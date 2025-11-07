@@ -4,9 +4,9 @@ import { ArrowRight, Play } from "lucide-react"
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden py-20">
+    <section className="relative overflow-hidden py-10 sm:py-16 md:py-20">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 md:items-center">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-center md:gap-12">
           {/* Left Column - Content */}
           <div className="space-y-8">
             {/* Social Proof - moved above title */}
@@ -21,12 +21,12 @@ export default function Hero() {
             </div>
 
             <div className="space-y-4">
-              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
                 Build the Future with{" "}
                 <span className="text-primary">AI-Powered</span>{" "}
                 Solutions
               </h1>
-              <p className="text-lg text-muted-foreground md:text-xl">
+              <p className="text-base text-muted-foreground sm:text-lg md:text-xl">
                 Transform your business with cutting-edge AI technology.
                 Streamline workflows, boost productivity, and unlock new
                 possibilities with our intuitive platform.
@@ -50,25 +50,24 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right Column - Product Screenshot/Video Placeholder */}
-          <div className="relative">
+          <div className="relative order-first md:order-last">
             <div className="aspect-video rounded-lg bg-muted shadow-lg">
               {/* Placeholder content with icon */}
               <div className="flex h-full w-full items-center justify-center">
                 <div className="text-center">
-                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-background shadow-sm">
-                    <Play className="h-8 w-8 text-muted-foreground" />
+                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-background shadow-sm sm:h-16 sm:w-16">
+                    <Play className="h-6 w-6 text-muted-foreground sm:h-8 sm:w-8" />
                   </div>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-xs text-muted-foreground sm:text-sm">
                     Product Video / Screenshot
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Decorative elements */}
-            <div className="absolute -right-4 -top-4 h-72 w-72 rounded-full bg-primary/5 blur-3xl"></div>
-            <div className="absolute -bottom-8 -left-4 h-72 w-72 rounded-full bg-primary/5 blur-3xl"></div>
+            {/* Decorative elements - Hidden on mobile */}
+            <div className="absolute -right-4 -top-4 h-72 w-72 rounded-full bg-primary/5 blur-3xl hidden md:block"></div>
+            <div className="absolute -bottom-8 -left-4 h-72 w-72 rounded-full bg-primary/5 blur-3xl hidden md:block"></div>
           </div>
         </div>
       </div>

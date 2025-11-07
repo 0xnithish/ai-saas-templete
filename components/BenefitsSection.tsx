@@ -42,26 +42,26 @@ export default function BenefitsSection() {
   ]
 
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-12 md:py-24">
       <div className="container mx-auto px-4">
         {/* Section Title */}
-        <div className="mb-12 text-center md:mb-16">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+        <div className="mb-8 md:mb-12">
+          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl lg:text-5xl">
             Benefits
           </h2>
         </div>
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
           {/* Card 1 - Large card spanning full width on md, normal on lg */}
           <Card className="md:col-span-2 lg:col-span-1">
             <CardHeader>
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 sm:h-12 sm:w-12">
                 {benefits[0].icon}
               </div>
-              <CardTitle className="text-xl">{benefits[0].title}</CardTitle>
+              <CardTitle className="text-lg sm:text-xl">{benefits[0].title}</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-0">
               <p className="text-sm text-muted-foreground">{benefits[0].description}</p>
             </CardContent>
           </Card>
@@ -69,12 +69,12 @@ export default function BenefitsSection() {
           {/* Card 2 - Large card spanning full width on md, normal on lg */}
           <Card className="md:col-span-2 lg:col-span-1">
             <CardHeader>
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 sm:h-12 sm:w-12">
                 {benefits[1].icon}
               </div>
-              <CardTitle className="text-xl">{benefits[1].title}</CardTitle>
+              <CardTitle className="text-lg sm:text-xl">{benefits[1].title}</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-0">
               <p className="text-sm text-muted-foreground">{benefits[1].description}</p>
             </CardContent>
           </Card>
@@ -82,12 +82,12 @@ export default function BenefitsSection() {
           {/* Card 3 - Spans full width on mobile and desktop */}
           <Card className="md:col-span-2 lg:col-span-1">
             <CardHeader>
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 sm:h-12 sm:w-12">
                 {benefits[2].icon}
               </div>
-              <CardTitle className="text-xl">{benefits[2].title}</CardTitle>
+              <CardTitle className="text-lg sm:text-xl">{benefits[2].title}</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-0">
               <p className="text-sm text-muted-foreground">{benefits[2].description}</p>
             </CardContent>
           </Card>
@@ -95,12 +95,12 @@ export default function BenefitsSection() {
           {/* Card 4 */}
           <Card className="">
             <CardHeader>
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 sm:h-12 sm:w-12">
                 {benefits[3].icon}
               </div>
-              <CardTitle className="text-xl">{benefits[3].title}</CardTitle>
+              <CardTitle className="text-lg sm:text-xl">{benefits[3].title}</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-0">
               <p className="text-sm text-muted-foreground">{benefits[3].description}</p>
             </CardContent>
           </Card>
@@ -108,12 +108,12 @@ export default function BenefitsSection() {
           {/* Card 5 */}
           <Card className="">
             <CardHeader>
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 sm:h-12 sm:w-12">
                 {benefits[4].icon}
               </div>
-              <CardTitle className="text-xl">{benefits[4].title}</CardTitle>
+              <CardTitle className="text-lg sm:text-xl">{benefits[4].title}</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-0">
               <p className="text-sm text-muted-foreground">{benefits[4].description}</p>
             </CardContent>
           </Card>
@@ -121,12 +121,12 @@ export default function BenefitsSection() {
           {/* Card 6 */}
           <Card className="">
             <CardHeader>
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 sm:h-12 sm:w-12">
                 {benefits[5].icon}
               </div>
-              <CardTitle className="text-xl">{benefits[5].title}</CardTitle>
+              <CardTitle className="text-lg sm:text-xl">{benefits[5].title}</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-0">
               <p className="text-sm text-muted-foreground">{benefits[5].description}</p>
             </CardContent>
           </Card>

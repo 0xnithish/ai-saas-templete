@@ -37,10 +37,10 @@ export default function HowItWorksSection() {
           </h2>
         </div>
 
-        {/* Steps Grid with connecting arrows */}
-        <div className="grid grid-cols-11 gap-4 items-center max-w-5xl mx-auto">
+        {/* Steps - Mobile: stacked, Desktop: horizontal with arrows */}
+        <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-center md:gap-4 lg:gap-8">
           {/* Step 1 */}
-          <div className="col-span-3">
+          <div className="md:w-80 lg:w-96">
             <Card className="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border pb-6 shadow-sm w-full pt-0">
               {/* Placeholder Image Area */}
               <div className="aspect-video bg-muted rounded-t-lg">
@@ -58,7 +58,7 @@ export default function HowItWorksSection() {
                 </Button>
 
                 {/* Title */}
-                <CardTitle className="text-2xl">{steps[0].title}</CardTitle>
+                <CardTitle className="text-xl md:text-2xl">{steps[0].title}</CardTitle>
               </CardHeader>
 
               <CardContent>
@@ -67,13 +67,13 @@ export default function HowItWorksSection() {
             </Card>
           </div>
 
-          {/* Arrow between Step 1 and Step 2 */}
-          <div className="col-span-1 flex justify-center">
+          {/* Arrow - Hidden on mobile, visible on desktop */}
+          <div className="hidden md:block">
             <ArrowRight className="h-8 w-8 text-muted-foreground" />
           </div>
 
           {/* Step 2 */}
-          <div className="col-span-3">
+          <div className="md:w-80 lg:w-96">
             <Card className="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border pb-6 shadow-sm w-full pt-0">
               {/* Placeholder Image Area */}
               <div className="aspect-video bg-muted rounded-t-lg">
@@ -91,7 +91,7 @@ export default function HowItWorksSection() {
                 </Button>
 
                 {/* Title */}
-                <CardTitle className="text-2xl">{steps[1].title}</CardTitle>
+                <CardTitle className="text-xl md:text-2xl">{steps[1].title}</CardTitle>
               </CardHeader>
 
               <CardContent>
@@ -100,13 +100,13 @@ export default function HowItWorksSection() {
             </Card>
           </div>
 
-          {/* Arrow between Step 2 and Step 3 */}
-          <div className="col-span-1 flex justify-center">
+          {/* Arrow - Hidden on mobile, visible on desktop */}
+          <div className="hidden md:block">
             <ArrowRight className="h-8 w-8 text-muted-foreground" />
           </div>
 
           {/* Step 3 */}
-          <div className="col-span-3">
+          <div className="md:w-80 lg:w-96">
             <Card className="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border pb-6 shadow-sm w-full pt-0">
               {/* Placeholder Image Area */}
               <div className="aspect-video bg-muted rounded-t-lg">
@@ -124,7 +124,7 @@ export default function HowItWorksSection() {
                 </Button>
 
                 {/* Title */}
-                <CardTitle className="text-2xl">{steps[2].title}</CardTitle>
+                <CardTitle className="text-xl md:text-2xl">{steps[2].title}</CardTitle>
               </CardHeader>
 
               <CardContent>

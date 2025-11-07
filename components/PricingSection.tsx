@@ -64,19 +64,19 @@ export default function PricingSection() {
   }
 
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-12 md:py-24">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="mb-12 text-center md:mb-16">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+        <div className="mb-8 md:mb-12">
+          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl lg:text-5xl">
             Pricing
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
+          <p className="mt-3 text-base text-muted-foreground sm:text-lg">
             Choose the perfect plan for your needs
           </p>
 
           {/* Billing Toggle */}
-          <div className="mt-8 flex items-center justify-center gap-4">
+          <div className="mt-6 flex items-center justify-center gap-4">
             <span className={`text-sm ${!isYearly ? "font-semibold" : "text-muted-foreground"}`}>
               Monthly
             </span>
@@ -91,7 +91,7 @@ export default function PricingSection() {
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
           {plans.map((plan) => (
             <Card
               key={plan.id}

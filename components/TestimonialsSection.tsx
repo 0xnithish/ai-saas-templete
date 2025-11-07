@@ -106,8 +106,8 @@ export default function TestimonialsSection() {
     <section className="py-16 md:py-24 bg-gray-50 overflow-hidden">
       <div className="container mx-auto px-4">
         {/* Section Title */}
-        <div className="mb-12 text-center md:mb-16">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+        <div className="mb-8 md:mb-12">
+          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl lg:text-5xl">
             Loved by people worldwide
           </h2>
         </div>
@@ -119,11 +119,11 @@ export default function TestimonialsSection() {
           <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-32 bg-gradient-to-l from-gray-50 to-transparent"></div>
 
           {/* Scrolling container */}
-          <div className="flex animate-scroll-horizontal gap-6">
+          <div className="flex animate-scroll-horizontal gap-4 sm:gap-6">
             {duplicatedTestimonials.map((testimonial, index) => (
               <Card
                 key={`${testimonial.id}-${index}`}
-                className="w-[350px] flex-shrink-0 md:w-[400px]"
+                className="w-[300px] flex-shrink-0 sm:w-[350px] md:w-[400px]"
               >
                 <CardContent className="p-6">
                   {/* Rating */}

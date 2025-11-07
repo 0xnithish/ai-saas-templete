@@ -42,32 +42,32 @@ export default function FaqSection() {
   ]
 
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-12 md:py-24">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="mb-12 text-center md:mb-16">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+        <div className="mb-8 text-center md:mb-12">
+          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl lg:text-5xl">
             Frequently Asked Questions
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
+          <p className="mt-3 text-base text-muted-foreground sm:text-lg">
             Find answers to common questions about our platform
           </p>
         </div>
 
         {/* FAQ Accordion */}
         <div className="mx-auto max-w-3xl">
-          <Accordion type="single" collapsible className="w-full space-y-4">
+          <Accordion type="single" collapsible className="w-full space-y-3 sm:space-y-4">
             {faqs.map((faq) => (
               <AccordionItem
                 key={faq.id}
                 value={faq.id}
-                className="rounded-lg border bg-background px-6 shadow-sm"
+                className="rounded-lg border bg-background px-4 shadow-sm sm:px-6"
               >
-                <AccordionTrigger className="hover:no-underline py-6 text-left">
+                <AccordionTrigger className="hover:no-underline py-4 sm:py-6 text-left text-sm sm:text-base">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="pt-4 pb-2">
-                  <p className="text-sm text-muted-foreground">{faq.answer}</p>
+                <AccordionContent className="pt-2 pb-4">
+                  <p className="text-xs text-muted-foreground sm:text-sm">{faq.answer}</p>
                 </AccordionContent>
               </AccordionItem>
             ))}
