@@ -1,6 +1,5 @@
+import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
 
 export default function HowItWorksSection() {
   const steps = [
@@ -28,110 +27,37 @@ export default function HowItWorksSection() {
   ]
 
   return (
-    <section className="py-16 md:py-24 bg-gray-50">
-      <div className="container mx-auto px-4">
-        {/* Section Title */}
-        <div className="mb-12 text-center md:mb-16">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+    <section className="py-32">
+      <div className="container mx-auto">
+        <div className="mx-auto flex max-w-4xl flex-col items-center gap-4 text-center">
+          <h2 className="text-pretty text-4xl font-semibold lg:text-6xl">
             How it works
           </h2>
+          <p className="text-muted-foreground lg:text-xl">
+            Launch in minutes with a guided workflow that keeps every decision clear and every step actionable.
+          </p>
         </div>
-
-        {/* Steps - Mobile: stacked, Desktop: horizontal with arrows */}
-        <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-center md:gap-4 lg:gap-8">
-          {/* Step 1 */}
-          <div className="md:w-80 lg:w-96">
-            <Card className="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border pb-6 shadow-sm w-full pt-0">
-              {/* Placeholder Image Area */}
-              <div className="aspect-video bg-muted rounded-t-lg">
+        <div className="mx-auto mt-12 grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {steps.map((step) => (
+            <Card key={step.id} className="flex h-full flex-col overflow-hidden pt-0">
+              <div className="aspect-video w-full bg-muted">
                 <div className="flex h-full w-full items-center justify-center">
-                  <p className="text-sm text-muted-foreground font-medium">
-                    {steps[0].imageText}
-                  </p>
+                  <span className="text-sm font-medium text-muted-foreground">
+                    {step.imageText}
+                  </span>
                 </div>
               </div>
-
-              <CardHeader className="space-y-3">
-                {/* Step Number Button */}
-                <Button variant="secondary" size="sm" className="w-20">
-                  Step {steps[0].id}
-                </Button>
-
-                {/* Title */}
-                <CardTitle className="text-xl md:text-2xl">{steps[0].title}</CardTitle>
+              <CardHeader className="flex flex-col gap-4">
+                <Badge variant="secondary" className="w-fit px-3 py-1 text-xs uppercase tracking-wide">
+                  Step {step.id}
+                </Badge>
+                <CardTitle className="text-xl">{step.title}</CardTitle>
               </CardHeader>
-
               <CardContent>
-                <p className="text-sm text-muted-foreground">{steps[0].description}</p>
+                <p className="text-sm text-muted-foreground">{step.description}</p>
               </CardContent>
             </Card>
-          </div>
-
-          {/* Arrow - Hidden on mobile, visible on desktop */}
-          <div className="hidden md:block">
-            <ArrowRight className="h-8 w-8 text-muted-foreground" />
-          </div>
-
-          {/* Step 2 */}
-          <div className="md:w-80 lg:w-96">
-            <Card className="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border pb-6 shadow-sm w-full pt-0">
-              {/* Placeholder Image Area */}
-              <div className="aspect-video bg-muted rounded-t-lg">
-                <div className="flex h-full w-full items-center justify-center">
-                  <p className="text-sm text-muted-foreground font-medium">
-                    {steps[1].imageText}
-                  </p>
-                </div>
-              </div>
-
-              <CardHeader className="space-y-3">
-                {/* Step Number Button */}
-                <Button variant="secondary" size="sm" className="w-20">
-                  Step {steps[1].id}
-                </Button>
-
-                {/* Title */}
-                <CardTitle className="text-xl md:text-2xl">{steps[1].title}</CardTitle>
-              </CardHeader>
-
-              <CardContent>
-                <p className="text-sm text-muted-foreground">{steps[1].description}</p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Arrow - Hidden on mobile, visible on desktop */}
-          <div className="hidden md:block">
-            <ArrowRight className="h-8 w-8 text-muted-foreground" />
-          </div>
-
-          {/* Step 3 */}
-          <div className="md:w-80 lg:w-96">
-            <Card className="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border pb-6 shadow-sm w-full pt-0">
-              {/* Placeholder Image Area */}
-              <div className="aspect-video bg-muted rounded-t-lg">
-                <div className="flex h-full w-full items-center justify-center">
-                  <p className="text-sm text-muted-foreground font-medium">
-                    {steps[2].imageText}
-                  </p>
-                </div>
-              </div>
-
-              <CardHeader className="space-y-3">
-                {/* Step Number Button */}
-                <Button variant="secondary" size="sm" className="w-20">
-                  Step {steps[2].id}
-                </Button>
-
-                {/* Title */}
-                <CardTitle className="text-xl md:text-2xl">{steps[2].title}</CardTitle>
-              </CardHeader>
-
-              <CardContent>
-                <p className="text-sm text-muted-foreground">{steps[2].description}</p>
-              </CardContent>
-            </Card>
-          </div>
+          ))}
         </div>
       </div>
     </section>

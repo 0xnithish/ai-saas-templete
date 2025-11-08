@@ -1,24 +1,26 @@
 import Header from "@/components/Header"
 import Hero from "@/components/Hero"
-import PartnersSection from "@/components/PartnersSection"
+import LogoCloud from "@/components/LogoCloud"
 import BenefitsSection from "@/components/BenefitsSection"
 import HowItWorksSection from "@/components/HowItWorksSection"
-import PricingSection from "@/components/PricingSection"
-import TestimonialsSection from "@/components/TestimonialsSection"
+import Pricing2 from "@/components/PricingSection"
+import Testimonials from "@/components/Testimonials"
 import FaqSection from "@/components/FaqSection"
 import CtaSection from "@/components/CtaSection"
 import FooterSection from "@/components/FooterSection"
+import AnnouncementBar from "@/components/AnnouncementBar"
 
 export default function Home() {
   return (
     <>
+      <AnnouncementBar />
       <Header />
       <Hero />
-      <PartnersSection />
+      <LogoCloud />
       <BenefitsSection />
       <HowItWorksSection />
-      <PricingSection />
-      <TestimonialsSection />
+      <Pricing2 />
+      <Testimonials />
       <FaqSection />
       <CtaSection />
       <FooterSection />

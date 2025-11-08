@@ -9,7 +9,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-export const NavigationSheet = () => {
+const NavigationSheet = () => {
   const navItems = [
     { href: "#features", label: "Features" },
     { href: "#pricing", label: "Pricing" },
@@ -50,3 +50,5 @@ export const NavigationSheet = () => {
     </Sheet>
   );
 };
+
+export default NavigationSheet;

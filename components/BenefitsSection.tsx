@@ -1,137 +1,86 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Zap, Shield, Rocket, Users, BarChart, Lock } from "lucide-react"
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import {
+  BookCheck,
+  ChartPie,
+  FolderSync,
+  Goal,
+  Users,
+  Zap,
+} from "lucide-react";
 
-export default function BenefitsSection() {
-  const benefits = [
-    {
-      id: 1,
-      icon: <Zap className="h-8 w-8 text-primary" />,
-      title: "Lightning Fast",
-      description: "Experience blazing-fast performance with our optimized AI algorithms and infrastructure.",
-    },
-    {
-      id: 2,
-      icon: <Shield className="h-8 w-8 text-primary" />,
-      title: "Enterprise Security",
-      description: "Bank-level encryption and security protocols to keep your data safe and compliant.",
-    },
-    {
-      id: 3,
-      icon: <Rocket className="h-8 w-8 text-primary" />,
-      title: "Quick Setup",
-      description: "Get started in minutes with our intuitive setup process and comprehensive documentation.",
-    },
-    {
-      id: 4,
-      icon: <Users className="h-8 w-8 text-primary" />,
-      title: "Team Collaboration",
-      description: "Work together seamlessly with powerful collaboration tools and real-time updates.",
-    },
-    {
-      id: 5,
-      icon: <BarChart className="h-8 w-8 text-primary" />,
-      title: "Advanced Analytics",
-      description: "Make data-driven decisions with comprehensive analytics and detailed insights.",
-    },
-    {
-      id: 6,
-      icon: <Lock className="h-8 w-8 text-primary" />,
-      title: "Privacy First",
-      description: "Your data stays yours. Built with privacy-first architecture and GDPR compliance.",
-    },
-  ]
+const features = [
+  {
+    icon: Goal,
+    title: "Identify Opportunities",
+    description:
+      "Easily uncover untapped areas to explore and expand your reach effortlessly.",
+  },
+  {
+    icon: BookCheck,
+    title: "Build Authority",
+    description:
+      "Create valuable content that resonates, inspires trust, and positions you as an expert.",
+  },
+  {
+    icon: ChartPie,
+    title: "Instant Insights",
+    description:
+      "Gain immediate, actionable insights with a quick glance, enabling fast decision-making.",
+  },
+  {
+    icon: Users,
+    title: "Engage with Your Audience",
+    description:
+      "Boost audience engagement with interactive features like polls, quizzes, and forms.",
+  },
+  {
+    icon: FolderSync,
+    title: "Automate Your Workflow",
+    description:
+      "Streamline your processes by automating repetitive tasks, saving time and reducing effort.",
+  },
+  {
+    icon: Zap,
+    title: "Accelerate Growth",
+    description:
+      "Supercharge your growth by implementing strategies that drive results quickly and efficiently.",
+  },
+];
 
+const Features = () => {
   return (
-    <section className="py-12 md:py-24">
-      <div className="container mx-auto px-4">
-        {/* Section Title */}
-        <div className="mb-8 md:mb-12">
-          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl lg:text-5xl">
-            Benefits
-          </h2>
-        </div>
-
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {/* Card 1 - Large card spanning full width on md, normal on lg */}
-          <Card className="md:col-span-2 lg:col-span-1">
-            <CardHeader>
-              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 sm:h-12 sm:w-12">
-                {benefits[0].icon}
-              </div>
-              <CardTitle className="text-lg sm:text-xl">{benefits[0].title}</CardTitle>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <p className="text-sm text-muted-foreground">{benefits[0].description}</p>
-            </CardContent>
-          </Card>
-
-          {/* Card 2 - Large card spanning full width on md, normal on lg */}
-          <Card className="md:col-span-2 lg:col-span-1">
-            <CardHeader>
-              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 sm:h-12 sm:w-12">
-                {benefits[1].icon}
-              </div>
-              <CardTitle className="text-lg sm:text-xl">{benefits[1].title}</CardTitle>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <p className="text-sm text-muted-foreground">{benefits[1].description}</p>
-            </CardContent>
-          </Card>
-
-          {/* Card 3 - Spans full width on mobile and desktop */}
-          <Card className="md:col-span-2 lg:col-span-1">
-            <CardHeader>
-              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 sm:h-12 sm:w-12">
-                {benefits[2].icon}
-              </div>
-              <CardTitle className="text-lg sm:text-xl">{benefits[2].title}</CardTitle>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <p className="text-sm text-muted-foreground">{benefits[2].description}</p>
-            </CardContent>
-          </Card>
-
-          {/* Card 4 */}
-          <Card className="">
-            <CardHeader>
-              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 sm:h-12 sm:w-12">
-                {benefits[3].icon}
-              </div>
-              <CardTitle className="text-lg sm:text-xl">{benefits[3].title}</CardTitle>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <p className="text-sm text-muted-foreground">{benefits[3].description}</p>
-            </CardContent>
-          </Card>
-
-          {/* Card 5 */}
-          <Card className="">
-            <CardHeader>
-              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 sm:h-12 sm:w-12">
-                {benefits[4].icon}
-              </div>
-              <CardTitle className="text-lg sm:text-xl">{benefits[4].title}</CardTitle>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <p className="text-sm text-muted-foreground">{benefits[4].description}</p>
-            </CardContent>
-          </Card>
-
-          {/* Card 6 */}
-          <Card className="">
-            <CardHeader>
-              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 sm:h-12 sm:w-12">
-                {benefits[5].icon}
-              </div>
-              <CardTitle className="text-lg sm:text-xl">{benefits[5].title}</CardTitle>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <p className="text-sm text-muted-foreground">{benefits[5].description}</p>
-            </CardContent>
-          </Card>
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="max-w-(--breakpoint-lg) w-full py-10 px-6">
+        <h2 className="text-4xl md:text-[2.5rem] md:leading-[1.2] font-semibold tracking-[-0.03em] sm:max-w-xl text-pretty">
+          Strengthen Your Strategy
+        </h2>
+        <p className="mt-2 text-muted-foreground text-lg sm:text-xl">
+          Enhance your strategy with intelligent tools designed for success.
+        </p>
+        <div className="mt-10 w-full mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
+          {features.map((feature) => (
+            <Card
+              key={feature.title}
+              className="flex flex-col border rounded-xl overflow-hidden shadow-none pb-0"
+            >
+              <CardHeader>
+                <feature.icon />
+                <h4 className="mt-3! text-xl font-semibold tracking-tight">
+                  {feature.title}
+                </h4>
+                <p className="mt-1 text-muted-foreground text-[17px]">
+                  {feature.description}
+                </p>
+              </CardHeader>
+              <CardContent className="mt-auto px-0 pb-0">
+                <div className="bg-muted h-40 ml-6 rounded-tl-xl" />
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
-    </section>
-  )
-}
+    </div>
+  );
+};
+
+export default Features;
