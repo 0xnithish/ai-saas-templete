@@ -25,14 +25,15 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
       <div className="container flex h-14 sm:h-16 items-center justify-between px-4 md:px-8">
-        {/* Logo on the left */}
-        <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-          <img src="/logo.svg" alt="Logo" className="h-6 w-auto sm:h-8" />
-        </Link>
+        {/* Logo and Navigation links on the left */}
+        <div className="flex items-center gap-6">
+          <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
+            <img src="/logo.svg" alt="Logo" className="h-6 w-auto sm:h-8" />
+          </Link>
 
-        {/* Navigation links in the center - hidden on mobile */}
-        <NavigationMenu className="hidden md:flex">
-          <NavigationMenuList className="gap-1 md:gap-2">
+          {/* Navigation links next to logo - hidden on mobile */}
+          <NavigationMenu className="hidden md:flex">
+            <NavigationMenuList className="gap-1 md:gap-2">
             {navigationLinks.map((link) => (
               <NavigationMenuItem key={link.href}>
                 <NavigationMenuLink asChild>
@@ -47,12 +48,13 @@ export default function Header() {
             ))}
           </NavigationMenuList>
         </NavigationMenu>
+        </div>
 
-        {/* CTA button - hidden on mobile, visible on desktop */}
-        <Button asChild size="sm" className="hidden md:inline-flex gap-2">
+        {/* CTA button on the right - hidden on mobile, visible on desktop */}
+        <Button asChild size="sm" className="hidden md:inline-flex gap-2 group">
           <Link href="/get-started">
             Get started
-            <ArrowRight className="h-4 w-4" />
+            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
           </Link>
         </Button>
 
@@ -95,16 +97,15 @@ export default function Header() {
                       {link.label}
                     </Link>
                   ))}
-                  
                   <div className="mt-3 pt-3 border-t">
-                    <Button 
-                      asChild 
-                      size="sm" 
-                      className="w-full gap-2"
+                    <Button
+                      asChild
+                      size="sm"
+                      className="w-full gap-2 group"
                     >
                       <Link href="/get-started" onClick={() => setIsMenuOpen(false)}>
                         Get started
-                        <ArrowRight className="h-4 w-4" />
+                        <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                       </Link>
                     </Button>
                   </div>
