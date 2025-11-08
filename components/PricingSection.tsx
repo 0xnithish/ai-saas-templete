@@ -91,6 +91,7 @@ const Pricing2 = ({
             <Switch
               checked={isYearly}
               onCheckedChange={() => setIsYearly(!isYearly)}
+              className="data-[state=unchecked]:bg-gray-600"
             />
             Yearly
           </div>
