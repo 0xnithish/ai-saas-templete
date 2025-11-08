@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <div className="min-h-screen w-full flex flex-col gap-16 items-center justify-center px-6 py-16">
+    <div className="relative min-h-screen w-full flex flex-col gap-16 items-center justify-center px-6 py-16">
       <div className="text-center max-w-3xl">
         <Badge
           variant="secondary"
@@ -47,6 +47,8 @@ export default function Hero() {
           className="w-full h-full object-cover"
         />
       </div>
+      {/* Gradient overlay at the bottom */}
+      <div className="absolute bottom-0 left-0 right-0 h-100 bg-linear-to-t from-background to-transparent pointer-events-none" />
     </div>
   );
 }

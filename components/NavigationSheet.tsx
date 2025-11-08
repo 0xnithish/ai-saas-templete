@@ -8,6 +8,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { SignInButton, SignUpButton, SignedIn, SignedOut } from "@clerk/nextjs";
 
 const NavigationSheet = () => {
   const navItems = [
@@ -40,10 +41,19 @@ const NavigationSheet = () => {
             </Link>
           ))}
           <div className="flex flex-col gap-3 mt-4 pt-4 border-t">
-            <Button variant="outline" className="w-full rounded-full">
-              Sign In
-            </Button>
-            <Button className="w-full rounded-full">Get Started</Button>
+            <SignedOut>
+              <Button asChild variant="outline" className="w-full rounded-full">
+                <SignInButton />
+              </Button>
+              <Button asChild className="w-full rounded-full">
+                <SignUpButton />
+              </Button>
+            </SignedOut>
+            <SignedIn>
+              <Link href="/dashboard" className="text-lg font-medium hover:text-primary transition-colors">
+                Dashboard
+              </Link>
+            </SignedIn>
           </div>
         </nav>
       </SheetContent>

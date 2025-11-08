@@ -8,30 +8,23 @@ import {
   Logo07,
   Logo08,
 } from "@/components/Logos";
-import { Marquee } from "@/components/ui/marquee";
 
 const LogoCloud = () => {
   return (
-    <div className="min-h-screen  flex items-center justify-center px-6">
-      <div className="overflow-hidden">
-        <p className="text-center text-xl font-medium">
-          Trusted by employees at leading companies worldwide
-        </p>
+    <div className="py-16 px-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
+          <p className="text-lg md:text-xl font-medium text-muted-foreground whitespace-nowrap">
+            Trusted by fast-growing<br className="hidden md:block" />
+            companies around the world.
+          </p>
 
-        <div className="mt-10 flex items-center justify-center gap-x-14 gap-y-10 max-w-(--breakpoint-xl)">
-          <Marquee
-            pauseOnHover
-            className="[--duration:20s] [&_svg]:mr-10 mask-x-from-70% mask-x-to-90%"
-          >
+          <div className="flex items-center gap-8 md:gap-12 flex-wrap justify-center md:justify-end">
             <Logo01 />
             <Logo02 />
             <Logo03 />
             <Logo04 />
-            <Logo05 />
-            <Logo06 />
-            <Logo07 />
-            <Logo08 />
-          </Marquee>
+          </div>
         </div>
       </div>
     </div>

@@ -1,7 +1,6 @@
 import Header from "@/components/Header"
 import Hero from "@/components/Hero"
 import LogoCloud from "@/components/LogoCloud"
-import BenefitsSection from "@/components/BenefitsSection"
 import HowItWorksSection from "@/components/HowItWorksSection"
 import Pricing2 from "@/components/PricingSection"
 import Testimonials from "@/components/Testimonials"
@@ -9,6 +8,7 @@ import FaqSection from "@/components/FaqSection"
 import CtaSection from "@/components/CtaSection"
 import FooterSection from "@/components/FooterSection"
 import AnnouncementBar from "@/components/AnnouncementBar"
+import Features from "@/components/Features"
 
 export default function Home() {
   return (
@@ -17,7 +17,7 @@ export default function Home() {
       <Header />
       <Hero />
       <LogoCloud />
-      <BenefitsSection />
+      <Features />
       <HowItWorksSection />
       <Pricing2 />
       <Testimonials />
