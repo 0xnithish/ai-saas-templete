@@ -1,76 +1,52 @@
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { ArrowRight, Play } from "lucide-react"
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ArrowUpRight, CirclePlay } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden py-10 sm:py-16 md:py-20">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-center md:gap-12">
-          {/* Left Column - Content */}
-          <div className="space-y-8">
-            {/* Social Proof - moved above title */}
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <div className="flex -space-x-2">
-                <div className="h-8 w-8 rounded-full bg-primary/20"></div>
-                <div className="h-8 w-8 rounded-full bg-primary/30"></div>
-                <div className="h-8 w-8 rounded-full bg-primary/40"></div>
-              </div>
-              <span className="font-medium text-foreground">1,200+</span>
-              <span>active users</span>
-            </div>
-
-            <div className="space-y-4">
-              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
-                Build the Future with{" "}
-                <span className="text-primary">AI-Powered</span>{" "}
-                Solutions
-              </h1>
-              <p className="text-base text-muted-foreground sm:text-lg md:text-xl">
-                Transform your business with cutting-edge AI technology.
-                Streamline workflows, boost productivity, and unlock new
-                possibilities with our intuitive platform.
-              </p>
-            </div>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col gap-4 sm:flex-row">
-              <Button size="lg" asChild className="gap-2">
-                <Link href="/get-started">
-                  Get Started Free
-                  <ArrowRight className="h-5 w-5" />
-                </Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild className="gap-2">
-                <Link href="/demo">
-                  <Play className="h-5 w-5" />
-                  Watch Demo
-                </Link>
-              </Button>
-            </div>
-          </div>
-
-          <div className="relative order-first md:order-last">
-            <div className="aspect-video rounded-lg bg-muted shadow-lg">
-              {/* Placeholder content with icon */}
-              <div className="flex h-full w-full items-center justify-center">
-                <div className="text-center">
-                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-background shadow-sm sm:h-16 sm:w-16">
-                    <Play className="h-6 w-6 text-muted-foreground sm:h-8 sm:w-8" />
-                  </div>
-                  <p className="text-xs text-muted-foreground sm:text-sm">
-                    Product Video / Screenshot
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Decorative elements - Hidden on mobile */}
-            <div className="absolute -right-4 -top-4 h-72 w-72 rounded-full bg-primary/5 blur-3xl hidden md:block"></div>
-            <div className="absolute -bottom-8 -left-4 h-72 w-72 rounded-full bg-primary/5 blur-3xl hidden md:block"></div>
-          </div>
+    <div className="min-h-screen w-full flex flex-col gap-16 items-center justify-center px-6 py-16">
+      <div className="text-center max-w-3xl">
+        <Badge
+          variant="secondary"
+          className="rounded-full py-1 border-border"
+          asChild
+        >
+          <Link href="#">
+            Just released v1.0.0 <ArrowUpRight className="ml-1 size-4" />
+          </Link>
+        </Badge>
+        <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl lg:text-7xl md:leading-[1.2] font-semibold tracking-tighter">
+          Customized Shadcn UI Blocks & Components
+        </h1>
+        <p className="mt-6 md:text-lg text-foreground/80">
+          Explore a collection of Shadcn UI blocks and components, ready to
+          preview and copy. Streamline your development workflow with
+          easy-to-implement examples.
+        </p>
+        <div className="mt-10 flex items-center justify-center gap-4">
+          <Button size="lg" className="rounded-full text-base">
+            Get Started <ArrowUpRight className="h-5! w-5!" />
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            className="rounded-full text-base shadow-none"
+          >
+            <CirclePlay className="h-5! w-5!" /> Watch Demo
+          </Button>
         </div>
       </div>
-    </section>
-  )
+      <div className="w-full max-w-(--breakpoint-xl) mx-auto aspect-video bg-accent rounded-xl overflow-hidden">
+        <Image 
+          src="/hero/screenshot.webp" 
+          alt="Screenshot" 
+          width={1920}
+          height={1080}
+          className="w-full h-full object-cover"
+        />
+      </div>
+    </div>
+  );
 }

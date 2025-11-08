@@ -1,79 +1,83 @@
-"use client"
-
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
+} from "@/components/ui/accordion";
+import { cn } from "@/lib/utils";
+import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import { PlusIcon } from "lucide-react";
 
-export default function FaqSection() {
-  const faqs = [
-    {
-      id: "item-1",
-      question: "What is AI-Powered Solutions?",
-      answer:
-        "AI-Powered Solutions is a cutting-edge platform that leverages artificial intelligence to streamline your business processes, automate repetitive tasks, and provide intelligent insights to help you make data-driven decisions faster and more efficiently.",
-    },
-    {
-      id: "item-2",
-      question: "How do I get started with the platform?",
-      answer:
-        "Getting started is easy! Simply sign up for an account, choose your plan, and follow our quick setup guide. Our intuitive interface will walk you through the initial configuration, and you'll be up and running in just a few minutes with our helpful tutorials and documentation.",
-    },
-    {
-      id: "item-3",
-      question: "Can I integrate it with my existing tools?",
-      answer:
-        "Absolutely! Our platform offers seamless integration with over 100 popular business tools and services including Slack, Microsoft Teams, Salesforce, HubSpot, and many more. We also provide a robust API and webhook support for custom integrations.",
-    },
-    {
-      id: "item-4",
-      question: "What kind of support do you provide?",
-      answer:
-        "We offer multiple support channels to ensure your success. All plans include access to our comprehensive documentation and knowledge base. Professional and Enterprise plans include priority email support, live chat, and phone support during business hours.",
-    },
-    {
-      id: "item-5",
-      question: "Is my data secure with AI-Powered Solutions?",
-      answer:
-        "Security is our top priority. We use enterprise-grade encryption, maintain SOC 2 compliance, and follow industry best practices for data protection. Your data is encrypted both in transit and at rest, and we never share your information with third parties. We also offer GDPR and CCPA compliance features.",
-    },
-  ]
+const faq = [
+  {
+    question: "What is your return policy?",
+    answer:
+      "You can return unused items in their original packaging within 30 days for a refund or exchange. Contact support for assistance.",
+  },
+  {
+    question: "How do I track my order?",
+    answer:
+      "Track your order using the link provided in your confirmation email, or log into your account to view tracking details.",
+  },
+  {
+    question: "Do you ship internationally?",
+    answer:
+      "Yes, we ship worldwide. Shipping fees and delivery times vary by location, and customs duties may apply for some countries.",
+  },
+  {
+    question: "What payment methods do you accept?",
+    answer:
+      "We accept Visa, MasterCard, American Express, PayPal, Apple Pay, and Google Pay, ensuring secure payment options for all customers.",
+  },
+  {
+    question: "What if I receive a damaged item?",
+    answer:
+      "Please contact our support team within 48 hours of delivery with photos of the damaged item. We’ll arrange a replacement or refund.",
+  },
+];
 
+const FAQ = () => {
   return (
-    <section className="py-12 md:py-24">
-      <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="mb-8 text-center md:mb-12">
-          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl lg:text-5xl">
-            Frequently Asked Questions
-          </h2>
-          <p className="mt-3 text-base text-muted-foreground sm:text-lg">
-            Find answers to common questions about our platform
-          </p>
-        </div>
+    <div className="min-h-screen flex items-center justify-center px-6 py-12">
+      <div className="w-full max-w-2xl">
+        <h2 className="text-4xl md:text-5xl leading-[1.15]! font-semibold tracking-tighter">
+          Frequently Asked Questions
+        </h2>
+        <p className="mt-2 text-xl text-muted-foreground">
+          Quick answers to common questions about our products and services.
+        </p>
 
-        {/* FAQ Accordion */}
-        <div className="mx-auto max-w-3xl">
-          <Accordion type="single" collapsible className="w-full space-y-3 sm:space-y-4">
-            {faqs.map((faq) => (
-              <AccordionItem
-                key={faq.id}
-                value={faq.id}
-                className="rounded-lg border bg-background px-4 shadow-sm sm:px-6"
-              >
-                <AccordionTrigger className="hover:no-underline py-4 sm:py-6 text-left text-sm sm:text-base">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="pt-2 pb-4">
-                  <p className="text-xs text-muted-foreground sm:text-sm">{faq.answer}</p>
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
+        <Accordion
+          type="single"
+          collapsible
+          className="mt-8 sm:mt-10 space-y-4"
+          defaultValue="question-0"
+        >
+          {faq.map(({ question, answer }, index) => (
+            <AccordionItem
+              key={question}
+              value={`question-${index}`}
+              className="bg-accent py-1 px-4 rounded-xl border-none"
+            >
+              <AccordionPrimitive.Header className="flex">
+                <AccordionPrimitive.Trigger
+                  className={cn(
+                    "flex flex-1 items-center justify-between pt-4 pb-3 font-semibold tracking-tight transition-all hover:underline [&[data-state=open]>svg]:rotate-45",
+                    "text-start text-lg"
+                  )}
+                >
+                  {question}
+                  <PlusIcon className="h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-200" />
+                </AccordionPrimitive.Trigger>
+              </AccordionPrimitive.Header>
+              <AccordionContent className="text-base text-muted-foreground">
+                {answer}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </div>
-    </section>
-  )
-}
+    </div>
+  );
+};
+
+export default FAQ;

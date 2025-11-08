@@ -1,158 +1,168 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Switch } from "@/components/ui/switch"
-import { Check } from "lucide-react"
+import NumberFlow from "@number-flow/react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { ArrowRight, BadgeCheck } from "lucide-react";
+import { useState } from "react";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export default function PricingSection() {
-  const [isYearly, setIsYearly] = useState(false)
-
-  const plans = [
-    {
-      id: 1,
-      name: "Starter",
-      monthlyPrice: 19,
-      yearlyPrice: 190,
-      features: [
-        "Up to 5 projects",
-        "10GB storage",
-        "Email support",
-        "Basic analytics",
-        "24/7 community access",
-      ],
-      popular: false,
+const plans = [
+  {
+    id: "hobby",
+    name: "Hobby",
+    price: {
+      monthly: "Free forever",
+      yearly: "Free forever",
     },
-    {
-      id: 2,
-      name: "Pro",
-      monthlyPrice: 49,
-      yearlyPrice: 490,
-      features: [
-        "Unlimited projects",
-        "100GB storage",
-        "Priority support",
-        "Advanced analytics",
-        "Team collaboration",
-      ],
-      popular: true,
+    description:
+      "The perfect starting place for your web app or personal project.",
+    features: [
+      "50 API calls / month",
+      "60 second checks",
+      "Single-user account",
+      "5 monitors",
+      "Basic email support",
+    ],
+    cta: "Get started for free",
+  },
+  {
+    id: "pro",
+    name: "Pro",
+    price: {
+      monthly: 90,
+      yearly: 75,
     },
-    {
-      id: 3,
-      name: "Advanced",
-      monthlyPrice: 99,
-      yearlyPrice: 990,
-      features: [
-        "Everything in Pro",
-        "Unlimited storage",
-        "Dedicated support",
-        "Custom integrations",
-        "API access",
-      ],
-      popular: false,
+    description: "Everything you need to build and scale your business.",
+    features: [
+      "Unlimited API calls",
+      "30 second checks",
+      "Multi-user account",
+      "10 monitors",
+      "Priority email support",
+    ],
+    cta: "Subscribe to Pro",
+    popular: true,
+  },
+  {
+    id: "enterprise",
+    name: "Enterprise",
+    price: {
+      monthly: "Get in touch for pricing",
+      yearly: "Get in touch for pricing",
     },
-  ]
+    description: "Critical security, performance, observability and support.",
+    features: [
+      "You can DDOS our API.",
+      "Nano-second checks.",
+      "Invite your extended family.",
+      "Unlimited monitors.",
+      "We'll sit on your desk.",
+    ],
+    cta: "Contact us",
+  },
+];
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 0,
-    }).format(price)
-  }
+const Example = () => {
+  const [frequency, setFrequency] = useState<string>("monthly");
 
   return (
-    <section className="py-12 md:py-24">
-      <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="mb-8 md:mb-12">
-          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl lg:text-5xl">
-            Pricing
-          </h2>
-          <p className="mt-3 text-base text-muted-foreground sm:text-lg">
-            Choose the perfect plan for your needs
-          </p>
-
-          {/* Billing Toggle */}
-          <div className="mt-6 flex items-center justify-center gap-4">
-            <span className={`text-sm ${!isYearly ? "font-semibold" : "text-muted-foreground"}`}>
-              Monthly
-            </span>
-            <Switch checked={isYearly} onCheckedChange={setIsYearly} />
-            <span className={`text-sm ${isYearly ? "font-semibold" : "text-muted-foreground"}`}>
+    <div className="not-prose @container flex flex-col gap-16 px-8 py-24 text-center">
+      <div className="flex flex-col items-center justify-center gap-8">
+        <h1 className="mb-0 text-balance font-medium text-5xl tracking-tighter!">
+          Simple, transparent pricing
+        </h1>
+        <p className="mx-auto mt-0 mb-0 max-w-2xl text-balance text-lg text-muted-foreground">
+          Managing a business is hard enough, so why not make your life easier?
+          Our pricing plans are simple, transparent and scale with you.
+        </p>
+        <Tabs defaultValue={frequency} onValueChange={setFrequency}>
+          <TabsList>
+            <TabsTrigger value="monthly">Monthly</TabsTrigger>
+            <TabsTrigger value="yearly">
               Yearly
-            </span>
-            <Badge variant="secondary" className="ml-2">
-              Save 20%
-            </Badge>
-          </div>
-        </div>
-
-        {/* Pricing Cards */}
-        <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
+              <Badge variant="secondary">20% off</Badge>
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+        <div className="mt-8 grid w-full max-w-4xl @2xl:grid-cols-3 gap-4">
           {plans.map((plan) => (
             <Card
-              key={plan.id}
-              className={`relative flex flex-col ${
-                plan.popular ? "border-primary shadow-lg" : ""
-              }`}
-            >
-              {/* Most Popular Badge */}
-              {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <Badge className="bg-primary px-3 py-1 text-xs font-semibold">
-                    Most Popular
-                  </Badge>
-                </div>
+              className={cn(
+                "relative w-full text-left",
+                plan.popular && "ring-2 ring-primary"
               )}
-
+              key={plan.id}
+            >
+              {plan.popular && (
+                <Badge className="-translate-x-1/2 -translate-y-1/2 absolute top-0 left-1/2 rounded-full">
+                  Popular
+                </Badge>
+              )}
               <CardHeader>
-                <CardTitle className="text-2xl">{plan.name}</CardTitle>
-              </CardHeader>
-
-              <CardContent className="flex-1">
-                {/* Price */}
-                <div className="mb-6">
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-bold">
-                      {formatPrice(isYearly ? plan.yearlyPrice : plan.monthlyPrice)}
+                <CardTitle className="font-medium text-xl">
+                  {plan.name}
+                </CardTitle>
+                <CardDescription>
+                  <p>{plan.description}</p>
+                  {typeof plan.price[frequency as keyof typeof plan.price] ===
+                  "number" ? (
+                    <NumberFlow
+                      className="font-medium text-foreground"
+                      format={{
+                        style: "currency",
+                        currency: "USD",
+                        maximumFractionDigits: 0,
+                      }}
+                      suffix={`/month, billed ${frequency}.`}
+                      value={
+                        plan.price[
+                          frequency as keyof typeof plan.price
+                        ] as number
+                      }
+                    />
+                  ) : (
+                    <span className="font-medium text-foreground">
+                      {plan.price[frequency as keyof typeof plan.price]}.
                     </span>
-                    <span className="text-sm text-muted-foreground">
-                      /{isYearly ? "year" : "month"}
-                    </span>
-                  </div>
-                  {isYearly && (
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      Save {formatPrice(plan.monthlyPrice * 12 - plan.yearlyPrice)} per year
-                    </p>
                   )}
-                </div>
-
-                {/* Features List */}
-                <ul className="space-y-3">
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <Check className="h-5 w-5 flex-shrink-0 text-primary" />
-                      <span className="text-sm text-muted-foreground">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="grid gap-2">
+                {plan.features.map((feature, index) => (
+                  <div
+                    className="flex gap-2 text-muted-foreground text-sm"
+                    key={index}
+                  >
+                    <BadgeCheck className="h-lh w-4 flex-none" />
+                    {feature}
+                  </div>
+                ))}
               </CardContent>
-
               <CardFooter>
                 <Button
                   className="w-full"
-                  variant={plan.popular ? "default" : "outline"}
+                  variant={plan.popular ? "default" : "secondary"}
                 >
-                  Get Started
+                  {plan.cta}
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </CardFooter>
             </Card>
           ))}
         </div>
       </div>
-    </section>
-  )
-}
+    </div>
+  );
+};
+
+export default Example;
