@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI SaaS Template
+
+A modern, production-ready AI SaaS template built with Next.js 16, React 19, and TypeScript. This template provides a solid foundation for quickly building and deploying AI-powered SaaS applications.
+
+## Features
+
+- 🚀 **Modern Tech Stack**: Next.js 16 with App Router, React 19, and TypeScript
+- 🎨 **Beautiful UI**: shadcn/ui components with Tailwind CSS v4
+- 🔐 **Authentication**: Pre-configured Clerk authentication
+- 💳 **Payments**: Polar integration for subscription management
+- 🗄️ **Database**: Supabase integration for data storage
+- 📊 **State Management**: TanStack Query for server state
+- 🧩 **Component Library**: Reusable UI components with Radix UI primitives
+- 📱 **Responsive Design**: Mobile-first approach with Tailwind CSS
+
+## Tech Stack
+
+- **Frontend**: Next.js 16, React 19, TypeScript
+- **Styling**: Tailwind CSS v4
+- **UI Components**: shadcn/ui (New York style)
+- **Authentication**: Clerk
+- **Database**: Supabase
+- **Payments**: Polar
+- **Icons**: Lucide React
+- **Package Manager**: Bun
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies**:
+   ```bash
+   bun install
+   ```
 
-```bash
-bun dev
-# or
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+2. **Set up environment variables**:
+   Copy `.env.example` to `.env.local` and fill in your API keys:
+   ```bash
+   cp .env.example .env.local
+   ```
+
+   Required environment variables:
+   - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
+   - `CLERK_SECRET_KEY`
+
+3. **Run the development server**:
+   ```bash
+   bun dev
+   ```
+
+4. **Open your browser**:
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## Project Structure
+
+```
+/
+├── app/                    # Next.js App Router
+│   ├── layout.tsx         # Root layout with Clerk provider
+│   ├── page.tsx          # Landing page
+│   ├── sign-in/          # Clerk authentication pages
+│   └── sign-up/
+├── components/            # React components
+│   ├── ui/               # shadcn/ui reusable components
+│   ├── Header.tsx        # Site navigation
+│   ├── Hero.tsx          # Landing page hero section
+│   ├── Features.tsx      # Feature showcase
+│   └── PricingSection.tsx # Pricing tables
+├── lib/                  # Utility functions
+└── public/               # Static assets
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Development server**: `bun dev` (uses Turbopack for faster builds)
+- **Build**: `bun build` (creates production build with Turbopack)
+- **Start production**: `bun start`
+- **Lint**: `bun lint`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Key Integrations
 
-## Learn More
+### Authentication (Clerk)
+- Pre-configured sign-in and sign-up pages
+- User management and session handling
+- Protected routes support
 
-To learn more about Next.js, take a look at the following resources:
+### Database (Supabase)
+- PostgreSQL database integration
+- Real-time subscriptions
+- Row-level security
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Payments (Polar)
+- Subscription management
+- Billing integration
+- Payment processing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Customization
 
-## Deploy on Vercel
+This template is designed to be customized for your specific AI SaaS needs:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Update branding**: Modify colors, fonts, and styling in `tailwind.config.js`
+2. **Add features**: Extend the landing page components in `components/`
+3. **Configure integrations**: Set up your own API keys and endpoints
+4. **Add pages**: Create new routes in the `app/` directory
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploy
+
+The easiest way to deploy is using the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme).
+
+Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).

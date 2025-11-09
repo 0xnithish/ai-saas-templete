@@ -19,10 +19,17 @@ import {
   IconUsers,
 } from "@tabler/icons-react"
 
+<<<<<<<< HEAD:components/AppSidebar.tsx
 import { NavDocuments } from "@/components/NavDocuments"
 import { NavMain } from "@/components/NavMain"
 import { NavSecondary } from "@/components/NavSecondary"
 import { NavUser } from "@/components/NavUser"
+========
+import { NavDocuments } from "@/components/navigation/NavDocuments"
+import { NavMain } from "@/components/navigation/NavMain"
+import { NavSecondary } from "@/components/navigation/NavSecondary"
+import { NavUser } from "@/components/navigation/NavUser"
+>>>>>>>> main:components/dashboard/AppSidebar.tsx
 import {
   Sidebar,
   SidebarContent,
@@ -158,7 +165,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
+              className="data-[slot=sidebar-menu-button]:p-1.5!"
             >
               <a href="#">
                 <IconInnerShadowTop className="size-5!" />
