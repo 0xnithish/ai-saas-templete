@@ -7,8 +7,9 @@ import {
   SignUpButton,
   SignedIn,
   SignedOut,
-  UserButton,
+  SignOutButton,
 } from "@clerk/nextjs";
+import Link from "next/link";
 
 const Navbar = () => {
   return (
@@ -29,7 +30,12 @@ const Navbar = () => {
             </Button>
           </SignedOut>
           <SignedIn>
-            <UserButton />
+            <Button asChild variant="outline">
+              <Link href="/dashboard">Dashboard</Link>
+            </Button>
+            <Button asChild>
+              <SignOutButton />
+            </Button>
           </SignedIn>
 
           {/* Mobile Menu */}
