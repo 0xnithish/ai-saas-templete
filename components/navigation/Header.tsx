@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { Logo } from "@/components/Logo";
-import NavMenu from "@/components/NavMenu";
-import NavigationSheet from "@/components/NavigationSheet";
+import { Logo } from "@/components/marketing/Logo";
+import NavMenu from "@/components/navigation/NavMenu";
+import NavigationSheet from "@/components/navigation/NavigationSheet";
 import {
   SignInButton,
   SignUpButton,
