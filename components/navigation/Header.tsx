@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/marketing/Logo";
 import NavMenu from "@/components/navigation/NavMenu";
 import NavigationSheet from "@/components/navigation/NavigationSheet";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import {
   SignInButton,
   SignUpButton,
@@ -21,6 +22,7 @@ const Navbar = () => {
         <NavMenu className="hidden md:block" />
 
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           <SignedOut>
             <Button asChild variant="outline" className="hidden sm:inline-flex">
               <SignInButton />
