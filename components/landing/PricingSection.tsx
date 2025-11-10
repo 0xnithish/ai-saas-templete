@@ -76,88 +76,158 @@ const Pricing2 = () => {
   const [frequency, setFrequency] = useState<string>('monthly');
 
   return (
-    <div className="not-prose flex flex-col gap-16 px-8 py-24 text-center">
-      <div className="flex flex-col items-center justify-center gap-8">
-        <h1 className="mb-0 text-balance font-medium text-5xl tracking-tighter!">
+    <div className="not-prose flex flex-col gap-12 px-8 py-20 text-center bg-muted/30">
+      <div className="flex flex-col items-center justify-center gap-6">
+        <h1 className="mb-0 text-balance font-semibold text-5xl tracking-tight text-foreground">
           Simple, transparent pricing
         </h1>
-        <p className="mx-auto mt-0 mb-0 max-w-2xl text-balance text-lg text-muted-foreground">
+        <p className="mx-auto mt-0 mb-0 max-w-2xl text-balance text-lg text-muted-foreground leading-relaxed">
           Managing a business is hard enough, so why not make your life easier?
           Our pricing plans are simple, transparent and scale with you.
         </p>
         <Tabs defaultValue={frequency} onValueChange={setFrequency}>
-          <TabsList>
-            <TabsTrigger value="monthly">Monthly</TabsTrigger>
-            <TabsTrigger value="yearly">
+          <TabsList className="h-11 px-1 bg-muted/60 backdrop-blur-sm border border-border shadow-sm">
+            <TabsTrigger value="monthly" className="px-6 py-2 text-sm font-medium text-muted-foreground data-[state=active]:bg-background data-[state=active]:text-foreground">Monthly</TabsTrigger>
+            <TabsTrigger value="yearly" className="px-6 py-2 text-sm font-medium text-muted-foreground data-[state=active]:bg-background data-[state=active]:text-foreground">
               Yearly
-              <Badge variant="secondary">20% off</Badge>
+              <Badge variant="outline" className="ml-2 text-xs font-semibold border-border text-muted-foreground">20% off</Badge>
             </TabsTrigger>
           </TabsList>
         </Tabs>
-        <div className="mt-8 grid w-full max-w-4xl gap-4 lg:grid-cols-3">
+        <div className="mt-8 grid w-full max-w-5xl gap-6 lg:grid-cols-3">
           {plans.map((plan) => (
-            <Card
+            <div
               className={cn(
-                'relative w-full text-left',
-                plan.popular && 'ring-2 ring-primary'
+                'relative w-full flex flex-col',
+                plan.popular
+                  ? 'bg-gray-900 rounded-3xl p-2 shadow-[0_12px_50px_-15px_rgba(0,0,0,0.25)] transform scale-105'
+                  : 'bg-card rounded-3xl p-2 shadow-[0_12px_50px_-15px_rgba(0,0,0,0.1)] border border-border'
               )}
               key={plan.id}
             >
-              {plan.popular && (
-                <Badge className="-translate-x-1/2 -translate-y-1/2 absolute top-0 left-1/2 rounded-full">
-                  Popular
-                </Badge>
-              )}
-              <CardHeader>
-                <CardTitle className="font-medium text-xl">
-                  {plan.name}
-                </CardTitle>
-                <CardDescription>
-                  <p>{plan.description}</p>
-                  {typeof plan.price[frequency as keyof typeof plan.price] ===
-                  'number' ? (
-                    <NumberFlow
-                      className="font-medium text-foreground"
-                      format={{
-                        style: 'currency',
-                        currency: 'USD',
-                        maximumFractionDigits: 0,
-                      }}
-                      suffix={`/month, billed ${frequency}.`}
-                      value={
-                        plan.price[
-                          frequency as keyof typeof plan.price
-                        ] as number
-                      }
-                    />
+              <div className={cn(
+                'rounded-2xl p-6 mb-2 flex-grow flex flex-col',
+                plan.popular ? 'bg-gray-800' : 'bg-card'
+              )}>
+                <div className="flex items-center gap-3 mb-3">
+                  <h3 className={cn(
+                    'text-2xl font-bold tracking-tight',
+                    plan.popular ? 'text-white' : 'text-foreground'
+                  )}>
+                    {plan.name}
+                  </h3>
+                  {plan.popular ? (
+                    <Badge className="bg-gradient-to-r from-blue-600 to-blue-400 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full border-0">
+                      Most Popular
+                    </Badge>
                   ) : (
-                    <span className="font-medium text-foreground">
-                      {plan.price[frequency as keyof typeof plan.price]}.
-                    </span>
+                    <Badge className="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-0.5 rounded-full">
+                      Popular
+                    </Badge>
                   )}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="grid gap-2">
-                {plan.features.map((feature, index) => (
-                  <div
-                    className="flex items-center gap-2 text-muted-foreground text-sm"
-                    key={index}
-                  >
-                    <BadgeCheck className="h-4 w-4" />
-                    {feature}
-                  </div>
-                ))}
-              </CardContent>
-              <CardFooter>
+                </div>
+                <p className={cn(
+                  'text-sm leading-relaxed mb-6 text-left',
+                  plan.popular ? 'text-gray-400' : 'text-muted-foreground'
+                )}>
+                  {plan.description}
+                </p>
+                <div className="flex items-baseline mb-6">
+                  {typeof plan.price[frequency as keyof typeof plan.price] === 'number' ? (
+                    <>
+                      <NumberFlow
+                        className={cn(
+                          'text-4xl font-bold tracking-tighter',
+                          plan.popular ? 'text-white' : 'text-foreground'
+                        )}
+                        format={{
+                          style: 'currency',
+                          currency: 'USD',
+                          maximumFractionDigits: 0,
+                        }}
+                        value={plan.price[frequency as keyof typeof plan.price] as number}
+                      />
+                      <span className={cn(
+                        'text-lg ml-2',
+                        plan.popular ? 'text-gray-400' : 'text-muted-foreground'
+                      )}>
+                        /{frequency}
+                      </span>
+                    </>
+                  ) : (
+                    <div className={cn(
+                      'text-lg leading-relaxed',
+                      plan.popular ? 'text-white' : 'text-foreground'
+                    )}>
+                      {plan.price[frequency as keyof typeof plan.price]}
+                    </div>
+                  )}
+                </div>
                 <Button
-                  className="w-full"
-                  variant={plan.popular ? 'default' : 'secondary'}
+                  className={cn(
+                    'w-full py-3 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 shadow-[0_4px_20px_-5px_rgba(0,0,0,0.2)]',
+                    plan.popular
+                      ? 'bg-blue-600 text-white hover:bg-blue-700'
+                      : 'bg-gray-900 text-white hover:bg-gray-800'
+                  )}
+                  size="lg"
                 >
                   {plan.cta}
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight className="w-5 h-5" />
                 </Button>
-              </CardFooter>
-            </Card>
+              </div>
+              <div className={cn(
+                'flex-grow flex flex-col px-4 pb-4 pt-3',
+                plan.popular ? 'bg-gray-900' : 'bg-muted'
+              )}>
+                <div className="grid grid-cols-1 gap-y-2 mb-auto">
+                  {plan.features.map((feature, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <div className={cn(
+                        'w-3.5 h-3.5 rounded-full flex-shrink-0 flex items-center justify-center',
+                        plan.popular
+                          ? 'bg-white/20'
+                          : 'bg-foreground'
+                      )}>
+                        <svg
+                          className="w-2 h-2"
+                          viewBox="0 0 10 8"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M1 4L3.5 6.5L9 1"
+                            stroke={plan.popular ? "white" : "background"}
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </div>
+                      <span className={cn(
+                        'text-xs font-medium leading-relaxed text-left',
+                        plan.popular ? 'text-gray-300' : 'text-muted-foreground'
+                      )}>
+                        {feature}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 pt-3 border-t border-border">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className={plan.popular ? 'text-gray-400' : 'text-muted-foreground'}>
+                      Support Level:
+                    </span>
+                    <span className={cn(
+                      'font-semibold',
+                      plan.popular ? 'text-white' : 'text-foreground'
+                    )}>
+                      {plan.id === 'hobby' ? 'Basic' : plan.id === 'pro' ? 'Priority' : 'Dedicated'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </div>
