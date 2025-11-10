@@ -7,7 +7,7 @@ import {
 
 const LogoCloud = () => {
   return (
-    <div className="py-16 px-6">
+    <div className="py-16 px-6 bg-muted">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
           <p className="text-lg md:text-xl font-medium text-muted-foreground whitespace-nowrap">
