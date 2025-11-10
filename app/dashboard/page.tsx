@@ -1,16 +1,8 @@
-<<<<<<< HEAD
 import { AppSidebar } from "@/components/AppSidebar"
 import { ChartAreaInteractive } from "@/components/ChartAreaInterActive"
 import { DataTable } from "@/components/DataTable"
 import { SectionCards } from "@/components/SectionCards"
 import { SiteHeader } from "@/components/SiteHeader"
-=======
-import { AppSidebar } from "@/components/dashboard/AppSidebar"
-import { ChartAreaInteractive } from "@/components/dashboard/ChartAreaInterActive"
-import { DataTable } from "@/components/dashboard/DataTable"
-import { SectionCards } from "@/components/marketing/SectionCards"
-import { SiteHeader } from "@/components/navigation/SiteHeader"
->>>>>>> main
 import {
   SidebarInset,
   SidebarProvider,
