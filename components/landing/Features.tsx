@@ -11,6 +11,7 @@ interface FeaturesProps {
   feature2?: Feature;
   feature3?: Feature;
   feature4?: Feature;
+  feature5?: Feature;
 }
 
 const Features = ({
@@ -40,6 +41,12 @@ const Features = ({
       "Supercharge your growth by implementing strategies that drive results quickly and efficiently.",
     image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-4.svg",
   },
+  feature5 = {
+    title: "Smart Analytics",
+    description:
+      "Track performance metrics and gain deep insights into your progress with advanced analytics.",
+    image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-5.svg",
+  },
 }: FeaturesProps) => {
   return (
     <section className="py-32">
@@ -53,44 +60,53 @@ const Features = ({
           </p>
         </div>
         <div className="relative flex justify-center">
-          <div className="border-muted2 relative flex w-full flex-col border lg:max-w-6xl">
-            <div className="relative flex flex-col lg:flex-row">
-              <div className="border-muted2 flex flex-col justify-between border-b border-solid p-10 lg:w-3/5 lg:border-b-0 lg:border-r">
+          <div className="w-full lg:max-w-6xl">
+            <div className="flex flex-col gap-6 lg:flex-row">
+              <div className="border-muted2/20 flex flex-col justify-between rounded-2xl border bg-background p-8 lg:w-1/3 shadow-sm">
                 <h2 className="text-xl font-semibold">{feature1.title}</h2>
                 <p className="text-muted-foreground">{feature1.description}</p>
                 <img
                   src={feature1.image}
                   alt={feature1.title}
-                  className="mt-8 aspect-[1.5] h-full w-full object-cover lg:aspect-[2.4]"
+                  className="mt-8 aspect-[1.5] h-full w-full rounded-xl object-cover"
                 />
               </div>
-              <div className="flex flex-col justify-between p-10 lg:w-2/5">
+              <div className="border-muted2/20 flex flex-col justify-between rounded-2xl border bg-background p-8 lg:w-1/3 shadow-sm">
                 <h2 className="text-xl font-semibold">{feature2.title}</h2>
                 <p className="text-muted-foreground">{feature2.description}</p>
                 <img
                   src={feature2.image}
                   alt={feature2.title}
-                  className="mt-8 aspect-[1.45] h-full w-full object-cover"
+                  className="mt-8 aspect-[1.45] h-full w-full rounded-xl object-cover"
                 />
               </div>
-            </div>
-            <div className="border-muted2 relative flex flex-col border-t border-solid lg:flex-row">
-              <div className="border-muted2 flex flex-col justify-between border-b border-solid p-10 lg:w-2/5 lg:border-b-0 lg:border-r">
+              <div className="border-muted2/20 flex flex-col justify-between rounded-2xl border bg-background p-8 lg:w-1/3 shadow-sm">
                 <h2 className="text-xl font-semibold">{feature3.title}</h2>
                 <p className="text-muted-foreground">{feature3.description}</p>
                 <img
                   src={feature3.image}
                   alt={feature3.title}
-                  className="mt-8 aspect-[1.45] h-full w-full object-cover"
+                  className="mt-8 aspect-[1.45] h-full w-full rounded-xl object-cover"
                 />
               </div>
-              <div className="flex flex-col justify-between p-10 lg:w-3/5">
+            </div>
+            <div className="mt-6 flex flex-col gap-6 lg:flex-row">
+              <div className="border-muted2/20 flex flex-col rounded-2xl border bg-background p-8 lg:w-1/2 shadow-sm">
                 <h2 className="text-xl font-semibold">{feature4.title}</h2>
                 <p className="text-muted-foreground">{feature4.description}</p>
                 <img
                   src={feature4.image}
                   alt={feature4.title}
-                  className="mt-8 aspect-[1.5] h-full w-full object-cover lg:aspect-[2.4]"
+                  className="mt-6 aspect-[2.5] h-72 w-full rounded-xl object-cover"
+                />
+              </div>
+              <div className="border-muted2/20 flex flex-col rounded-2xl border bg-background p-8 lg:w-1/2 shadow-sm">
+                <h2 className="text-xl font-semibold">{feature5.title}</h2>
+                <p className="text-muted-foreground">{feature5.description}</p>
+                <img
+                  src={feature5.image}
+                  alt={feature5.title}
+                  className="mt-6 aspect-[2.5] h-72 w-full rounded-xl object-cover"
                 />
               </div>
             </div>
