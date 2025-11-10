@@ -1,7 +1,7 @@
 import { AppSidebar } from "@/components/dashboard/AppSidebar"
 import { ChartAreaInteractive } from "@/components/dashboard/ChartAreaInterActive"
 import { DataTable } from "@/components/dashboard/DataTable"
-import { SectionCards } from "@/components/landing/SectionCards"
+import { MetricsCards } from "@/components/dashboard/MetricsCards"
 import { SiteHeader } from "@/components/navigation/SiteHeader"
 import {
   SidebarInset,
@@ -26,7 +26,9 @@ export default function Page() {
         <div className="flex flex-1 flex-col">
           <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-              <SectionCards />
+              <div className="px-4 lg:px-6">
+                <MetricsCards />
+              </div>
               <div className="px-4 lg:px-6">
                 <ChartAreaInteractive />
               </div>
