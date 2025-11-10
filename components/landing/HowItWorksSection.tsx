@@ -1,64 +1,68 @@
 import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { RocketIcon } from "lucide-react"
 
 export default function HowItWorksSection() {
   const steps = [
     {
       id: 1,
-      title: "Sign Up",
-      description:
-        "Create your account in seconds with just your email. No credit card required to get started.",
-      imageText: "Image Placeholder",
+      title: "Clone the Repo",
+      description: "Get a clean, local copy of the codebase. No complex installers.",
+      duration: "30 seconds",
     },
     {
       id: 2,
-      title: "Configure",
-      description:
-        "Customize the AI settings to match your workflow. Set preferences and integrate with your tools.",
-      imageText: "Image Placeholder",
+      title: "Add Your Keys",
+      description: "Open the .env.local.example file, rename it, and paste in your credentials.",
+      duration: "2 minutes",
     },
     {
       id: 3,
-      title: "Start Building",
-      description:
-        "Begin creating with our intuitive interface. Launch your first project and see results immediately.",
-      imageText: "Image Placeholder",
+      title: "Run the Dev Server",
+      description: "That's it. Your new app is running locally with a database, authentication, and payments ready to go.",
+      duration: "30 seconds",
     },
   ]
 
   return (
-    <section className="py-32">
-      <div className="container mx-auto">
-        <div className="mx-auto flex max-w-4xl flex-col items-center gap-4 text-center">
-          <h2 className="text-pretty text-4xl font-semibold lg:text-6xl">
-            How it works
+    <section id="how-it-works" className="px-4 py-20 bg-gray-50">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-16">
+          <Badge variant="outline" className="bg-primary/10 border-primary/20 mb-4">
+            <RocketIcon className="w-3 h-3 mr-1" />
+            The Solution
+          </Badge>
+          <h2 className="text-4xl lg:text-5xl font-bold text-black mb-4">
+            The 5-Minute Promise
           </h2>
-          <p className="text-muted-foreground lg:text-xl">
-            Launch in minutes with a guided workflow that keeps every decision clear and every step actionable.
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Here's The Workflow. <span className="text-black font-medium">All Of It.</span> This isn't an exaggeration. This is the <em>entire</em> setup process.
           </p>
         </div>
-        <div className="mx-auto mt-12 grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {steps.map((step) => (
-            <Card key={step.id} className="flex h-full flex-col overflow-hidden pt-0">
-              <div className="aspect-video w-full bg-muted">
-                <div className="flex h-full w-full items-center justify-center">
-                  <span className="text-sm font-medium text-muted-foreground">
-                    {step.imageText}
-                  </span>
+
+        <div className="relative">
+          <div className="grid lg:grid-cols-3 gap-8 lg:gap-12 relative">
+            {steps.map((step, index) => (
+              <div
+                key={step.id}
+                className={`bg-white ${index === 1 ? '' : 'lg:mt-8'} rounded-2xl p-8 shadow-sm border-5 border-gray-200 backdrop-blur transform relative z-10`}
+              >
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="mb-6">
+                    <span className="text-6xl font-bold text-black">{step.id}</span>
+                  </div>
+                  <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border-primary/20 ml-auto">
+                    <span className="text-xs text-primary font-medium">{step.duration}</span>
+                  </div>
                 </div>
+                <h3 className="text-2xl font-bold text-black mb-4">{step.title}</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {step.description}
+                </p>
               </div>
-              <CardHeader className="flex flex-col gap-4">
-                <Badge variant="secondary" className="w-fit px-3 py-1 text-xs uppercase tracking-wide">
-                  Step {step.id}
-                </Badge>
-                <CardTitle className="text-xl">{step.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">{step.description}</p>
-              </CardContent>
-            </Card>
-          ))}
+            ))}
+          </div>
         </div>
+
       </div>
     </section>
   )
