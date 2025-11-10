@@ -56,8 +56,8 @@ export default function HowItWorksSection() {
                 </div>
                 {/* Dotted line connector between cards */}
                 {index < steps.length - 1 && (
-                  <DottedLine
-                    className="hidden lg:block absolute top-20 left-1/2 w-full h-16 text-muted-foreground pointer-events-none -z-10"
+                  <DottedLine 
+                    className="hidden lg:block absolute top-16 left-1/2 w-full h-16 text-muted-foreground pointer-events-none -z-10" 
                     inverted={index === 1}
                   />
                 )}

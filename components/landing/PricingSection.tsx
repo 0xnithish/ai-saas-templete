@@ -76,7 +76,7 @@ const Pricing2 = () => {
   const [frequency, setFrequency] = useState<string>('monthly');
 
   return (
-    <div className="not-prose flex flex-col gap-12 px-(--container-padding-x) py-(--section-padding-y) text-center bg-muted/30">
+    <div id="pricing" className="not-prose flex flex-col gap-12 px-(--container-padding-x) py-(--section-padding-y) text-center bg-muted/30">
       <div className="flex flex-col items-center justify-center gap-6">
         <h2 className="mb-0 text-balance font-semibold text-4xl md:text-5xl leading-[1.15] tracking-tighter text-foreground">
           Simple, transparent pricing

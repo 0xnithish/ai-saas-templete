@@ -1,4 +1,3 @@
-import Link from "next/link";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -17,30 +16,30 @@ const NavMenu = ({ className }: NavMenuProps) => {
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link href="#features" className={navigationMenuTriggerStyle()}>
+            <a href="#features" className={navigationMenuTriggerStyle()}>
               Features
-            </Link>
+            </a>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link href="#pricing" className={navigationMenuTriggerStyle()}>
+            <a href="#pricing" className={navigationMenuTriggerStyle()}>
               Pricing
-            </Link>
+            </a>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link href="#testimonials" className={navigationMenuTriggerStyle()}>
+            <a href="#testimonials" className={navigationMenuTriggerStyle()}>
               Testimonials
-            </Link>
+            </a>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link href="#faq" className={navigationMenuTriggerStyle()}>
+            <a href="#faq" className={navigationMenuTriggerStyle()}>
               FAQ
-            </Link>
+            </a>
           </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>

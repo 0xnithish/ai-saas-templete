@@ -32,13 +32,13 @@ const NavigationSheet = () => {
         </SheetHeader>
         <nav className="flex flex-col gap-4 mt-8">
           {navItems.map((item) => (
-            <Link
+            <a
               key={item.href}
               href={item.href}
               className="text-lg font-medium hover:text-primary transition-colors"
             >
               {item.label}
-            </Link>
+            </a>
           ))}
           <div className="flex flex-col gap-3 mt-4 pt-4 border-t">
             <SignedOut>

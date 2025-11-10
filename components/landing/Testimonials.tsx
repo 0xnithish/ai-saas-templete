@@ -62,7 +62,7 @@ const testimonials = [
 ];
 
 const Testimonials = () => (
-  <div className="min-h-screen flex justify-center items-center py-[var(--section-padding-y)] px-[var(--container-padding-x)] bg-muted">
+  <div id="testimonials" className="min-h-screen flex justify-center items-center py-[var(--section-padding-y)] px-[var(--container-padding-x)] bg-muted">
     <div className="w-full max-w-[var(--container-max-w)] mx-auto">
       <h2 className="mb-14 text-4xl md:text-5xl leading-[1.15] font-semibold text-center tracking-tighter">
         Testimonials
