@@ -1,15 +1,13 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { ArrowRight, Sparkles } from "lucide-react"
 
 export default function CtaSection() {
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        <div className="relative rounded-3xl bg-gradient-to-br from-black via-gray-900 to-black p-16 overflow-hidden">
+        <div className="relative rounded-3xl bg-linear-to-br from-black via-gray-900 to-black p-16 overflow-hidden">
 
     {/* Diagonal Grid with Light */}
     <div

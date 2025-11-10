@@ -76,7 +76,7 @@ const Pricing2 = () => {
   const [frequency, setFrequency] = useState<string>('monthly');
 
   return (
-    <div className="not-prose flex flex-col gap-12 px-[var(--container-padding-x)] py-[var(--section-padding-y)] text-center bg-muted/30">
+    <div className="not-prose flex flex-col gap-12 px-(--container-padding-x) py-(--section-padding-y) text-center bg-muted/30">
       <div className="flex flex-col items-center justify-center gap-6">
         <h2 className="mb-0 text-balance font-semibold text-4xl md:text-5xl leading-[1.15] tracking-tighter text-foreground">
           Simple, transparent pricing
@@ -100,24 +100,24 @@ const Pricing2 = () => {
               className={cn(
                 'relative w-full flex flex-col',
                 plan.popular
-                  ? 'bg-gray-900 rounded-[var(--card-radius-xl)] p-2 shadow-[0_12px_50px_-15px_rgba(0,0,0,0.25)] transform scale-105'
-                  : 'bg-card rounded-[var(--card-radius-xl)] p-2 shadow-[0_12px_50px_-15px_rgba(0,0,0,0.1)] border border-border'
+                  ? 'bg-gray-900 rounded-(--card-radius-xl) p-2 shadow-[0_12px_50px_-15px_rgba(0,0,0,0.25)] transform scale-105'
+                  : 'bg-card rounded-(--card-radius-xl) p-2 shadow-[0_12px_50px_-15px_rgba(0,0,0,0.1)] border border-border'
               )}
               key={plan.id}
             >
               <div className={cn(
-                'rounded-[var(--card-radius-lg)] p-6 mb-2 flex-grow flex flex-col',
+                'rounded-(--card-radius-lg) p-6 mb-2 grow flex flex-col',
                 plan.popular ? 'bg-gray-800' : 'bg-card'
               )}>
                 <div className="flex items-center gap-3 mb-3">
                   <h3 className={cn(
-                    'text-[var(--heading-3)] font-bold tracking-tight',
+                    'text-(--heading-3) font-bold tracking-tight',
                     plan.popular ? 'text-white' : 'text-foreground'
                   )}>
                     {plan.name}
                   </h3>
                   {plan.popular ? (
-                    <Badge className="bg-gradient-to-r from-blue-600 to-blue-400 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full border-0">
+                    <Badge className="bg-linear-to-r from-blue-600 to-blue-400 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full border-0">
                       Most Popular
                     </Badge>
                   ) : (
@@ -177,14 +177,14 @@ const Pricing2 = () => {
                 </Button>
               </div>
               <div className={cn(
-                'flex-grow flex flex-col px-4 pb-4 pt-3',
+                'grow flex flex-col px-4 pb-4 pt-3',
                 plan.popular ? 'bg-gray-900' : 'bg-muted'
               )}>
                 <div className="grid grid-cols-1 gap-y-2 mb-auto">
                   {plan.features.map((feature, index) => (
                     <div key={index} className="flex items-center gap-2">
                       <div className={cn(
-                        'w-3.5 h-3.5 rounded-full flex-shrink-0 flex items-center justify-center',
+                        'w-3.5 h-3.5 rounded-full shrink-0 flex items-center justify-center',
                         plan.popular
                           ? 'bg-white/20'
                           : 'bg-foreground'
@@ -205,7 +205,7 @@ const Pricing2 = () => {
                         </svg>
                       </div>
                       <span className={cn(
-                        'text-[var(--body-sm)] font-medium leading-relaxed text-left',
+                        'text-(--body-sm) font-medium leading-relaxed text-left',
                         plan.popular ? 'text-gray-300' : 'text-muted-foreground'
                       )}>
                         {feature}
@@ -214,7 +214,7 @@ const Pricing2 = () => {
                   ))}
                 </div>
                 <div className="mt-4 pt-3 border-t border-border">
-                  <div className="flex items-center justify-between text-[var(--body-sm)]">
+                  <div className="flex items-center justify-between text-(--body-sm)">
                     <span className={plan.popular ? 'text-gray-400' : 'text-muted-foreground'}>
                       Support Level:
                     </span>

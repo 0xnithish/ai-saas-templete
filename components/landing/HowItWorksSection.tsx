@@ -23,8 +23,8 @@ export default function HowItWorksSection() {
   ]
 
   return (
-    <section id="how-it-works" className="px-[var(--container-padding-x)] py-[var(--section-padding-y)] bg-muted">
-      <div className="max-w-[var(--container-max-w)] mx-auto">
+    <section id="how-it-works" className="px-(--container-padding-x) py-(--section-padding-y) bg-muted">
+      <div className="max-w-(--container-max-w) mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl leading-[1.15] font-semibold tracking-tighter text-foreground mb-8">
             The 5-Minute Promise
