@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Logo } from "@/components/marketing/Logo";
+import { Logo } from "@/components/landing/Logo";
 import NavMenu from "@/components/navigation/NavMenu";
 import NavigationSheet from "@/components/navigation/NavigationSheet";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";

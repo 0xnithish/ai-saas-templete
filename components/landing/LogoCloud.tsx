@@ -3,7 +3,7 @@ import {
   Logo02,
   Logo03,
   Logo04,
-} from "@/components/marketing/Logos";
+} from "@/components/landing/Logos";
 
 const LogoCloud = () => {
   return (
