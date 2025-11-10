@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <div className="relative min-h-screen w-full flex flex-col gap-16 items-center justify-center px-6 py-[var(--section-padding-y-sm)]">
+    <div className="relative min-h-screen w-full flex flex-col gap-16 items-center justify-center px-6 py-(--section-padding-y-sm)">
       <div className="text-center max-w-4xl mx-auto">
         <Badge
           variant="secondary"
@@ -38,7 +38,7 @@ export default function Hero() {
           </Button>
         </div>
       </div>
-      <div className="w-full max-w-6xl mx-auto aspect-video bg-accent rounded-[var(--card-radius-xl)] overflow-hidden">
+      <div className="w-full max-w-6xl mx-auto aspect-video bg-accent rounded-(--card-radius-xl) overflow-hidden">
         <Image
           src="/hero/screenshot.webp"
           alt="Screenshot"

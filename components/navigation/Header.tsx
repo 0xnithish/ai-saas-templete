@@ -3,6 +3,7 @@ import { Logo } from "@/components/landing/Logo";
 import NavMenu from "@/components/navigation/NavMenu";
 import NavigationSheet from "@/components/navigation/NavigationSheet";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { ArrowRight } from "lucide-react";
 import {
   SignInButton,
   SignUpButton,
@@ -33,10 +34,13 @@ const Navbar = () => {
           </SignedOut>
           <SignedIn>
             <Button asChild variant="outline">
-              <Link href="/dashboard">Dashboard</Link>
+              <SignOutButton />
             </Button>
             <Button asChild>
-              <SignOutButton />
+              <Link href="/dashboard" className="flex items-center gap-2">
+                Dashboard
+                <ArrowRight className="h-4 w-4" />
+              </Link>
             </Button>
           </SignedIn>
 
