@@ -6,8 +6,8 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <div className="relative min-h-screen w-full flex flex-col gap-16 items-center justify-center px-6 py-16">
-      <div className="text-center max-w-3xl">
+    <div className="relative min-h-screen w-full flex flex-col gap-16 items-center justify-center px-6 py-[var(--section-padding-y-sm)]">
+      <div className="text-center max-w-4xl mx-auto">
         <Badge
           variant="secondary"
           className="rounded-full py-1 border-border"
@@ -17,10 +17,10 @@ export default function Hero() {
             Just released v1.0.0 <ArrowUpRight className="ml-1 size-4" />
           </Link>
         </Badge>
-        <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl lg:text-7xl md:leading-[1.2] font-semibold tracking-tighter">
+        <h1 className="mt-6 text-4xl md:text-5xl lg:text-6xl leading-[1.15] font-semibold tracking-tighter">
           Customized Shadcn UI Blocks & Components
         </h1>
-        <p className="mt-6 md:text-lg text-foreground/80">
+        <p className="mt-6 text-xl text-muted-foreground max-w-2xl mx-auto">
           Explore a collection of Shadcn UI blocks and components, ready to
           preview and copy. Streamline your development workflow with
           easy-to-implement examples.
@@ -38,10 +38,10 @@ export default function Hero() {
           </Button>
         </div>
       </div>
-      <div className="w-full max-w-(--breakpoint-xl) mx-auto aspect-video bg-accent rounded-xl overflow-hidden">
-        <Image 
-          src="/hero/screenshot.webp" 
-          alt="Screenshot" 
+      <div className="w-full max-w-6xl mx-auto aspect-video bg-accent rounded-[var(--card-radius-xl)] overflow-hidden">
+        <Image
+          src="/hero/screenshot.webp"
+          alt="Screenshot"
           width={1920}
           height={1080}
           className="w-full h-full object-cover"

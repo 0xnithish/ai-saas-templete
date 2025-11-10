@@ -76,12 +76,12 @@ const Pricing2 = () => {
   const [frequency, setFrequency] = useState<string>('monthly');
 
   return (
-    <div className="not-prose flex flex-col gap-12 px-8 py-20 text-center bg-muted/30">
+    <div className="not-prose flex flex-col gap-12 px-[var(--container-padding-x)] py-[var(--section-padding-y)] text-center bg-muted/30">
       <div className="flex flex-col items-center justify-center gap-6">
-        <h1 className="mb-0 text-balance font-semibold text-5xl tracking-tight text-foreground">
+        <h2 className="mb-0 text-balance font-semibold text-4xl md:text-5xl leading-[1.15] tracking-tighter text-foreground">
           Simple, transparent pricing
-        </h1>
-        <p className="mx-auto mt-0 mb-0 max-w-2xl text-balance text-lg text-muted-foreground leading-relaxed">
+        </h2>
+        <p className="mx-auto mt-0 mb-0 max-w-2xl text-balance text-xl text-muted-foreground leading-relaxed">
           Managing a business is hard enough, so why not make your life easier?
           Our pricing plans are simple, transparent and scale with you.
         </p>
@@ -100,18 +100,18 @@ const Pricing2 = () => {
               className={cn(
                 'relative w-full flex flex-col',
                 plan.popular
-                  ? 'bg-gray-900 rounded-3xl p-2 shadow-[0_12px_50px_-15px_rgba(0,0,0,0.25)] transform scale-105'
-                  : 'bg-card rounded-3xl p-2 shadow-[0_12px_50px_-15px_rgba(0,0,0,0.1)] border border-border'
+                  ? 'bg-gray-900 rounded-[var(--card-radius-xl)] p-2 shadow-[0_12px_50px_-15px_rgba(0,0,0,0.25)] transform scale-105'
+                  : 'bg-card rounded-[var(--card-radius-xl)] p-2 shadow-[0_12px_50px_-15px_rgba(0,0,0,0.1)] border border-border'
               )}
               key={plan.id}
             >
               <div className={cn(
-                'rounded-2xl p-6 mb-2 flex-grow flex flex-col',
+                'rounded-[var(--card-radius-lg)] p-6 mb-2 flex-grow flex flex-col',
                 plan.popular ? 'bg-gray-800' : 'bg-card'
               )}>
                 <div className="flex items-center gap-3 mb-3">
                   <h3 className={cn(
-                    'text-2xl font-bold tracking-tight',
+                    'text-[var(--heading-3)] font-bold tracking-tight',
                     plan.popular ? 'text-white' : 'text-foreground'
                   )}>
                     {plan.name}
@@ -127,7 +127,7 @@ const Pricing2 = () => {
                   )}
                 </div>
                 <p className={cn(
-                  'text-sm leading-relaxed mb-6 text-left',
+                  'text-base leading-relaxed mb-6 text-left',
                   plan.popular ? 'text-gray-400' : 'text-muted-foreground'
                 )}>
                   {plan.description}
@@ -148,7 +148,7 @@ const Pricing2 = () => {
                         value={plan.price[frequency as keyof typeof plan.price] as number}
                       />
                       <span className={cn(
-                        'text-lg ml-2',
+                        'text-xl ml-2',
                         plan.popular ? 'text-gray-400' : 'text-muted-foreground'
                       )}>
                         /{frequency}
@@ -156,7 +156,7 @@ const Pricing2 = () => {
                     </>
                   ) : (
                     <div className={cn(
-                      'text-lg leading-relaxed',
+                      'text-xl leading-relaxed',
                       plan.popular ? 'text-white' : 'text-foreground'
                     )}>
                       {plan.price[frequency as keyof typeof plan.price]}
@@ -205,7 +205,7 @@ const Pricing2 = () => {
                         </svg>
                       </div>
                       <span className={cn(
-                        'text-xs font-medium leading-relaxed text-left',
+                        'text-[var(--body-sm)] font-medium leading-relaxed text-left',
                         plan.popular ? 'text-gray-300' : 'text-muted-foreground'
                       )}>
                         {feature}
@@ -214,7 +214,7 @@ const Pricing2 = () => {
                   ))}
                 </div>
                 <div className="mt-4 pt-3 border-t border-border">
-                  <div className="flex items-center justify-between text-xs">
+                  <div className="flex items-center justify-between text-[var(--body-sm)]">
                     <span className={plan.popular ? 'text-gray-400' : 'text-muted-foreground'}>
                       Support Level:
                     </span>

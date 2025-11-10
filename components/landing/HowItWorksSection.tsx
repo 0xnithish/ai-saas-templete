@@ -23,10 +23,10 @@ export default function HowItWorksSection() {
   ]
 
   return (
-    <section id="how-it-works" className="px-6 py-24 bg-muted">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-24">
-          <h2 className="text-4xl lg:text-6xl font-bold text-foreground mb-8">
+    <section id="how-it-works" className="px-[var(--container-padding-x)] py-[var(--section-padding-y)] bg-muted">
+      <div className="max-w-[var(--container-max-w)] mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl leading-[1.15] font-semibold tracking-tighter text-foreground mb-8">
             The 5-Minute Promise
           </h2>
           <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
@@ -43,14 +43,14 @@ export default function HowItWorksSection() {
                     <img
                       src={step.image}
                       alt={step.title}
-                      className="w-80 h-44 rounded-xl object-cover mx-auto shadow-lg"
+                      className="w-80 h-44 rounded-(--card-radius-lg) object-cover mx-auto shadow-lg"
                     />
                     <div className="absolute -top-3 -left-3 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold border-4 border-background shadow-md">
                       {step.id}
                     </div>
                   </div>
-                  <h3 className="text-3xl font-bold text-foreground mb-6">{step.title}</h3>
-                  <p className="text-lg text-muted-foreground leading-relaxed max-w-sm mx-auto">
+                  <h3 className="text-lg font-semibold tracking-tight text-foreground mb-4">{step.title}</h3>
+                  <p className="text-base text-muted-foreground leading-relaxed max-w-sm mx-auto">
                     {step.description}
                   </p>
                 </div>

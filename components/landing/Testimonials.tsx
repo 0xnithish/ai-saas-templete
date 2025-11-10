@@ -62,16 +62,16 @@ const testimonials = [
 ];
 
 const Testimonials = () => (
-  <div className="min-h-screen flex justify-center items-center py-12 px-6 bg-muted">
-    <div>
-      <h2 className="mb-14 text-5xl md:text-6xl font-semibold text-center tracking-[-0.03em]">
+  <div className="min-h-screen flex justify-center items-center py-[var(--section-padding-y)] px-[var(--container-padding-x)] bg-muted">
+    <div className="w-full max-w-[var(--container-max-w)] mx-auto">
+      <h2 className="mb-14 text-4xl md:text-5xl leading-[1.15] font-semibold text-center tracking-tighter">
         Testimonials
       </h2>
-      <div className="max-w-(--breakpoint-xl) mx-auto columns-1 md:columns-2 lg:columns-3 gap-8">
+      <div className="max-w-[var(--container-max-w)] mx-auto columns-1 md:columns-2 lg:columns-3 gap-8">
         {testimonials.map((testimonial) => (
           <div
             key={testimonial.id}
-            className="mb-8 rounded-xl p-6 break-inside-avoid shadow-[0px_0px_16px_0px_rgba(0,0,0,0.1)]"
+            className="mb-8 rounded-[var(--card-radius-lg)] p-6 break-inside-avoid shadow-lg bg-card"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
@@ -82,7 +82,7 @@ const Testimonials = () => (
                 </Avatar>
                 <div>
                   <p className="text-lg font-semibold">{testimonial.name}</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-muted-foreground">
                     {testimonial.designation}
                   </p>
                 </div>
@@ -93,7 +93,7 @@ const Testimonials = () => (
                 </Link>
               </Button>
             </div>
-            <p className="mt-5 text-[17px]">{testimonial.testimonial}</p>
+            <p className="mt-5 text-base leading-relaxed">{testimonial.testimonial}</p>
           </div>
         ))}
       </div>

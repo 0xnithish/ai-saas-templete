@@ -49,64 +49,64 @@ const Features = ({
   },
 }: FeaturesProps) => {
   return (
-    <section className="py-32">
-      <div className="container max-w-7xl mx-auto px-4">
-        <div className="mb-24 flex flex-col items-center gap-6">
-          <h1 className="text-center text-3xl font-semibold lg:max-w-3xl lg:text-5xl">
+    <section className="py-[var(--section-padding-y-lg)]">
+      <div className="container max-w-[var(--container-max-w)] mx-auto px-[var(--container-padding-x)]">
+        <div className="mb-16 flex flex-col items-center gap-6">
+          <h2 className="text-center text-4xl md:text-5xl leading-[1.15] font-semibold tracking-tighter lg:max-w-4xl">
             {title}
-          </h1>
-          <p className="text-muted-foreground text-center text-lg font-medium md:max-w-4xl lg:text-xl">
+          </h2>
+          <p className="text-muted-foreground text-center text-xl lg:max-w-4xl">
             {description}
           </p>
         </div>
         <div className="relative flex justify-center">
           <div className="w-full lg:max-w-6xl">
             <div className="flex flex-col gap-6 lg:flex-row">
-              <div className="border-muted2/20 flex flex-col justify-between rounded-2xl border bg-background p-8 lg:w-1/3 shadow-sm">
-                <h2 className="text-xl font-semibold">{feature1.title}</h2>
-                <p className="text-muted-foreground">{feature1.description}</p>
+              <div className="border-muted/20 flex flex-col justify-between rounded-[var(--card-radius-lg)] border bg-background p-8 lg:w-1/3 shadow-sm">
+                <h3 className="text-lg font-semibold tracking-tight">{feature1.title}</h3>
+                <p className="text-muted-foreground text-base">{feature1.description}</p>
                 <img
                   src={feature1.image}
                   alt={feature1.title}
-                  className="mt-8 aspect-[1.5] h-full w-full rounded-xl object-cover"
+                  className="mt-8 aspect-[1.5] h-full w-full rounded-[var(--card-radius)] object-cover"
                 />
               </div>
-              <div className="border-muted2/20 flex flex-col justify-between rounded-2xl border bg-background p-8 lg:w-1/3 shadow-sm">
-                <h2 className="text-xl font-semibold">{feature2.title}</h2>
-                <p className="text-muted-foreground">{feature2.description}</p>
+              <div className="border-muted/20 flex flex-col justify-between rounded-[var(--card-radius-lg)] border bg-background p-8 lg:w-1/3 shadow-sm">
+                <h3 className="text-lg font-semibold tracking-tight">{feature2.title}</h3>
+                <p className="text-muted-foreground text-base">{feature2.description}</p>
                 <img
                   src={feature2.image}
                   alt={feature2.title}
-                  className="mt-8 aspect-[1.45] h-full w-full rounded-xl object-cover"
+                  className="mt-8 aspect-[1.45] h-full w-full rounded-[var(--card-radius)] object-cover"
                 />
               </div>
-              <div className="border-muted2/20 flex flex-col justify-between rounded-2xl border bg-background p-8 lg:w-1/3 shadow-sm">
-                <h2 className="text-xl font-semibold">{feature3.title}</h2>
-                <p className="text-muted-foreground">{feature3.description}</p>
+              <div className="border-muted/20 flex flex-col justify-between rounded-[var(--card-radius-lg)] border bg-background p-8 lg:w-1/3 shadow-sm">
+                <h3 className="text-lg font-semibold tracking-tight">{feature3.title}</h3>
+                <p className="text-muted-foreground text-base">{feature3.description}</p>
                 <img
                   src={feature3.image}
                   alt={feature3.title}
-                  className="mt-8 aspect-[1.45] h-full w-full rounded-xl object-cover"
+                  className="mt-8 aspect-[1.45] h-full w-full rounded-[var(--card-radius)] object-cover"
                 />
               </div>
             </div>
             <div className="mt-6 flex flex-col gap-6 lg:flex-row">
-              <div className="border-muted2/20 flex flex-col rounded-2xl border bg-background p-8 lg:w-1/2 shadow-sm">
-                <h2 className="text-xl font-semibold">{feature4.title}</h2>
-                <p className="text-muted-foreground">{feature4.description}</p>
+              <div className="border-muted/20 flex flex-col rounded-[var(--card-radius-lg)] border bg-background p-8 lg:w-1/2 shadow-sm">
+                <h3 className="text-lg font-semibold tracking-tight">{feature4.title}</h3>
+                <p className="text-muted-foreground text-base">{feature4.description}</p>
                 <img
                   src={feature4.image}
                   alt={feature4.title}
-                  className="mt-6 aspect-[2.5] h-72 w-full rounded-xl object-cover"
+                  className="mt-6 aspect-[2.5] h-72 w-full rounded-[var(--card-radius)] object-cover"
                 />
               </div>
-              <div className="border-muted2/20 flex flex-col rounded-2xl border bg-background p-8 lg:w-1/2 shadow-sm">
-                <h2 className="text-xl font-semibold">{feature5.title}</h2>
-                <p className="text-muted-foreground">{feature5.description}</p>
+              <div className="border-muted/20 flex flex-col rounded-[var(--card-radius-lg)] border bg-background p-8 lg:w-1/2 shadow-sm">
+                <h3 className="text-lg font-semibold tracking-tight">{feature5.title}</h3>
+                <p className="text-muted-foreground text-base">{feature5.description}</p>
                 <img
                   src={feature5.image}
                   alt={feature5.title}
-                  className="mt-6 aspect-[2.5] h-72 w-full rounded-xl object-cover"
+                  className="mt-6 aspect-[2.5] h-72 w-full rounded-[var(--card-radius)] object-cover"
                 />
               </div>
             </div>

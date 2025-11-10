@@ -7,10 +7,10 @@ import {
 
 const LogoCloud = () => {
   return (
-    <div className="py-16 px-6 bg-muted">
-      <div className="max-w-7xl mx-auto">
+    <div className="py-[var(--section-padding-y)] px-[var(--container-padding-x)] bg-muted">
+      <div className="max-w-[var(--container-max-w)] mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
-          <p className="text-lg md:text-xl font-medium text-muted-foreground whitespace-nowrap">
+          <p className="text-xl md:text-2xl font-medium text-muted-foreground whitespace-nowrap">
             Trusted by fast-growing<br className="hidden md:block" />
             companies around the world.
           </p>

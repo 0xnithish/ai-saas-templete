@@ -56,6 +56,28 @@
   --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
+
+  /* Landing Page Design Tokens */
+  --section-padding-y: 5rem;
+  --section-padding-y-sm: 3rem;
+  --section-padding-y-lg: 8rem;
+  --container-max-w: 80rem;
+  --container-padding-x: 1.5rem;
+  --heading-1: 4rem;
+  --heading-1-sm: 3rem;
+  --heading-1-lg: 5rem;
+  --heading-2: 2.25rem;
+  --heading-2-sm: 2rem;
+  --heading-2-lg: 2.5rem;
+  --heading-3: 1.5rem;
+  --heading-3-sm: 1.25rem;
+  --heading-3-lg: 1.875rem;
+  --body-lg: 1.25rem;
+  --body: 1rem;
+  --body-sm: 0.875rem;
+  --card-radius: 0.75rem;
+  --card-radius-lg: 1rem;
+  --card-radius-xl: 1.5rem;
 }
 
 .dark {
