@@ -1,3 +1,5 @@
+import React from "react"
+
 import { AppSidebar } from "@/components/dashboard/AppSidebar"
 import { ChartAreaInteractive } from "@/components/dashboard/ChartAreaInterActive"
 import { DataTable } from "@/components/dashboard/DataTable"
