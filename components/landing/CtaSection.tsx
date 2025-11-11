@@ -7,7 +7,7 @@ export default function CtaSection() {
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        <div className="relative rounded-3xl bg-linear-to-br from-black via-gray-900 to-black p-16 overflow-hidden">
+        <div className="relative rounded-3xl bg-linear-to-br from-secondary via-primary/40 to-secondary p-16 overflow-hidden">
 
     {/* Diagonal Grid with Light */}
     <div
@@ -32,9 +32,9 @@ export default function CtaSection() {
             </p>
 
             <Link href="/login">
-              <Button 
-              variant="secondary"
-              className="text-md py-6 group relative overflow-hidden"
+              <Button
+                variant="default"
+                className="text-md py-6 group relative overflow-hidden"
               >
                 Start Tracking for Free
               </Button>

@@ -1,4 +1,4 @@
-import DottedLine from "@/components/shared/DottedLine"
+import DottedLine from "@/components/landing/DottedLine"
 
 export default function HowItWorksSection() {
   const steps = [

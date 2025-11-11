@@ -3,23 +3,30 @@ import {
   Logo02,
   Logo03,
   Logo04,
+  Logo05,
+  Logo06,
+  Logo07,
+  Logo08,
 } from "@/components/landing/Logos";
 
 const LogoCloud = () => {
   return (
-    <div className="py-[var(--section-padding-y)] px-[var(--container-padding-x)] bg-muted">
-      <div className="max-w-[var(--container-max-w)] mx-auto">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
-          <p className="text-xl md:text-2xl font-medium text-muted-foreground whitespace-nowrap">
-            Trusted by fast-growing<br className="hidden md:block" />
-            companies around the world.
+    <div className="py-(--section-padding-y) px-(--container-padding-x) bg-background border-y">
+      <div className="max-w-(--container-max-w) mx-auto">
+        <div className="flex flex-col items-center gap-12">
+          <p className="text-sm md:text-base font-medium text-muted-foreground text-center">
+            Trusted by teams building at scale.
           </p>
 
-          <div className="flex items-center gap-8 md:gap-12 flex-wrap justify-center md:justify-end">
+          <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 items-center justify-items-center opacity-80 grayscale hover:grayscale-0 transition-all duration-300">
             <Logo01 />
             <Logo02 />
             <Logo03 />
             <Logo04 />
+            <Logo05 />
+            <Logo06 />
+            <Logo07 />
+            <Logo08 />
           </div>
         </div>
       </div>

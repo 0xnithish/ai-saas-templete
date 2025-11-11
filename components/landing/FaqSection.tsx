@@ -56,12 +56,12 @@ const FAQ = () => {
             <AccordionItem
               key={question}
               value={`question-${index}`}
-              className="bg-accent py-1 px-4 rounded-xl border-none"
+              className="border border-border/50 rounded-lg px-6 py-2 bg-background/50 hover:bg-accent/50 transition-colors"
             >
               <AccordionPrimitive.Header className="flex">
                 <AccordionPrimitive.Trigger
                   className={cn(
-                    "flex flex-1 items-center justify-between pt-4 pb-3 font-semibold tracking-tight transition-all hover:underline [&[data-state=open]>svg]:rotate-45",
+                    "flex flex-1 items-center justify-between py-4 font-semibold tracking-tight transition-all [&[data-state=open]>svg]:rotate-45 cursor-pointer",
                     "text-start text-lg"
                   )}
                 >
@@ -69,7 +69,7 @@ const FAQ = () => {
                   <PlusIcon className="h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-200" />
                 </AccordionPrimitive.Trigger>
               </AccordionPrimitive.Header>
-              <AccordionContent className="text-base text-muted-foreground">
+              <AccordionContent className="text-base text-muted-foreground pb-4">
                 {answer}
               </AccordionContent>
             </AccordionItem>

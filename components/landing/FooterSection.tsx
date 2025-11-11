@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
 import { Mail, Twitter, Github, Linkedin } from "lucide-react"
+import { Logo } from "@/components/shared/Logo"
 
 export default function FooterSection() {
   const menuLinks = [
@@ -27,9 +28,7 @@ export default function FooterSection() {
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* Column 1: Logo */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <img src="/logo.svg" alt="Logo" className="h-8 w-auto" />
-            </div>
+            <Logo />
             <p className="text-sm text-muted-foreground">
               Transforming businesses with AI-powered solutions.
             </p>

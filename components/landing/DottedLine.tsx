@@ -17,7 +17,7 @@ export default function DottedLine({
       aria-hidden="true"
     >
       <path
-        d={inverted ? "M 0 50 Q 100 90, 200 50" : "M 0 50 Q 100 10, 200 50"}
+        d={inverted ? "M 0 50 Q 100 100, 200 50" : "M 0 50 Q 100 0, 200 50"}
         stroke="currentColor"
         strokeWidth="2"
         strokeDasharray="8,6"

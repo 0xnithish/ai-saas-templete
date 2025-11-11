@@ -98,133 +98,134 @@ const Pricing2 = () => {
           {plans.map((plan) => (
             <div
               className={cn(
-                'relative w-full flex flex-col',
+                'relative w-full flex flex-col rounded-2xl overflow-hidden',
                 plan.popular
-                  ? 'bg-gray-900 rounded-(--card-radius-xl) p-2 shadow-[0_12px_50px_-15px_rgba(0,0,0,0.25)] transform scale-105'
-                  : 'bg-card rounded-(--card-radius-xl) p-2 shadow-[0_12px_50px_-15px_rgba(0,0,0,0.1)] border border-border'
+                  ? 'bg-primary/5 dark:bg-linear-to-b dark:from-primary/20 dark:via-primary/15 dark:to-primary/10 border border-primary/20 shadow-[0_12px_50px_-15px_rgba(0,0,0,0.15)] dark:shadow-[0_12px_50px_-15px_rgba(255,255,255,0.1)] transform scale-105'
+                  : 'bg-card border border-border shadow-[0_12px_50px_-15px_rgba(0,0,0,0.1)]'
               )}
               key={plan.id}
             >
+              {/* Header with Badge */}
               <div className={cn(
-                'rounded-(--card-radius-lg) p-6 mb-2 grow flex flex-col',
-                plan.popular ? 'bg-gray-800' : 'bg-card'
+                'px-6 pt-4 pb-2',
+                plan.popular ? '' : 'bg-card'
               )}>
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-center justify-between mb-1">
                   <h3 className={cn(
-                    'text-(--heading-3) font-bold tracking-tight',
-                    plan.popular ? 'text-white' : 'text-foreground'
+                    'text-2xl font-bold tracking-tight text-left',
+                    plan.popular ? 'text-foreground' : 'text-foreground'
                   )}>
                     {plan.name}
                   </h3>
-                  {plan.popular ? (
-                    <Badge className="bg-linear-to-r from-blue-600 to-blue-400 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full border-0">
-                      Most Popular
-                    </Badge>
-                  ) : (
-                    <Badge className="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-0.5 rounded-full">
-                      Popular
+                  {plan.popular && (
+                    <Badge className="bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full border-0">
+                      Best value
                     </Badge>
                   )}
                 </div>
                 <p className={cn(
-                  'text-base leading-relaxed mb-6 text-left',
-                  plan.popular ? 'text-gray-400' : 'text-muted-foreground'
+                  'text-sm leading-relaxed text-left',
+                  plan.popular ? 'text-muted-foreground' : 'text-muted-foreground'
                 )}>
                   {plan.description}
                 </p>
-                <div className="flex items-baseline mb-6">
-                  {typeof plan.price[frequency as keyof typeof plan.price] === 'number' ? (
-                    <>
+              </div>
+
+              {/* Pricing */}
+              <div className={cn(
+                'px-6 py-2',
+                plan.popular ? '' : ''
+              )}>
+                {typeof plan.price[frequency as keyof typeof plan.price] === 'number' ? (
+                  <div className="flex flex-col items-start">
+                    <div className="flex items-baseline gap-1">
                       <NumberFlow
                         className={cn(
-                          'text-4xl font-bold tracking-tighter',
-                          plan.popular ? 'text-white' : 'text-foreground'
+                          'text-5xl font-bold tracking-tighter',
+                          plan.popular ? 'text-foreground' : 'text-foreground'
                         )}
                         format={{
                           style: 'currency',
                           currency: 'USD',
-                          maximumFractionDigits: 0,
+                          maximumFractionDigits: 2,
                         }}
                         value={plan.price[frequency as keyof typeof plan.price] as number}
                       />
                       <span className={cn(
-                        'text-xl ml-2',
-                        plan.popular ? 'text-gray-400' : 'text-muted-foreground'
+                        'text-base',
+                        plan.popular ? 'text-muted-foreground' : 'text-muted-foreground'
                       )}>
-                        /{frequency}
+                        per month
                       </span>
-                    </>
-                  ) : (
-                    <div className={cn(
-                      'text-xl leading-relaxed',
-                      plan.popular ? 'text-white' : 'text-foreground'
-                    )}>
-                      {plan.price[frequency as keyof typeof plan.price]}
                     </div>
-                  )}
-                </div>
+                    <p className={cn(
+                      'text-xs',
+                      plan.popular ? 'text-muted-foreground' : 'text-muted-foreground'
+                    )}>
+                      per user / month, when paying {frequency}
+                    </p>
+                  </div>
+                ) : (
+                  <div className={cn(
+                    'text-2xl font-semibold text-left',
+                    plan.popular ? 'text-foreground' : 'text-foreground'
+                  )}>
+                    {plan.price[frequency as keyof typeof plan.price]}
+                  </div>
+                )}
+              </div>
+
+              {/* CTA Button */}
+              <div className={cn(
+                'px-6 py-3',
+                plan.popular ? '' : 'bg-card'
+              )}>
                 <Button
                   className={cn(
-                    'w-full py-3 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 shadow-[0_4px_20px_-5px_rgba(0,0,0,0.2)]',
+                    'w-full py-4 rounded-lg text-base font-semibold transition-all duration-200 items-center gap-2',
                     plan.popular
-                      ? 'bg-blue-600 text-white hover:bg-blue-700'
-                      : 'bg-gray-900 text-white hover:bg-gray-800'
+                      ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                      : 'bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-border'
                   )}
                   size="lg"
                 >
                   {plan.cta}
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="h-4 w-4" />
                 </Button>
               </div>
+
+              {/* Features List */}
               <div className={cn(
-                'grow flex flex-col px-4 pb-4 pt-3',
-                plan.popular ? 'bg-gray-900' : 'bg-muted'
+                'px-6 py-4 flex-1',
+                plan.popular ? '' : 'bg-muted/30'
               )}>
-                <div className="grid grid-cols-1 gap-y-2 mb-auto">
+                <div className="space-y-2">
                   {plan.features.map((feature, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <div className={cn(
-                        'w-3.5 h-3.5 rounded-full shrink-0 flex items-center justify-center',
-                        plan.popular
-                          ? 'bg-white/20'
-                          : 'bg-foreground'
-                      )}>
+                    <div key={index} className="flex items-start gap-3">
+                      <div className="mt-0.5">
                         <svg
-                          className="w-2 h-2"
-                          viewBox="0 0 10 8"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
+                          className={cn(
+                            'w-5 h-5',
+                            plan.popular ? 'text-foreground' : 'text-foreground'
+                          )}
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
                         >
                           <path
-                            d="M1 4L3.5 6.5L9 1"
-                            stroke={plan.popular ? "white" : "background"}
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
+                            fillRule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clipRule="evenodd"
                           />
                         </svg>
                       </div>
                       <span className={cn(
-                        'text-(--body-sm) font-medium leading-relaxed text-left',
-                        plan.popular ? 'text-gray-300' : 'text-muted-foreground'
+                        'text-sm leading-relaxed',
+                        plan.popular ? 'text-foreground' : 'text-foreground'
                       )}>
                         {feature}
                       </span>
                     </div>
                   ))}
-                </div>
-                <div className="mt-4 pt-3 border-t border-border">
-                  <div className="flex items-center justify-between text-(--body-sm)">
-                    <span className={plan.popular ? 'text-gray-400' : 'text-muted-foreground'}>
-                      Support Level:
-                    </span>
-                    <span className={cn(
-                      'font-semibold',
-                      plan.popular ? 'text-white' : 'text-foreground'
-                    )}>
-                      {plan.id === 'hobby' ? 'Basic' : plan.id === 'pro' ? 'Priority' : 'Dedicated'}
-                    </span>
-                  </div>
                 </div>
               </div>
             </div>

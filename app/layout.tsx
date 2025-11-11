@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
@@ -7,13 +7,13 @@ import { ThemeScript } from "@/components/theme/ThemeScript";
 import NextTopLoader from "nextjs-toploader";
 import React from "react";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
 });
 
@@ -34,10 +34,10 @@ export default function RootLayout({
           <ThemeScript />
         </head>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}
         >
           <NextTopLoader
-            color="#2299dd"
+            color="#FB5204"
             initialPosition={0.08}
             crawlSpeed={200}
             height={3}
@@ -45,7 +45,7 @@ export default function RootLayout({
             showSpinner={false}
             easing="ease"
             speed={200}
-            shadow="0 0 10px #2299dd,0 0 5px #2299dd"
+            shadow="0 0 10px #FB5204,0 0 5px #FB5204"
           />
           <ThemeProvider
             attribute="class"
