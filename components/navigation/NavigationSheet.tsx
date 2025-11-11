@@ -1,3 +1,5 @@
+"use client";
+
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -8,9 +10,19 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { SignInButton, SignUpButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignedIn, SignedOut, useClerk } from "@clerk/nextjs";
 
 const NavigationSheet = () => {
+  const { openSignIn, openSignUp } = useClerk();
+
+  const handleSignIn = () => {
+    openSignIn({});
+  };
+
+  const handleSignUp = () => {
+    openSignUp({});
+  };
+
   const navItems = [
     { href: "#features", label: "Features" },
     { href: "#pricing", label: "Pricing" },
@@ -42,11 +54,11 @@ const NavigationSheet = () => {
           ))}
           <div className="flex flex-col gap-3 mt-4 pt-4 border-t">
             <SignedOut>
-              <Button asChild variant="outline" className="w-full rounded-full">
-                <SignInButton />
+              <Button variant="outline" className="w-full rounded-full" onClick={handleSignIn}>
+                Sign In
               </Button>
-              <Button asChild className="w-full rounded-full">
-                <SignUpButton />
+              <Button className="w-full rounded-full" onClick={handleSignUp}>
+                Sign Up
               </Button>
             </SignedOut>
             <SignedIn>

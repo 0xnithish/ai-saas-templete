@@ -1,5 +1,7 @@
 "use client";
 
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/shared/Logo";
 import NavMenu from "@/components/navigation/NavMenu";
@@ -17,6 +19,14 @@ import Link from "next/link";
 const Navbar = () => {
   const { openSignIn, openSignUp } = useClerk();
 
+  const handleSignIn = () => {
+    openSignIn({});
+  };
+
+  const handleSignUp = () => {
+    openSignUp({});
+  };
+
   return (
     <nav className="sticky top-0 z-50 h-16 bg-background border-b">
       <div className="h-full flex items-center justify-between max-w-(--breakpoint-xl) mx-auto px-4 sm:px-6 lg:px-8">
@@ -28,14 +38,10 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           <ThemeToggle />
           <SignedOut>
-            <Button 
-              variant="outline" 
-              className="hidden sm:inline-flex"
-              onClick={() => openSignIn({})}
-            >
+            <Button variant="outline" className="hidden sm:inline-flex" onClick={handleSignIn}>
               Sign In
             </Button>
-            <Button onClick={() => openSignUp({})}>
+            <Button onClick={handleSignUp}>
               Sign Up
             </Button>
           </SignedOut>
