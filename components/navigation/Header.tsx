@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/shared/Logo";
 import NavMenu from "@/components/navigation/NavMenu";
@@ -5,15 +7,16 @@ import NavigationSheet from "@/components/navigation/NavigationSheet";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { ArrowRight } from "lucide-react";
 import {
-  SignInButton,
-  SignUpButton,
   SignedIn,
   SignedOut,
   SignOutButton,
+  useClerk,
 } from "@clerk/nextjs";
 import Link from "next/link";
 
 const Navbar = () => {
+  const { openSignIn, openSignUp } = useClerk();
+
   return (
     <nav className="sticky top-0 z-50 h-16 bg-background border-b">
       <div className="h-full flex items-center justify-between max-w-(--breakpoint-xl) mx-auto px-4 sm:px-6 lg:px-8">
@@ -25,11 +28,15 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           <ThemeToggle />
           <SignedOut>
-            <Button asChild variant="outline" className="hidden sm:inline-flex">
-              <SignInButton />
+            <Button 
+              variant="outline" 
+              className="hidden sm:inline-flex"
+              onClick={() => openSignIn({})}
+            >
+              Sign In
             </Button>
-            <Button asChild>
-              <SignUpButton />
+            <Button onClick={() => openSignUp({})}>
+              Sign Up
             </Button>
           </SignedOut>
           <SignedIn>
