@@ -90,7 +90,7 @@ const Pricing2 = () => {
             <TabsTrigger value="monthly" className="px-6 py-2 text-sm font-medium text-muted-foreground data-[state=active]:bg-background data-[state=active]:text-foreground">Monthly</TabsTrigger>
             <TabsTrigger value="yearly" className="px-6 py-2 text-sm font-medium text-muted-foreground data-[state=active]:bg-background data-[state=active]:text-foreground">
               Yearly
-              <Badge variant="outline" className="ml-2 text-xs font-semibold border-border text-muted-foreground">20% off</Badge>
+              <Badge variant="outline" className="ml-2 text-xs font-semibold border-primary text-primary">20% off</Badge>
             </TabsTrigger>
           </TabsList>
         </Tabs>
@@ -98,7 +98,7 @@ const Pricing2 = () => {
           {plans.map((plan) => (
             <div
               className={cn(
-                'relative w-full flex flex-col rounded-2xl overflow-hidden',
+                'relative w-full flex flex-col rounded-xl overflow-hidden',
                 plan.popular
                   ? 'bg-primary/5 dark:bg-linear-to-b dark:from-primary/20 dark:via-primary/15 dark:to-primary/10 border border-primary/20 shadow-[0_12px_50px_-15px_rgba(0,0,0,0.15)] dark:shadow-[0_12px_50px_-15px_rgba(255,255,255,0.1)] transform scale-105'
                   : 'bg-card border border-border shadow-[0_12px_50px_-15px_rgba(0,0,0,0.1)]'
@@ -118,7 +118,7 @@ const Pricing2 = () => {
                     {plan.name}
                   </h3>
                   {plan.popular && (
-                    <Badge className="bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full border-0">
+                    <Badge className="bg-primary text-white text-xs font-semibold px-3 py-1 rounded-md border-0">
                       Best value
                     </Badge>
                   )}
@@ -182,7 +182,7 @@ const Pricing2 = () => {
               )}>
                 <Button
                   className={cn(
-                    'w-full py-4 rounded-lg text-base font-semibold transition-all duration-200 items-center gap-2',
+                    'w-full py-4 rounded-md text-base font-semibold transition-all duration-200 items-center gap-2',
                     plan.popular
                       ? 'bg-primary text-primary-foreground hover:bg-primary/90'
                       : 'bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-border'

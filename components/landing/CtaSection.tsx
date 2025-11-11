@@ -1,45 +1,23 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { ArrowUpRight } from "lucide-react"
 import Link from "next/link"
 
 export default function CtaSection() {
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="relative rounded-3xl bg-linear-to-br from-secondary via-primary/40 to-secondary p-16 overflow-hidden">
-
-    {/* Diagonal Grid with Light */}
-    <div
-      className="absolute inset-0 z-0 pointer-events-none"
-      style={{
-        backgroundImage: `
-          repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 20px),
-        repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 20px)
-        `,
-        backgroundSize: "40px 40px",
-      }}
-    />
-  
- 
-
-          {/* Content */}
-          <div className="relative z-10 text-center">
-            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">Stop Building Infrastructure.
-             <br /> Start Building Products.</h2>
-            <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Get the foundation you need to focus on what makes your product unique.
-            </p>
-
-            <Link href="/login">
-              <Button
-                variant="default"
-                className="text-md py-6 group relative overflow-hidden"
-              >
-                Start Tracking for Free
-              </Button>
-            </Link>
-          </div>
+    <section className="w-full py-20 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="rounded-2xl p-12 sm:p-16 text-center shadow-2xl" style={{ backgroundColor: '#171717' }}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
+            Ready to Work Smarter with AI?
+          </h2>
+          <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto mb-8">
+            Start today and see how Acme Inc. helps you finish projects faster, with clarity and focus at every step.
+          </p>
+          <Button size="lg" className="text-base">
+            Get Started <ArrowUpRight className="h-5! w-5!" />
+          </Button>
         </div>
       </div>
     </section>

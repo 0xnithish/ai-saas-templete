@@ -12,14 +12,21 @@ function Accordion({
   return <AccordionPrimitive.Root data-slot="accordion" {...props} />
 }
 
+type AccordionItemProps = React.ComponentProps<
+  typeof AccordionPrimitive.Item
+> & {
+  disableBorder?: boolean
+}
+
 function AccordionItem({
   className,
+  disableBorder,
   ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Item>) {
+}: AccordionItemProps) {
   return (
     <AccordionPrimitive.Item
       data-slot="accordion-item"
-      className={cn("border-b last:border-b-0", className)}
+      className={cn(disableBorder ? undefined : "border-b last:border-b-0", className)}
       {...props}
     />
   )
