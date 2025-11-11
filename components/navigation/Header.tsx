@@ -13,11 +13,13 @@ import {
   SignedOut,
   SignOutButton,
   useClerk,
+  useUser,
 } from "@clerk/nextjs";
 import Link from "next/link";
 
 const Navbar = () => {
   const { openSignIn, openSignUp } = useClerk();
+  const { isLoaded } = useUser();
 
   const handleSignIn = () => {
     openSignIn({});
@@ -37,25 +39,35 @@ const Navbar = () => {
 
         <div className="flex items-center gap-3">
           <ThemeToggle />
-          <SignedOut>
-            <Button variant="outline" className="hidden sm:inline-flex" onClick={handleSignIn}>
-              Sign In
-            </Button>
-            <Button onClick={handleSignUp}>
-              Sign Up
-            </Button>
-          </SignedOut>
-          <SignedIn>
-            <Button asChild variant="outline">
-              <SignOutButton />
-            </Button>
-            <Button asChild>
-              <Link href="/dashboard" className="flex items-center gap-2">
-                Dashboard
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          </SignedIn>
+          {!isLoaded ? (
+            // Show skeleton buttons while loading to prevent layout shift
+            <div className="flex items-center gap-3">
+              <div className="h-9 w-20 bg-muted animate-pulse rounded-md hidden sm:inline-flex" />
+              <div className="h-9 w-20 bg-muted animate-pulse rounded-md" />
+            </div>
+          ) : (
+            <>
+              <SignedOut>
+                <Button variant="outline" className="hidden sm:inline-flex" onClick={handleSignIn}>
+                  Sign In
+                </Button>
+                <Button onClick={handleSignUp}>
+                  Sign Up
+                </Button>
+              </SignedOut>
+              <SignedIn>
+                <Button asChild variant="outline">
+                  <SignOutButton />
+                </Button>
+                <Button asChild>
+                  <Link href="/dashboard" className="flex items-center gap-2">
+                    Dashboard
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+              </SignedIn>
+            </>
+          )}
 
           {/* Mobile Menu */}
           <div className="md:hidden">
