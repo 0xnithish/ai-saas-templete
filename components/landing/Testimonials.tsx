@@ -62,16 +62,16 @@ const testimonials = [
 ];
 
 const Testimonials = () => (
-  <div id="testimonials" className="min-h-screen flex justify-center items-center py-[var(--section-padding-y)] px-[var(--container-padding-x)] bg-muted">
-    <div className="w-full max-w-[var(--container-max-w)] mx-auto">
+  <div id="testimonials" className="min-h-screen flex justify-center items-center py-(--section-padding-y) px-(--container-padding-x) bg-muted">
+    <div className="w-full max-w-(--container-max-w) mx-auto">
       <h2 className="mb-14 text-4xl md:text-5xl leading-[1.15] font-semibold text-center tracking-tighter">
         Testimonials
       </h2>
-      <div className="max-w-[var(--container-max-w)] mx-auto columns-1 md:columns-2 lg:columns-3 gap-8">
+      <div className="max-w-(--container-max-w) mx-auto columns-1 md:columns-2 lg:columns-3 gap-8">
         {testimonials.map((testimonial) => (
           <div
             key={testimonial.id}
-            className="mb-8 rounded-[var(--card-radius-lg)] p-6 break-inside-avoid shadow-lg bg-card"
+            className="mb-8 rounded-(--card-radius-lg) p-6 break-inside-avoid shadow-lg bg-card"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
