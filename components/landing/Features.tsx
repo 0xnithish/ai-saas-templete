@@ -15,36 +15,36 @@ interface FeaturesProps {
 }
 
 const Features = ({
-  title = "Boost Your Strategy with Smart Features",
-  description = "Powerful features designed to help you identify opportunities, build authority, and accelerate your growth with data-driven insights.",
+  title = "Complete AI SaaS Foundation",
+  description = "Production-ready template with authentication, payments, and database pre-configured. Just add your environment variables and start building your AI SaaS in minutes, not months.",
   feature1 = {
-    title: "Identify Opportunities",
+    title: "🔐 Enterprise-Ready Authentication",
     description:
-      "Easily uncover untapped areas to explore and expand your reach effortlessly and effectively.",
+      "Skip weeks of auth setup with pre-configured Clerk authentication. Support for social providers, SSO, and protected routes out of the box.",
     image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-1.svg",
   },
   feature2 = {
-    title: "Build Authority",
+    title: "🗄️ Scalable Database Infrastructure",
     description:
-      "Create valuable content that resonates, inspires trust, and positions you as an expert.",
+      "Production-grade Supabase PostgreSQL with real-time subscriptions, row-level security, and automatic backups. Scales from MVP to enterprise.",
     image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-2.svg",
   },
   feature3 = {
-    title: "Instant Insights",
+    title: "💳 Seamless Payment Integration",
     description:
-      "Gain immediate, actionable insights with a quick glance, enabling fast decision-making.",
+      "Start collecting payments from day one with Polar integration. Subscription management, webhooks, and professional billing infrastructure included.",
     image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-3.svg",
   },
   feature4 = {
-    title: "Accelerate Growth",
+    title: "🎨 Modern UI Component Library",
     description:
-      "Supercharge your growth by implementing strategies that drive results quickly and efficiently.",
+      "50+ beautiful shadcn/ui components built with Radix UI primitives. Accessible, customizable, and consistent design system that impresses users.",
     image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-4.svg",
   },
   feature5 = {
-    title: "Smart Analytics",
+    title: "⚡ Developer Experience & Performance",
     description:
-      "Track performance metrics and gain deep insights into your progress with advanced analytics.",
+      "Lightning-fast development with Next.js 16, Turbopack, and TypeScript. Optimized build pipeline and production-ready performance.",
     image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-5.svg",
   },
 }: FeaturesProps) => {

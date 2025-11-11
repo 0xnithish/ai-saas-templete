@@ -11,36 +11,37 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 const plans = [
   {
     id: 'hobby',
-    name: 'Hobby',
+    name: 'Starter',
     price: {
       monthly: 'Free forever',
       yearly: 'Free forever',
     },
     description:
-      'The perfect starting place for your web app or personal project.',
+      'Perfect for developers building their first AI SaaS application.',
     features: [
-      '50 API calls / month',
-      '60 second checks',
-      'Single-user account',
-      '5 monitors',
-      'Basic email support',
+      'Complete AI SaaS template',
+      'Authentication setup (Clerk)',
+      'Database integration (Supabase)',
+      'Payment processing (Polar)',
+      'Community support',
     ],
     cta: 'Get started for free',
   },
   {
     id: 'pro',
-    name: 'Pro',
+    name: 'Professional',
     price: {
-      monthly: 90,
-      yearly: 75,
+      monthly: 29,
+      yearly: 25,
     },
-    description: 'Everything you need to build and scale your business.',
+    description: 'Everything you need to scale your AI SaaS business.',
     features: [
-      'Unlimited API calls',
-      '30 second checks',
-      'Multi-user account',
-      '10 monitors',
+      'All Starter features',
+      'Premium UI components',
+      'AI model integrations',
+      'Advanced analytics',
       'Priority email support',
+      'API documentation',
     ],
     cta: 'Subscribe to Pro',
     popular: true,
@@ -52,13 +53,14 @@ const plans = [
       monthly: 'Get in touch for pricing',
       yearly: 'Get in touch for pricing',
     },
-    description: 'Critical security, performance, observability and support.',
+    description: 'Advanced features for large AI SaaS applications and teams.',
     features: [
-      'You can DDOS our API.',
-      'Nano-second checks.',
-      'Invite your extended family.',
-      'Unlimited monitors.',
-      "We'll sit on your desk.",
+      'All Professional features',
+      'Custom AI integrations',
+      'White-label solutions',
+      'Dedicated support',
+      'SLA guarantees',
+      'On-premise deployment',
     ],
     cta: 'Contact us',
   },
@@ -71,11 +73,11 @@ const Pricing2 = () => {
     <div id="pricing" className="not-prose flex flex-col gap-12 px-(--container-padding-x) py-(--section-padding-y) text-center bg-muted/30">
       <div className="flex flex-col items-center justify-center gap-6">
         <h2 className="mb-0 text-balance font-semibold text-4xl md:text-5xl leading-[1.15] tracking-tighter text-foreground">
-          Simple, transparent pricing
+          AI SaaS Pricing
         </h2>
         <p className="mx-auto mt-0 mb-0 max-w-2xl text-balance text-xl text-muted-foreground leading-relaxed">
-          Managing a business is hard enough, so why not make your life easier?
-          Our pricing plans are simple, transparent and scale with you.
+          Building an AI SaaS should be simple. Our pricing plans are straightforward,
+          transparent, and designed to scale with your success.
         </p>
         <Tabs defaultValue={frequency} onValueChange={setFrequency}>
           <TabsList className="h-11 px-1 bg-muted/60 backdrop-blur-sm border border-border shadow-sm">

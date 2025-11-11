@@ -14,26 +14,33 @@ export default function Hero() {
           className="py-1 border-border bg-muted/50 hover:bg-muted/70"
           asChild
         >
-          <Link href="#">
-            [ <span className="font-semibold text-primary"> NEW </span> ] CloudeGuard v1.0 Is Now Live <ArrowUpRight className="ml-1 size-4" />
+          <Link href="https://github.com">
+            [ <span className="font-semibold text-primary"> OPEN SOURCE </span> ] MIT License · Production Ready <ArrowUpRight className="ml-1 size-4" />
           </Link>
         </Badge>
-        <h1 className="mt-6 text-2xl md:text-3xl lg:text-6xl leading-[1.15] font-semibold tracking-tighter">
-          Monitor, analyze, and scale your systems with precision.
-        </h1>
+        <div className="mt-6 text-center">
+          <h2 className="text-lg md:text-xl lg:text-2xl font-medium text-muted-foreground mb-4">
+            The Complete AI SaaS Template
+          </h2>
+          <h1 className="text-2xl md:text-3xl lg:text-6xl leading-[1.15] font-semibold tracking-tighter">
+            Ship Your AI Product in Days,<br/>Not Months!
+          </h1>
+        </div>
         <p className="mt-6 text-xl text-muted-foreground max-w-2xl mx-auto">
-          Track uptime, performance spikes, and system health across global servers with enterprise-grade precision.
+          Production-ready foundation with authentication by Clerk, payments by Polar, and database by Supabase.
+          Deploy your AI SaaS in minutes, not months.
         </p>
         <div className="mt-10 flex items-center justify-center gap-4">
-          <Button size="lg" className="text-base">
-            Get Started <ArrowUpRight className="h-5! w-5!" />
+          <Button size="lg" className="text-base" asChild>
+            <Link href="https://github.com">Get Started Now <ArrowUpRight className="h-5! w-5!" /></Link>
           </Button>
           <Button
             variant="outline"
             size="lg"
             className="text-base shadow-none"
+            asChild
           >
-            <CirclePlay className="h-5! w-5!" /> Watch Demo
+            <Link href="https://demo.example.com"><CirclePlay className="h-5! w-5!" /> View Live Demo</Link>
           </Button>
         </div>
       </div>

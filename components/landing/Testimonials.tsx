@@ -2,100 +2,128 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ComponentProps } from "react";
+import { TrendingUp } from "lucide-react";
 
-const testimonials = [
+const socialProofData = [
   {
     id: 1,
-    name: "John Doe",
-    designation: "Software Engineer",
-    company: "TechCorp",
+    name: "Alex Chen",
+    designation: "Indie Developer",
+    company: "AI Startup",
     testimonial:
-      "This product has completely transformed the way we work. The efficiency and ease of use are unmatched!",
-    avatar: "https://randomuser.me/api/portraits/men/1.jpg",
+      "Launched my AI SaaS in 3 days instead of 3 months. The template saved me from building auth, payments, and database from scratch. Pure gold for indie hackers!",
+    avatar: "AC",
+    twitter: "@alexchen"
   },
   {
     id: 2,
-    name: "Sophia Lee",
-    designation: "Data Analyst",
-    company: "InsightTech",
+    name: "Sarah Martinez",
+    designation: "CTO",
+    company: "TechVentures",
     testimonial:
-      "This tool has saved me hours of work! The analytics and reporting features are incredibly powerful.",
-    avatar: "https://randomuser.me/api/portraits/women/6.jpg",
+      "We built and deployed our enterprise AI tool in 2 weeks. The Clerk integration was seamless, and Polar payments worked perfectly out of the box. Incredible time saver.",
+    avatar: "SM",
+    twitter: "@sarahmartinez"
   },
   {
     id: 3,
-    name: "Michael Johnson",
-    designation: "UX Designer",
-    company: "DesignPro",
+    name: "Mike Johnson",
+    designation: "Startup Founder",
+    company: "DataFlow AI",
     testimonial:
-      "An amazing tool that simplifies complex tasks. Highly recommended for professionals in the industry. " +
-      "The intuitive interface makes it easy to onboard new team members, and the automation features save us countless hours every week. ",
-    avatar: "https://randomuser.me/api/portraits/men/3.jpg",
+      "As a non-technical founder, this template was a game-changer. I could focus on the AI features while the infrastructure just worked. Got our first paying customer in week 1.",
+    avatar: "MJ",
+    twitter: "@mikejohnson"
   },
   {
     id: 4,
-    name: "Emily Davis",
-    designation: "Marketing Specialist",
-    company: "BrandBoost",
+    name: "Emily Rodriguez",
+    designation: "Full-Stack Developer",
+    company: "Freelance",
     testimonial:
-      "I've seen a significant improvement in our team's productivity since we started using this service.",
-    avatar: "https://randomuser.me/api/portraits/women/4.jpg",
+      "I've built 3 client projects using this template. Each one would have taken months to build from scratch. Now I can deliver production-ready AI apps in weeks.",
+    avatar: "ER",
+    twitter: "@emilyrod"
   },
   {
     id: 5,
-    name: "Daniel Martinez",
-    designation: "Full-Stack Developer",
-    company: "CodeCrafters",
+    name: "David Park",
+    designation: "Product Manager",
+    company: "Enterprise Corp",
     testimonial:
-      "The best investment we've made! The support team is also super responsive and helpful.",
-    avatar: "https://randomuser.me/api/portraits/men/5.jpg",
+      "We evaluated multiple solutions and this template was the clear winner. The architecture is clean, the integrations work perfectly, and our dev team loves it.",
+    avatar: "DP",
+    twitter: "@davidpark"
   },
   {
     id: 6,
-    name: "Jane Smith",
-    designation: "Product Manager",
-    company: "InnovateX",
+    name: "Lisa Thompson",
+    designation: "Solo Founder",
+    company: "AI Tools Co",
     testimonial:
-      "The user experience is top-notch! The interface is clean, intuitive, and easy to navigate.",
-    avatar: "https://randomuser.me/api/portraits/women/2.jpg",
+      "From idea to revenue in 14 days. The template handled everything I needed to launch. Best investment I've made for my SaaS journey. Highly recommended!",
+    avatar: "LT",
+    twitter: "@lisathompson"
   },
 ];
 
 const Testimonials = () => (
   <div id="testimonials" className="min-h-screen flex justify-center items-center py-(--section-padding-y) px-(--container-padding-x) bg-muted">
     <div className="w-full max-w-(--container-max-w) mx-auto">
-      <h2 className="mb-14 text-4xl md:text-5xl leading-[1.15] font-semibold text-center tracking-tighter">
-        Testimonials
-      </h2>
+      {/* Success Stories */}
+      <div className="text-center mb-16">
+        <h2 className="text-4xl md:text-5xl leading-[1.15] font-semibold tracking-tighter mb-6">
+          Developer Success Stories
+        </h2>
+        <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          Real developers, real results, faster launches.
+        </p>
+      </div>
+
       <div className="max-w-(--container-max-w) mx-auto columns-1 md:columns-2 lg:columns-3 gap-8">
-        {testimonials.map((testimonial) => (
+        {socialProofData.map((story) => (
           <div
-            key={testimonial.id}
-            className="mb-8 rounded-(--card-radius-lg) p-6 break-inside-avoid shadow-lg bg-card"
+            key={story.id}
+            className="mb-8 rounded-(--card-radius-lg) p-6 break-inside-avoid shadow-lg bg-card relative"
           >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <Avatar>
-                  <AvatarFallback className="text-xl font-medium bg-primary text-primary-foreground">
-                    {testimonial.name.charAt(0)}
-                  </AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="text-lg font-semibold">{testimonial.name}</p>
-                  <p className="text-sm text-muted-foreground">
-                    {testimonial.designation}
-                  </p>
-                </div>
-              </div>
+            {/* Twitter Link */}
+            <div className="absolute top-4 right-4">
               <Button variant="ghost" size="icon" asChild>
-                <Link href="#" target="_blank">
+                <Link href="#" target="_blank" title={story.twitter}>
                   <TwitterLogo className="w-4 h-4" />
                 </Link>
               </Button>
             </div>
-            <p className="mt-5 text-base leading-relaxed">{testimonial.testimonial}</p>
+
+            <div className="flex items-center gap-4 mb-4">
+              <Avatar>
+                <AvatarFallback className="text-xl font-medium bg-primary text-primary-foreground">
+                  {story.avatar}
+                </AvatarFallback>
+              </Avatar>
+              <div>
+                <p className="text-lg font-semibold">{story.name}</p>
+                <p className="text-sm text-muted-foreground">
+                  {story.designation} at {story.company}
+                </p>
+              </div>
+            </div>
+            <p className="text-base leading-relaxed">{story.testimonial}</p>
           </div>
         ))}
+      </div>
+
+      {/* Community CTA */}
+      <div className="text-center mt-16">
+        <p className="text-muted-foreground mb-4">
+          Ready to join the community?
+        </p>
+        <Button asChild size="lg">
+          <Link href="https://github.com">
+            <TrendingUp className="h-4 w-4 mr-2" />
+            View on GitHub
+          </Link>
+        </Button>
       </div>
     </div>
   </div>
