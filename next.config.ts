@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Set the workspace root for Turbopack
+  turbopack: {
+    root: __dirname,
+  },
+  
   // Enable subdomain support
   experimental: {
     // Middleware handles subdomain routing

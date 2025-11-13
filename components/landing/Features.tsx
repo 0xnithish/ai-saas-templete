@@ -16,7 +16,7 @@ interface FeaturesProps {
 
 const Features = ({
   title = "Complete AI SaaS Foundation",
-  description = "Production-ready template with authentication, payments, and database pre-configured. Just add your environment variables and start building your AI SaaS in minutes, not months.",
+  description = "Production-ready template with authentication and database pre-configured. Just add your environment variables and start building your AI SaaS in minutes, not months.",
   feature1 = {
     title: "🔐 Enterprise-Ready Authentication",
     description:
@@ -30,9 +30,9 @@ const Features = ({
     image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-2.svg",
   },
   feature3 = {
-    title: "💳 Seamless Payment Integration",
+    title: "🚀 Rapid Development & Deployment",
     description:
-      "Start collecting payments from day one with Polar integration. Subscription management, webhooks, and professional billing infrastructure included.",
+      "Get to market faster with pre-configured deployment pipelines, environment management, and production optimizations. Focus on building your unique features.",
     image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-3.svg",
   },
   feature4 = {

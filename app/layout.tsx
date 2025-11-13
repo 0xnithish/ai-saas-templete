@@ -4,6 +4,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { ThemeScript } from "@/components/theme/ThemeScript";
+import { Toaster } from "@/components/ui/sonner";
 import NextTopLoader from "nextjs-toploader";
 import React from "react";
 import { shadcn } from "@clerk/themes";
@@ -59,6 +60,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
+            <Toaster />
           </ThemeProvider>
         </body>
       </html>

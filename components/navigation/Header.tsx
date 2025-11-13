@@ -57,6 +57,9 @@ const Navbar = () => {
               </SignedOut>
               <SignedIn>
                 <Button asChild variant="outline">
+                  <Link href="/profile">Profile</Link>
+                </Button>
+                <Button asChild variant="outline">
                   <SignOutButton />
                 </Button>
                 <Button asChild>

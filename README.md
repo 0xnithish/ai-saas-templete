@@ -7,7 +7,6 @@ A modern, production-ready AI SaaS template built with Next.js 16, React 19, and
 - 🚀 **Modern Tech Stack**: Next.js 16 with App Router, React 19, and TypeScript
 - 🎨 **Beautiful UI**: shadcn/ui components with Tailwind CSS v4
 - 🔐 **Authentication**: Pre-configured Clerk authentication
-- 💳 **Payments**: Polar integration for subscription management
 - 🗄️ **Database**: Supabase integration for data storage
 - 📊 **State Management**: TanStack Query for server state
 - 🧩 **Component Library**: Reusable UI components with Radix UI primitives
@@ -20,7 +19,6 @@ A modern, production-ready AI SaaS template built with Next.js 16, React 19, and
 - **UI Components**: shadcn/ui (New York style)
 - **Authentication**: Clerk
 - **Database**: Supabase
-- **Payments**: Polar
 - **Icons**: Lucide React
 - **Package Manager**: Bun
 
@@ -86,11 +84,9 @@ A modern, production-ready AI SaaS template built with Next.js 16, React 19, and
 - PostgreSQL database integration
 - Real-time subscriptions
 - Row-level security
+- **Profile Synchronization**: Automatic sync between Clerk and Supabase
 
-### Payments (Polar)
-- Subscription management
-- Billing integration
-- Payment processing
+
 
 ## Customization
 
@@ -100,6 +96,29 @@ This template is designed to be customized for your specific AI SaaS needs:
 2. **Add features**: Extend the landing page components in `components/`
 3. **Configure integrations**: Set up your own API keys and endpoints
 4. **Add pages**: Create new routes in the `app/` directory
+
+## Profile Synchronization
+
+This template includes automatic profile synchronization between Clerk (authentication) and Supabase (database):
+
+- **Real-time Sync**: When users update their profile through Clerk, changes are automatically synced to Supabase
+- **Webhook Integration**: Configure Clerk webhooks to enable real-time sync
+- **Manual Sync**: Users can manually sync their profile through the UI
+- **Status Indicators**: Visual feedback shows sync status and last sync time
+
+### Setting Up Profile Sync
+
+1. Configure Clerk webhooks in your [Clerk Dashboard](https://dashboard.clerk.com):
+   - Add webhook endpoint: `https://your-domain.com/api/clerk-webhooks`
+   - Select events: `user.created`, `user.updated`
+   - Copy the webhook secret to your environment variables
+
+2. Add webhook secret to `.env.local`:
+   ```
+   CLERK_WEBHOOK_SECRET=whsec_your_webhook_secret_here
+   ```
+
+For detailed instructions, see [docs/clerk-webhook-setup.md](docs/clerk-webhook-setup.md).
 
 ## Deploy
 

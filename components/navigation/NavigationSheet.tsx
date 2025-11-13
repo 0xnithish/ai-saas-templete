@@ -65,6 +65,9 @@ const NavigationSheet = () => {
               <Link href="/dashboard" className="text-lg font-medium hover:text-primary transition-colors">
                 Dashboard
               </Link>
+              <Link href="/profile" className="text-lg font-medium hover:text-primary transition-colors">
+                Profile
+              </Link>
             </SignedIn>
           </div>
         </nav>
