@@ -42,25 +42,16 @@ export default function PolarTestPage() {
 
   const testWebhookEndpoint = async () => {
     try {
-      const response = await fetch('/api/test-polar/webhook', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          type: 'checkout.updated',
-          data: { id: 'test-checkout-id', status: 'test' }
-        })
-      });
+      const response = await fetch('/api/test-polar/webhook-trigger');
       const data = await response.json();
       
       if (data.success) {
-        addResult('Webhook Endpoint', 'success', `✓ Webhook endpoint working: ${data.message}`);
+        addResult('Webhook Endpoint (via Polar)', 'success', `✓ ${data.message}`);
       } else {
-        addResult('Webhook Endpoint', 'error', `✗ Webhook test failed: ${data.error}`);
+        addResult('Webhook Endpoint (via Polar)', 'error', `✗ ${data.error}`);
       }
     } catch (error) {
-      addResult('Webhook Endpoint', 'error', `✗ Error: ${error}`);
+      addResult('Webhook Endpoint (via Polar)', 'error', `✗ Error: ${error}`);
     }
   };
 
@@ -146,7 +137,7 @@ export default function PolarTestPage() {
                   <div className="flex items-start">
                     <span className="font-medium text-gray-900">{result.test}:</span>
                   </div>
-                  <p className={`mt-1 ${result.status === 'success' ? 'text-green-700' : 'text-red-700'}`}>
+                  <p className={`mt-1 whitespace-pre-wrap ${result.status === 'success' ? 'text-green-700' : 'text-red-700'}`}>
                     {result.message}
                   </p>
                   <p className="text-xs text-gray-500 mt-1">
