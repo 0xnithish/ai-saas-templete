@@ -9,6 +9,7 @@ import { User, Edit2, Mail, Calendar } from 'lucide-react';
 import { getProfileAction } from '@/lib/actions/profile-actions';
 import { toast } from 'sonner';
 import Link from 'next/link';
+import { SubscriptionCard } from './SubscriptionCard';
 
 interface Profile {
   id: string;
@@ -20,6 +21,8 @@ interface Profile {
   avatar_url: string | null;
   created_at: string;
   updated_at: string;
+  subscriptionStatus?: string;
+  subscriptionEndsAt?: string | null;
 }
 
 export function SimpleProfile() {
@@ -92,17 +95,25 @@ export function SimpleProfile() {
   }
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <User className="h-5 w-5" />
-          Profile
-        </CardTitle>
-        <CardDescription>
-          Your personal information and account settings
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-6">
+    <div className="space-y-6 w-full max-w-2xl mx-auto">
+      {/* Subscription Card */}
+      <SubscriptionCard 
+        subscriptionStatus={profile?.subscriptionStatus}
+        subscriptionEndsAt={profile?.subscriptionEndsAt}
+      />
+
+      {/* Profile Card */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <User className="h-5 w-5" />
+            Profile
+          </CardTitle>
+          <CardDescription>
+            Your personal information and account settings
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
         {/* Profile Header */}
         <div className="flex items-center gap-4">
           <Avatar className="h-16 w-16">
@@ -158,5 +169,6 @@ export function SimpleProfile() {
         </div>
       </CardContent>
     </Card>
+    </div>
   );
 }

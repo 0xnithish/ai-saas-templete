@@ -1,6 +1,8 @@
 import { betterAuth } from "better-auth";
 import { Pool } from "pg";
 import { Resend } from "resend";
+import { polar, checkout, portal, usage, webhooks } from "@polar-sh/better-auth";
+import { polarClient } from "./polar";
 
 // Initialize Postgres pool for Better Auth
 const pool = new Pool({
@@ -105,9 +107,110 @@ export const auth = betterAuth({
       });
     },
   },
-  trustedOrigins: [process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"],
+  trustedOrigins: [
+    process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+    "http://localhost:3000",
+    ...(process.env.NGROK_URL ? [process.env.NGROK_URL] : []),
+  ],
   secret: process.env.BETTER_AUTH_SECRET!,
   baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
+  plugins: [
+    polar({
+      client: polarClient,
+      createCustomerOnSignUp: true,
+      use: [
+        checkout({
+          products: [
+            {
+              productId: process.env.POLAR_PRODUCT_ID_FREE!,
+              slug: "free",
+            },
+            {
+              productId: process.env.POLAR_PRODUCT_ID_PREMIUM!,
+              slug: "premium",
+            },
+          ],
+          successUrl: process.env.POLAR_SUCCESS_URL || "/success?checkout_id={CHECKOUT_ID}",
+          authenticatedUsersOnly: true,
+        }),
+        portal(),
+        usage(),
+        webhooks({
+          secret: process.env.POLAR_WEBHOOK_SECRET!,
+          onSubscriptionActive: async (payload) => {
+            try {
+              // The payload contains customer data with externalId
+              const userId = payload.data.customer?.externalId;
+              
+              if (!userId) {
+                console.warn('[Polar Webhook] No externalId found for customer');
+                return;
+              }
+
+              // Update user subscription status to premium
+              await pool.query(
+                `UPDATE public.user 
+                 SET "subscriptionStatus" = 'premium',
+                     "subscriptionEndsAt" = NULL,
+                     "polarCustomerId" = $2
+                 WHERE id = $1`,
+                [userId, payload.data.customerId]
+              );
+
+              console.log('[Polar Webhook] Granted premium access to user:', userId);
+            } catch (error) {
+              console.error('[Polar Webhook] Error activating subscription:', error);
+            }
+          },
+          onSubscriptionCanceled: async (payload) => {
+            try {
+              const userId = payload.data.customer?.externalId;
+              const endsAt = payload.data.endsAt ? new Date(payload.data.endsAt) : null;
+              
+              if (!userId) {
+                console.warn('[Polar Webhook] No externalId found for customer');
+                return;
+              }
+
+              await pool.query(
+                `UPDATE public.user 
+                 SET "subscriptionStatus" = 'canceled',
+                     "subscriptionEndsAt" = $2
+                 WHERE id = $1`,
+                [userId, endsAt]
+              );
+
+              console.log('[Polar Webhook] Marked subscription as canceled for user:', userId);
+            } catch (error) {
+              console.error('[Polar Webhook] Error canceling subscription:', error);
+            }
+          },
+          onSubscriptionRevoked: async (payload) => {
+            try {
+              const userId = payload.data.customer?.externalId;
+              
+              if (!userId) {
+                console.warn('[Polar Webhook] No externalId found for customer');
+                return;
+              }
+
+              await pool.query(
+                `UPDATE public.user 
+                 SET "subscriptionStatus" = 'free',
+                     "subscriptionEndsAt" = NULL
+                 WHERE id = $1`,
+                [userId]
+              );
+
+              console.log('[Polar Webhook] Revoked premium access for user:', userId);
+            } catch (error) {
+              console.error('[Polar Webhook] Error revoking subscription:', error);
+            }
+          },
+        }),
+      ],
+    }),
+  ],
 });
 
 export type Session = typeof auth.$Infer.Session.session;

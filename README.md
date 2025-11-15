@@ -7,6 +7,7 @@ A modern, production-ready AI SaaS template built with Next.js 16, React 19, and
 - 🚀 **Modern Tech Stack**: Next.js 16 with App Router, React 19, and TypeScript
 - 🎨 **Beautiful UI**: shadcn/ui components with Tailwind CSS v4
 - 🔐 **Authentication**: Better Auth with email/password and email verification
+- 💳 **Payments**: Polar integration for subscriptions and checkout
 - 📧 **Email Service**: Resend integration for transactional emails
 - 🗄️ **Database**: Supabase integration for data storage
 - 📊 **State Management**: TanStack Query for server state
@@ -19,6 +20,7 @@ A modern, production-ready AI SaaS template built with Next.js 16, React 19, and
 - **Styling**: Tailwind CSS v4
 - **UI Components**: shadcn/ui (New York style)
 - **Authentication**: Better Auth
+- **Payments**: Polar
 - **Email Service**: Resend
 - **Database**: Supabase (PostgreSQL)
 - **Icons**: Lucide React
@@ -41,7 +43,15 @@ A modern, production-ready AI SaaS template built with Next.js 16, React 19, and
    - Verify your domain (or use their test domain for development)
    - Get your API key from the dashboard
 
-4. **Set up environment variables**:
+4. **Set up Polar** (for payments):
+   - Create a Polar account at [polar.sh](https://polar.sh)
+   - Create an organization and products (Free and Premium tiers)
+   - Get your sandbox access token from Settings → Organization Access Tokens
+   - Configure webhook endpoint: `https://yourdomain.com/api/auth/polar/webhooks`
+   - Get your webhook secret from the webhook settings
+   - Note: Use sandbox environment for development, production for live deployment
+
+5. **Set up environment variables**:
    Copy `.env.example` to `.env.local` and fill in your credentials:
    ```bash
    cp .env.example .env.local
@@ -56,6 +66,11 @@ A modern, production-ready AI SaaS template built with Next.js 16, React 19, and
    - `SUPABASE_SERVICE_ROLE_KEY` - Supabase service role key
    - `RESEND_API_KEY` - Your Resend API key
    - `EMAIL_FROM` - Email address to send from (e.g., noreply@yourdomain.com)
+   - `POLAR_ACCESS_TOKEN` - Polar sandbox/production access token
+   - `POLAR_WEBHOOK_SECRET` - Polar webhook secret
+   - `POLAR_SUCCESS_URL` - Checkout success redirect URL
+   - `POLAR_PRODUCT_ID_FREE` - Free tier product ID from Polar
+   - `POLAR_PRODUCT_ID_PREMIUM` - Premium tier product ID from Polar
 
 5. **Run the development server**:
    ```bash
@@ -121,6 +136,14 @@ A modern, production-ready AI SaaS template built with Next.js 16, React 19, and
 - Row-level security (RLS)
 - User profiles and session storage
 - Real-time capabilities
+
+### Payments (Polar)
+- Subscription management (Free and Premium tiers)
+- Hosted checkout integration
+- Webhook event handling for subscription lifecycle
+- Customer portal for self-service subscription management
+- Automatic customer creation on signup
+- Secure payment processing
 
 ## Authentication Features
 

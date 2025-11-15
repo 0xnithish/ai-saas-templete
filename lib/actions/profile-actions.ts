@@ -154,9 +154,20 @@ export async function getProfileAction(): Promise<ProfileUpdateResult> {
           };
         }
 
+        // Fetch subscription data from user table
+        const { data: userData } = await supabase
+          .from('user')
+          .select('subscriptionStatus, subscriptionEndsAt')
+          .eq('id', userId)
+          .single();
+
         return {
           success: true,
-          profile: createdProfile,
+          profile: {
+            ...createdProfile,
+            subscriptionStatus: userData?.subscriptionStatus || 'free',
+            subscriptionEndsAt: userData?.subscriptionEndsAt || null,
+          },
         };
       }
 
@@ -167,9 +178,20 @@ export async function getProfileAction(): Promise<ProfileUpdateResult> {
       };
     }
 
+    // Fetch subscription data from user table
+    const { data: userData } = await supabase
+      .from('user')
+      .select('subscriptionStatus, subscriptionEndsAt')
+      .eq('id', userId)
+      .single();
+
     return {
       success: true,
-      profile: data,
+      profile: {
+        ...data,
+        subscriptionStatus: userData?.subscriptionStatus || 'free',
+        subscriptionEndsAt: userData?.subscriptionEndsAt || null,
+      },
     };
 
   } catch (error) {

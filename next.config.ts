@@ -11,6 +11,11 @@ const nextConfig: NextConfig = {
     // Middleware handles subdomain routing
   },
   
+  // Allow cross-origin requests from ngrok and other dev origins
+  allowedDevOrigins: [
+    'unfundable-facultative-nakita.ngrok-free.dev',
+  ],
+  
   // Optional: Configure remote patterns if using Next.js Image optimization with external images
   images: {
     remotePatterns: [
