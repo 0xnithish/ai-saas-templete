@@ -67,6 +67,50 @@ export const auth = betterAuth({
   emailVerification: {
     sendOnSignUp: true,
     autoSignInAfterVerification: true,
+    afterEmailVerification: async (user) => {
+      // Create Polar customer after email verification
+      try {
+        console.log(`🔄 Creating Polar customer for verified user: ${user.email}`);
+        
+        // Check if customer already exists
+        const existingCustomers = await polarClient.customers.list({
+          email: user.email,
+          limit: 1,
+        });
+
+        let polarCustomerId: string;
+
+        if (existingCustomers.result && existingCustomers.result.items.length > 0) {
+          // Customer already exists (shouldn't happen with createCustomerOnSignUp: false)
+          polarCustomerId = existingCustomers.result.items[0].id;
+          console.log(`✅ Found existing Polar customer: ${polarCustomerId}`);
+        } else {
+          // Create new customer in Polar
+          const newCustomer = await polarClient.customers.create({
+            email: user.email,
+            name: user.name || undefined,
+            metadata: {
+              userId: user.id,
+            },
+          });
+          
+          polarCustomerId = newCustomer.id;
+          console.log(`✅ Created new Polar customer: ${polarCustomerId}`);
+        }
+        
+        // Update database with Polar customer ID
+        await pool.query(
+          `UPDATE public.user 
+           SET "polarCustomerId" = $1, "updatedAt" = NOW()
+           WHERE id = $2`,
+          [polarCustomerId, user.id]
+        );
+        
+        console.log(`✅ Linked Polar customer ${polarCustomerId} to user ${user.id}`);
+      } catch (error) {
+        console.error('❌ Failed to create/link Polar customer after verification:', error);
+      }
+    },
     sendVerificationEmail: async ({ user, url }: { user: { email: string }; url: string }) => {
       if (!resend) {
         console.warn('Resend not configured - skipping email verification');
@@ -117,7 +161,7 @@ export const auth = betterAuth({
   plugins: [
     polar({
       client: polarClient,
-      createCustomerOnSignUp: true,
+      createCustomerOnSignUp: false, // Don't create until email verified
       use: [
         checkout({
           products: [
