@@ -4,13 +4,14 @@ import { Resend } from "resend";
 import { polar, checkout, portal, usage, webhooks } from "@polar-sh/better-auth";
 import { polarClient } from "./polar";
 
-// Initialize Postgres pool for Better Auth
+// Initialize Resend for email sending (only if API key is available)
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+
+// Initialize Postgres pool for Better Auth using the fixed DATABASE_URL
+// The DATABASE_URL has been updated to use the correct hostname (without 'db.' prefix)
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL!,
 });
-
-// Initialize Resend for email sending (only if API key is available)
-const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 export const auth = betterAuth({
   database: pool,
