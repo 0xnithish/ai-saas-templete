@@ -31,7 +31,7 @@ export function SubscriptionBadge() {
     return null;
   }
 
-  const isPremium = subscriptionStatus === "premium";
+  const isPremium = ["active", "trialing"].includes(subscriptionStatus);
 
   return (
     <Link href="/profile" className="inline-block">

@@ -191,17 +191,17 @@ export const auth = betterAuth({
                 return;
               }
 
-              // Update user subscription status to premium
+              // Update user subscription status to active
               await pool.query(
                 `UPDATE public.user 
-                 SET "subscriptionStatus" = 'premium',
+                 SET "subscriptionStatus" = 'active',
                      "subscriptionEndsAt" = NULL,
                      "polarCustomerId" = $2
                  WHERE id = $1`,
                 [userId, payload.data.customerId]
               );
 
-              console.log('[Polar Webhook] Granted premium access to user:', userId);
+              console.log('[Polar Webhook] Granted active subscription to user:', userId);
             } catch (error) {
               console.error('[Polar Webhook] Error activating subscription:', error);
             }
@@ -246,7 +246,7 @@ export const auth = betterAuth({
                 [userId]
               );
 
-              console.log('[Polar Webhook] Revoked premium access for user:', userId);
+              console.log('[Polar Webhook] Revoked subscription access for user:', userId);
             } catch (error) {
               console.error('[Polar Webhook] Error revoking subscription:', error);
             }

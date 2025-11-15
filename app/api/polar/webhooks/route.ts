@@ -71,7 +71,7 @@ export const POST = Webhooks({
             .from('user')
             .update({
               polarCustomerId: customerId,
-              subscriptionStatus: hasSubscription ? 'premium' : 'free',
+              subscriptionStatus: hasSubscription ? 'active' : 'free',
               subscriptionEndsAt: hasSubscription ? data.subscription?.current_period_end : null,
               updatedAt: new Date().toISOString(),
             })
@@ -80,7 +80,7 @@ export const POST = Webhooks({
           if (error) {
             console.error('❌ Failed to update user on order.paid:', error);
           } else {
-            console.log(`✅ Order paid for ${customerEmail}, subscription: ${hasSubscription ? 'premium' : 'none'}`);
+            console.log(`✅ Order paid for ${customerEmail}, subscription: ${hasSubscription ? 'active' : 'none'}`);
           }
           break;
         }
@@ -91,7 +91,7 @@ export const POST = Webhooks({
           .from('user')
           .update({
             polarCustomerId: customerId,
-            subscriptionStatus: hasSubscription ? 'premium' : 'free',
+            subscriptionStatus: hasSubscription ? 'active' : 'free',
             subscriptionEndsAt: hasSubscription ? data.subscription?.current_period_end : null,
             updatedAt: new Date().toISOString(),
           })
@@ -100,7 +100,7 @@ export const POST = Webhooks({
         if (error) {
           console.error('❌ Failed to update user on order.paid:', error);
         } else {
-          console.log(`✅ Order paid for user ${userId}, subscription: ${hasSubscription ? 'premium' : 'none'}`);
+          console.log(`✅ Order paid for user ${userId}, subscription: ${hasSubscription ? 'active' : 'none'}`);
         }
         break;
       }
@@ -117,7 +117,7 @@ export const POST = Webhooks({
           .from('user')
           .update({
             polarCustomerId: data.customer.id,
-            subscriptionStatus: data.status === 'active' ? 'premium' : 'free',
+            subscriptionStatus: data.status === 'active' ? 'active' : 'free',
             subscriptionEndsAt: data.current_period_end,
             updatedAt: new Date().toISOString(),
           })

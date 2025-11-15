@@ -20,7 +20,7 @@ export function SubscriptionCard({
 }: SubscriptionCardProps) {
   const [loading, setLoading] = useState(false);
 
-  const isPremium = subscriptionStatus === "premium";
+  const isPremium = ["active", "trialing"].includes(subscriptionStatus);
   const isCanceled = subscriptionStatus === "canceled";
   const hasGracePeriod = isCanceled && subscriptionEndsAt && new Date(subscriptionEndsAt) > new Date();
 
