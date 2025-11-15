@@ -1,11 +1,13 @@
 'use server';
 
-import { auth } from '@clerk/nextjs/server';
+import { auth } from '@/lib/auth';
 import { getSupabaseAdmin } from '@/lib/db/supabase';
+import { headers } from 'next/headers';
 
 interface UpdateProfileData {
   first_name?: string;
   last_name?: string;
+  username?: string;
 }
 
 interface ProfileUpdateResult {
@@ -16,14 +18,16 @@ interface ProfileUpdateResult {
 }
 
 /**
- * Server Action to update a user's profile in Clerk and sync to Supabase
+ * Server Action to update a user's profile
  */
 export async function updateProfileAction(profileData: UpdateProfileData): Promise<ProfileUpdateResult> {
   try {
-    // Get the authenticated user
-    const { userId } = await auth();
+    // Get the authenticated user session
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
     
-    if (!userId) {
+    if (!session?.user) {
       return {
         success: false,
         error: 'User not authenticated',
@@ -31,76 +35,43 @@ export async function updateProfileAction(profileData: UpdateProfileData): Promi
       };
     }
 
-    // Check if Clerk secret key is available
-    if (!process.env.CLERK_SECRET_KEY) {
-      return {
-        success: false,
-        error: 'Server configuration error',
-        details: 'Clerk secret key not configured',
-      };
-    }
+    const userId = session.user.id;
 
-    // Update user profile in Clerk using the Admin API
-    const clerkResponse = await global.fetch(`https://api.clerk.com/v1/users/${userId}`, {
-      method: 'PATCH',
-      headers: {
-        'Authorization': `Bearer ${process.env.CLERK_SECRET_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        first_name: profileData.first_name,
-        last_name: profileData.last_name,
-      }),
-    });
+    // Update user in Better Auth user table if name changed
+    if (profileData.first_name || profileData.last_name) {
+      const name = `${profileData.first_name || ''} ${profileData.last_name || ''}`.trim();
+      
+      const supabase = getSupabaseAdmin();
+      const { error: userError } = await supabase
+        .from('user')
+        .update({ name, updatedAt: new Date().toISOString() })
+        .eq('id', userId);
 
-    if (!clerkResponse.ok) {
-      const errorData = await clerkResponse.json().catch(() => ({}));
-
-      // Provide specific error messages for common Clerk API errors
-      let errorMessage = 'Failed to update profile in Clerk';
-      let details = `${clerkResponse.status}: ${errorData.message || clerkResponse.statusText}`;
-
-      if (clerkResponse.status === 400) {
-        errorMessage = 'Invalid profile data';
-        if (errorData.errors && Array.isArray(errorData.errors)) {
-          details = errorData.errors.map((e: any) => `${e.long_message || e.message}`).join('; ');
-        }
-      } else if (clerkResponse.status === 401) {
-        errorMessage = 'Clerk authentication failed';
-        details = 'CLERK_SECRET_KEY may be invalid or expired';
-      } else if (clerkResponse.status === 403) {
-        errorMessage = 'Permission denied';
-        details = 'Clerk secret key may not have sufficient permissions';
-      } else if (clerkResponse.status === 404) {
-        errorMessage = 'User not found';
-        details = `User ${userId} does not exist in Clerk`;
+      if (userError) {
+        return {
+          success: false,
+          error: 'Failed to update user',
+          details: userError.message,
+        };
       }
-
-      return {
-        success: false,
-        error: errorMessage,
-        details,
-      };
     }
 
-    const updatedUser = await clerkResponse.json();
-
-    // Sync updated profile to Supabase
+    // Update profile in Supabase
     const supabase = getSupabaseAdmin();
     
     const supabaseProfileData = {
-      clerk_id: userId,
-      email: updatedUser.email_addresses?.[0]?.email_address || '',
-      first_name: updatedUser.first_name,
-      last_name: updatedUser.last_name,
-      avatar_url: updatedUser.image_url,
+      user_id: userId,
+      email: session.user.email,
+      first_name: profileData.first_name,
+      last_name: profileData.last_name,
+      username: profileData.username,
       updated_at: new Date().toISOString(),
     };
 
     const { data, error } = await supabase
       .from('profiles')
       .upsert(supabaseProfileData, {
-        onConflict: 'clerk_id',
+        onConflict: 'user_id',
         ignoreDuplicates: false,
       })
       .select()
@@ -109,7 +80,7 @@ export async function updateProfileAction(profileData: UpdateProfileData): Promi
     if (error) {
       return {
         success: false,
-        error: 'Profile updated in Clerk but failed to sync to database',
+        error: 'Failed to update profile',
         details: error.message,
       };
     }
@@ -129,74 +100,69 @@ export async function updateProfileAction(profileData: UpdateProfileData): Promi
 }
 
 /**
- * Server Action to sync a user's profile from Clerk to Supabase
+ * Server Action to get a user's profile from the database
  */
-export async function syncProfileToSupabase(): Promise<ProfileUpdateResult> {
+export async function getProfileAction(): Promise<ProfileUpdateResult> {
   try {
-    // Get the authenticated user
-    const { userId } = await auth();
+    // Get the authenticated user session
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
     
-    if (!userId) {
+    if (!session?.user) {
       return {
         success: false,
         error: 'User not authenticated',
-        details: 'Please sign in to sync your profile',
+        details: 'Please sign in to view your profile',
       };
     }
 
-    // Get user data from Clerk
-    if (!process.env.CLERK_SECRET_KEY) {
-      return {
-        success: false,
-        error: 'Server configuration error',
-        details: 'Clerk secret key not configured',
-      };
-    }
+    const userId = session.user.id;
 
-    const clerkResponse = await global.fetch(`https://api.clerk.com/v1/users/${userId}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${process.env.CLERK_SECRET_KEY}`,
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!clerkResponse.ok) {
-      const errorData = await clerkResponse.json().catch(() => ({}));
-      return {
-        success: false,
-        error: 'Failed to fetch user from Clerk',
-        details: `${clerkResponse.status}: ${errorData.message || clerkResponse.statusText}`,
-      };
-    }
-
-    const clerkUser = await clerkResponse.json();
-
-    // Sync to Supabase
+    // Get profile from Supabase
     const supabase = getSupabaseAdmin();
     
-    const supabaseProfileData = {
-      clerk_id: userId,
-      email: clerkUser.email_addresses?.[0]?.email_address || '',
-      first_name: clerkUser.first_name,
-      last_name: clerkUser.last_name,
-      avatar_url: clerkUser.image_url,
-      updated_at: new Date().toISOString(),
-    };
-
     const { data, error } = await supabase
       .from('profiles')
-      .upsert(supabaseProfileData, {
-        onConflict: 'clerk_id',
-        ignoreDuplicates: false,
-      })
-      .select()
+      .select('*')
+      .eq('user_id', userId)
       .single();
 
     if (error) {
+      // If profile doesn't exist, create it
+      if (error.code === 'PGRST116') {
+        const newProfile = {
+          user_id: userId,
+          email: session.user.email,
+          first_name: null,
+          last_name: null,
+          username: null,
+          avatar_url: session.user.image || null,
+        };
+
+        const { data: createdProfile, error: createError } = await supabase
+          .from('profiles')
+          .insert(newProfile)
+          .select()
+          .single();
+
+        if (createError) {
+          return {
+            success: false,
+            error: 'Failed to create profile',
+            details: createError.message,
+          };
+        }
+
+        return {
+          success: true,
+          profile: createdProfile,
+        };
+      }
+
       return {
         success: false,
-        error: 'Failed to sync profile to database',
+        error: 'Failed to fetch profile',
         details: error.message,
       };
     }

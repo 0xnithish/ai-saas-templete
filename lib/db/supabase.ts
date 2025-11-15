@@ -1,28 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
-import { useAuth, useUser } from '@clerk/nextjs';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
 // Standard client for operations without authentication
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
-// Authenticated client that uses Clerk session tokens
-export function useSupabaseClient() {
-  const { getToken } = useAuth();
-  
-  return createClient(
-    supabaseUrl,
-    supabaseAnonKey,
-    {
-      // Session accessed from Clerk SDK
-      accessToken: async () => {
-        const token = await getToken({ template: 'supabase' });
-        return token || null;
-      },
-    }
-  );
-}
 
 // For server-side operations with elevated privileges
 // Only available on the server side
@@ -40,30 +22,33 @@ export type Database = {
       profiles: {
         Row: {
           id: string;
-          clerk_id: string;
+          user_id: string;
           email: string;
           first_name: string | null;
           last_name: string | null;
+          username: string | null;
           avatar_url: string | null;
           created_at: string;
           updated_at: string;
         };
         Insert: {
           id?: string;
-          clerk_id: string;
+          user_id: string;
           email: string;
           first_name?: string | null;
           last_name?: string | null;
+          username?: string | null;
           avatar_url?: string | null;
           created_at?: string;
           updated_at?: string;
         };
         Update: {
           id?: string;
-          clerk_id?: string;
+          user_id?: string;
           email?: string;
           first_name?: string | null;
           last_name?: string | null;
+          username?: string | null;
           avatar_url?: string | null;
           created_at?: string;
           updated_at?: string;

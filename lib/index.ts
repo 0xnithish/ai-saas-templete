@@ -4,11 +4,9 @@ export * from './actions/profile-actions';
 // Database
 export * from './db';
 
-// Synchronization
-export * from './sync';
-
-// Configuration
-export * from './config';
+// Authentication
+export * from './auth';
+export * from './auth-client';
 
 // Utilities
 export * from './utils';

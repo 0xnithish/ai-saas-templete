@@ -6,7 +6,8 @@ A modern, production-ready AI SaaS template built with Next.js 16, React 19, and
 
 - 🚀 **Modern Tech Stack**: Next.js 16 with App Router, React 19, and TypeScript
 - 🎨 **Beautiful UI**: shadcn/ui components with Tailwind CSS v4
-- 🔐 **Authentication**: Pre-configured Clerk authentication
+- 🔐 **Authentication**: Better Auth with email/password and email verification
+- 📧 **Email Service**: Resend integration for transactional emails
 - 🗄️ **Database**: Supabase integration for data storage
 - 📊 **State Management**: TanStack Query for server state
 - 🧩 **Component Library**: Reusable UI components with Radix UI primitives
@@ -17,8 +18,9 @@ A modern, production-ready AI SaaS template built with Next.js 16, React 19, and
 - **Frontend**: Next.js 16, React 19, TypeScript
 - **Styling**: Tailwind CSS v4
 - **UI Components**: shadcn/ui (New York style)
-- **Authentication**: Clerk
-- **Database**: Supabase
+- **Authentication**: Better Auth
+- **Email Service**: Resend
+- **Database**: Supabase (PostgreSQL)
 - **Icons**: Lucide React
 - **Package Manager**: Bun
 
@@ -29,22 +31,38 @@ A modern, production-ready AI SaaS template built with Next.js 16, React 19, and
    bun install
    ```
 
-2. **Set up environment variables**:
-   Copy `.env.example` to `.env.local` and fill in your API keys:
+2. **Set up Supabase**:
+   - Create a Supabase project at [supabase.com](https://supabase.com)
+   - Run the database migration: `supabase/migrations/20250115000000_migrate_to_better_auth.sql`
+   - Get your project URL and keys from the Supabase dashboard
+
+3. **Set up Resend**:
+   - Create a Resend account at [resend.com](https://resend.com)
+   - Verify your domain (or use their test domain for development)
+   - Get your API key from the dashboard
+
+4. **Set up environment variables**:
+   Copy `.env.example` to `.env.local` and fill in your credentials:
    ```bash
    cp .env.example .env.local
    ```
 
    Required environment variables:
-   - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
-   - `CLERK_SECRET_KEY`
+   - `BETTER_AUTH_SECRET` - Random secret key (generate with `openssl rand -base64 32`)
+   - `BETTER_AUTH_URL` - Your app URL (http://localhost:3000 for dev)
+   - `DATABASE_URL` - PostgreSQL connection string from Supabase
+   - `NEXT_PUBLIC_SUPABASE_URL` - Your Supabase project URL
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Supabase anon key
+   - `SUPABASE_SERVICE_ROLE_KEY` - Supabase service role key
+   - `RESEND_API_KEY` - Your Resend API key
+   - `EMAIL_FROM` - Email address to send from (e.g., noreply@yourdomain.com)
 
-3. **Run the development server**:
+5. **Run the development server**:
    ```bash
    bun dev
    ```
 
-4. **Open your browser**:
+6. **Open your browser**:
    Navigate to [http://localhost:3000](http://localhost:3000)
 
 ## Project Structure
@@ -52,17 +70,27 @@ A modern, production-ready AI SaaS template built with Next.js 16, React 19, and
 ```
 /
 ├── app/                    # Next.js App Router
-│   ├── layout.tsx         # Root layout with Clerk provider
+│   ├── api/auth/          # Better Auth API routes
+│   ├── layout.tsx         # Root layout
 │   ├── page.tsx          # Landing page
-│   ├── sign-in/          # Clerk authentication pages
-│   └── sign-up/
+│   ├── sign-in/          # Authentication pages
+│   ├── sign-up/
+│   ├── forgot-password/
+│   ├── reset-password/
+│   ├── profile/          # User profile page
+│   └── dashboard/        # Dashboard page
 ├── components/            # React components
 │   ├── ui/               # shadcn/ui reusable components
-│   ├── Header.tsx        # Site navigation
-│   ├── Hero.tsx          # Landing page hero section
-│   ├── Features.tsx      # Feature showcase
-│   └── PricingSection.tsx # Pricing tables
+│   ├── auth/             # Authentication components
+│   ├── navigation/       # Navigation components
+│   ├── profile/          # Profile management
+│   └── landing/          # Landing page sections
 ├── lib/                  # Utility functions
+│   ├── auth.ts           # Better Auth server config
+│   ├── auth-client.ts    # Better Auth client config
+│   ├── actions/          # Server actions
+│   └── db/               # Database utilities
+├── supabase/migrations/  # Database migrations
 └── public/               # Static assets
 ```
 
@@ -75,50 +103,56 @@ A modern, production-ready AI SaaS template built with Next.js 16, React 19, and
 
 ## Key Integrations
 
-### Authentication (Clerk)
-- Pre-configured sign-in and sign-up pages
-- User management and session handling
+### Authentication (Better Auth)
+- Email/password authentication with verification
+- Password reset functionality
+- Session management with database storage
 - Protected routes support
+- Customizable email templates
+
+### Email Service (Resend)
+- Transactional email delivery
+- Email verification
+- Password reset emails
+- Custom branded templates
 
 ### Database (Supabase)
 - PostgreSQL database integration
-- Real-time subscriptions
-- Row-level security
-- **Profile Synchronization**: Automatic sync between Clerk and Supabase
+- Row-level security (RLS)
+- User profiles and session storage
+- Real-time capabilities
 
+## Authentication Features
 
+### Sign Up Flow
+1. User enters email, password, and name
+2. Account is created with unverified email
+3. Verification email is sent via Resend
+4. User clicks verification link
+5. Email is verified and user can sign in
+
+### Password Reset Flow
+1. User requests password reset
+2. Reset email is sent via Resend
+3. User clicks reset link
+4. User enters new password
+5. Password is updated and user can sign in
+
+### Profile Management
+- Update first name, last name, and username
+- View profile status and metadata
+- Automatic profile creation on first sign-in
 
 ## Customization
 
 This template is designed to be customized for your specific AI SaaS needs:
 
 1. **Update branding**: Modify colors, fonts, and styling in `tailwind.config.js`
-2. **Add features**: Extend the landing page components in `components/`
-3. **Configure integrations**: Set up your own API keys and endpoints
-4. **Add pages**: Create new routes in the `app/` directory
-
-## Profile Synchronization
-
-This template includes automatic profile synchronization between Clerk (authentication) and Supabase (database):
-
-- **Real-time Sync**: When users update their profile through Clerk, changes are automatically synced to Supabase
-- **Webhook Integration**: Configure Clerk webhooks to enable real-time sync
-- **Manual Sync**: Users can manually sync their profile through the UI
-- **Status Indicators**: Visual feedback shows sync status and last sync time
-
-### Setting Up Profile Sync
-
-1. Configure Clerk webhooks in your [Clerk Dashboard](https://dashboard.clerk.com):
-   - Add webhook endpoint: `https://your-domain.com/api/clerk-webhooks`
-   - Select events: `user.created`, `user.updated`
-   - Copy the webhook secret to your environment variables
-
-2. Add webhook secret to `.env.local`:
-   ```
-   CLERK_WEBHOOK_SECRET=whsec_your_webhook_secret_here
-   ```
-
-For detailed instructions, see [docs/clerk-webhook-setup.md](docs/clerk-webhook-setup.md).
+2. **Customize emails**: Edit email templates in `lib/auth.ts`
+3. **Add features**: Extend components in `components/`
+4. **Configure integrations**: Set up your own API keys and endpoints
+5. **Add pages**: Create new routes in the `app/` directory
+6. **Extend authentication**: Add OAuth providers via Better Auth plugins
 
 ## Deploy
 

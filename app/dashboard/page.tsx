@@ -1,5 +1,6 @@
 import React from "react"
 
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute"
 import { AppSidebar } from "@/components/dashboard/AppSidebar"
 import { ChartAreaInteractive } from "@/components/dashboard/ChartAreaInterActive"
 import { DataTable } from "@/components/dashboard/DataTable"
@@ -12,33 +13,35 @@ import {
 
 import data from "./data.json"
 
-export default function Page() {
+export default async function Page() {
   return (
-    <SidebarProvider
-      style={
-        {
-          "--sidebar-width": "calc(var(--spacing) * 58)",
-          "--header-height": "calc(var(--spacing) * 12)",
-        } as React.CSSProperties
-      }
-    >
-      <AppSidebar variant="inset" />
-      <SidebarInset>
-        <SiteHeader />
-        <div className="flex flex-1 flex-col">
-          <div className="@container/main flex flex-1 flex-col gap-2">
-            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-              <div className="px-4 lg:px-6">
-                <MetricsCards />
+    <ProtectedRoute>
+      <SidebarProvider
+        style={
+          {
+            "--sidebar-width": "calc(var(--spacing) * 58)",
+            "--header-height": "calc(var(--spacing) * 12)",
+          } as React.CSSProperties
+        }
+      >
+        <AppSidebar variant="inset" />
+        <SidebarInset>
+          <SiteHeader />
+          <div className="flex flex-1 flex-col">
+            <div className="@container/main flex flex-1 flex-col gap-2">
+              <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+                <div className="px-4 lg:px-6">
+                  <MetricsCards />
+                </div>
+                <div className="px-4 lg:px-6">
+                  <ChartAreaInteractive />
+                </div>
+                <DataTable data={data} />
               </div>
-              <div className="px-4 lg:px-6">
-                <ChartAreaInteractive />
-              </div>
-              <DataTable data={data} />
             </div>
           </div>
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
+        </SidebarInset>
+      </SidebarProvider>
+    </ProtectedRoute>
   )
 }

@@ -1,32 +1,23 @@
 "use client";
 
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/shared/Logo";
 import NavMenu from "@/components/navigation/NavMenu";
 import NavigationSheet from "@/components/navigation/NavigationSheet";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { ArrowRight } from "lucide-react";
-import {
-  SignedIn,
-  SignedOut,
-  SignOutButton,
-  useClerk,
-  useUser,
-} from "@clerk/nextjs";
+import { useSession, signOut } from "@/lib/auth-client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
-  const { openSignIn, openSignUp } = useClerk();
-  const { isLoaded } = useUser();
+  const router = useRouter();
+  const { data: session, isPending } = useSession();
+  const user = session?.user;
 
-  const handleSignIn = () => {
-    openSignIn({});
-  };
-
-  const handleSignUp = () => {
-    openSignUp({});
+  const handleSignOut = async () => {
+    await signOut();
+    router.push("/");
   };
 
   return (
@@ -39,7 +30,7 @@ const Navbar = () => {
 
         <div className="flex items-center gap-3">
           <ThemeToggle />
-          {!isLoaded ? (
+          {isPending ? (
             // Show skeleton buttons while loading to prevent layout shift
             <div className="flex items-center gap-3">
               <div className="h-9 w-20 bg-muted animate-pulse rounded-md hidden sm:inline-flex" />
@@ -47,28 +38,31 @@ const Navbar = () => {
             </div>
           ) : (
             <>
-              <SignedOut>
-                <Button variant="outline" className="hidden sm:inline-flex" onClick={handleSignIn}>
-                  Sign In
-                </Button>
-                <Button onClick={handleSignUp}>
-                  Sign Up
-                </Button>
-              </SignedOut>
-              <SignedIn>
-                <Button asChild variant="outline">
-                  <Link href="/profile">Profile</Link>
-                </Button>
-                <Button asChild variant="outline">
-                  <SignOutButton />
-                </Button>
-                <Button asChild>
-                  <Link href="/dashboard" className="flex items-center gap-2">
-                    Dashboard
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </Button>
-              </SignedIn>
+              {!user ? (
+                <>
+                  <Button asChild variant="outline" className="hidden sm:inline-flex">
+                    <Link href="/sign-in">Sign In</Link>
+                  </Button>
+                  <Button asChild>
+                    <Link href="/sign-up">Sign Up</Link>
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button asChild variant="outline">
+                    <Link href="/profile">Profile</Link>
+                  </Button>
+                  <Button variant="outline" onClick={handleSignOut}>
+                    Sign Out
+                  </Button>
+                  <Button asChild>
+                    <Link href="/dashboard" className="flex items-center gap-2">
+                      Dashboard
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                </>
+              )}
             </>
           )}
 

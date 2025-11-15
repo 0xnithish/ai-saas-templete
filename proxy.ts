@@ -1,13 +1,23 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { getSessionCookie } from 'better-auth/cookies'
 
-const isPublicRoute = createRouteMatcher([
+// Public routes that don't require authentication
+const publicRoutes = [
   '/',
-  '/sign-in(.*)',
-  '/sign-up(.*)',
-  '/api/webhook/clerk',
-])
+  '/sign-in',
+  '/sign-up',
+  '/forgot-password',
+  '/reset-password',
+  '/api/auth',
+]
+
+// Check if a path matches public routes
+function isPublicRoute(pathname: string): boolean {
+  return publicRoutes.some(route => 
+    pathname === route || pathname.startsWith(`${route}/`)
+  )
+}
 
 // Subdomain routing function
 function handleSubdomainRouting(request: NextRequest) {
@@ -25,20 +35,32 @@ function handleSubdomainRouting(request: NextRequest) {
   return NextResponse.next()
 }
 
-export default clerkMiddleware(async (auth, req: NextRequest) => {
-  // First, handle subdomain routing
+export default async function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl
+  
+  // Handle subdomain routing first
   const subdomainResponse = handleSubdomainRouting(req)
-  if (subdomainResponse.headers.get('x-middleware-rewrite')) {
-    // If middleware rewrote the URL, continue with auth check on the rewritten path
+  
+  // Allow public routes
+  if (isPublicRoute(pathname)) {
+    return subdomainResponse
   }
   
-  // Then, check authentication
-  if (!isPublicRoute(req)) {
-    await auth.protect()
+  // For protected routes, check if user has a session cookie
+  // Using Better Auth's recommended getSessionCookie helper
+  // NOTE: This only checks for cookie existence, not validity
+  // Actual session validation happens in ProtectedRoute components
+  const sessionCookie = getSessionCookie(req)
+  
+  // If no session cookie and trying to access protected route, redirect to sign-in
+  if (!sessionCookie) {
+    const signInUrl = new URL('/sign-in', req.url)
+    signInUrl.searchParams.set('redirect', pathname)
+    return NextResponse.redirect(signInUrl)
   }
   
   return subdomainResponse
-})
+}
 
 export const config = {
   matcher: [

@@ -1,32 +1,31 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useUser } from '@clerk/nextjs';
+import { useSession } from '@/lib/auth-client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useProfileSync, getUserProfile } from '@/lib/sync/profile-sync';
-import { useSupabaseClient } from '@/lib/db/supabase';
+import { updateProfileAction, getProfileAction } from '@/lib/actions/profile-actions';
 import { Loader2, Save, User } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface Profile {
   id: string;
-  clerk_id: string;
+  user_id: string;
   email: string;
   first_name: string | null;
   last_name: string | null;
+  username: string | null;
   avatar_url: string | null;
   created_at: string;
   updated_at: string;
 }
 
 export function ProfileManager() {
-  const { user, isLoaded } = useUser();
-  const { syncProfile, updateProfileAndSync, isLoading: isSyncing } = useProfileSync(user);
-  const supabase = useSupabaseClient();
+  const { data: session, isPending } = useSession();
+  const user = session?.user;
   
   const [profile, setProfile] = useState<Profile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -34,58 +33,35 @@ export function ProfileManager() {
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
+    username: '',
   });
 
   // Load existing profile on component mount
   useEffect(() => {
-    if (isLoaded && user) {
+    if (!isPending && user) {
       loadProfile();
     }
-  }, [isLoaded, user]);
+  }, [isPending, user]);
 
   const loadProfile = async () => {
     if (!user) return;
 
     setIsLoading(true);
     try {
-      // Load profile
-      const existingProfile = await getUserProfile(supabase, user.id);
+      const result = await getProfileAction();
       
-      if (existingProfile) {
-        setProfile(existingProfile);
+      if (result.success && result.profile) {
+        setProfile(result.profile);
         setFormData({
-          first_name: existingProfile.first_name || '',
-          last_name: existingProfile.last_name || '',
+          first_name: result.profile.first_name || '',
+          last_name: result.profile.last_name || '',
+          username: result.profile.username || '',
         });
       } else {
-        // If no profile exists, sync from Clerk
-        await handleSyncFromClerk();
+        toast.error(result.error || 'Failed to load profile');
       }
-      
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const handleSyncFromClerk = async () => {
-    if (!user) return;
-
-    // Sync with Clerk data but preserve any unsaved form changes
-    const result = await syncProfile({
-      first_name: user.firstName ?? undefined,
-      last_name: user.lastName ?? undefined,
-      avatar_url: user.imageUrl ?? undefined,
-    });
-    
-    if (result.success && result.profile) {
-      setProfile(result.profile);
-      // Update form with the synced data
-      setFormData({
-        first_name: result.profile.first_name || user.firstName || '',
-        last_name: result.profile.last_name || user.lastName || '',
-      });
-      
-      toast.success('Profile synced from Clerk');
     }
   };
 
@@ -102,35 +78,29 @@ export function ProfileManager() {
       return;
     }
 
-    // Validate that we have a complete user object
-    if (!user.id || !user.primaryEmailAddress?.emailAddress) {
-      toast.error('User session not fully loaded. Please wait a moment and try again.');
-      return;
-    }
-
     setIsSaving(true);
 
     try {
-      // Update profile in Clerk first, then sync to Supabase
-      const updateResult = await updateProfileAndSync(formData);
+      const updateResult = await updateProfileAction(formData);
       
       if (updateResult.success) {
-        // Reload the profile to get the latest data
+        toast.success('Profile updated successfully');
         await loadProfile();
       } else {
-        // If the error suggests a token/session issue, suggest refreshing
-        if (updateResult.error?.includes('sign in again') || updateResult.error?.includes('cache')) {
-          toast.error(updateResult.error + ' Please try refreshing the page.');
+        toast.error(updateResult.error || 'Failed to update profile');
+        if (updateResult.details) {
+          console.error('Profile update error:', updateResult.details);
         }
       }
-    } catch {
+    } catch (error) {
       toast.error('Failed to update profile. Please try again.');
+      console.error('Profile update error:', error);
     } finally {
       setIsSaving(false);
     }
   };
 
-  if (!isLoaded || isLoading) {
+  if (isPending || isLoading) {
     return (
       <Card className="w-full max-w-2xl mx-auto">
         <CardHeader>
@@ -155,6 +125,13 @@ export function ProfileManager() {
     );
   }
 
+  const getInitials = () => {
+    if (formData.first_name && formData.last_name) {
+      return `${formData.first_name[0]}${formData.last_name[0]}`;
+    }
+    return user.name?.[0] || user.email[0];
+  };
+
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
@@ -163,22 +140,22 @@ export function ProfileManager() {
           Profile Manager
         </CardTitle>
         <CardDescription>
-          Manage your profile information that's synchronized between Clerk and Supabase.
+          Manage your profile information.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Profile Header */}
         <div className="flex items-center gap-4">
           <Avatar className="h-16 w-16">
-            <AvatarImage src={user.imageUrl} alt={user.fullName || 'User'} />
+            <AvatarImage src={user.image || undefined} alt={user.name || 'User'} />
             <AvatarFallback>
-              {user.firstName?.[0]}{user.lastName?.[0]}
+              {getInitials()}
             </AvatarFallback>
           </Avatar>
           <div>
-            <h3 className="text-lg font-medium">{user.fullName || 'Anonymous User'}</h3>
-            <p className="text-sm text-muted-foreground">{user.primaryEmailAddress?.emailAddress}</p>
-            <p className="text-xs text-muted-foreground">Clerk ID: {user.id}</p>
+            <h3 className="text-lg font-medium">{user.name || 'Anonymous User'}</h3>
+            <p className="text-sm text-muted-foreground">{user.email}</p>
+            <p className="text-xs text-muted-foreground">User ID: {user.id}</p>
           </div>
         </div>
 
@@ -205,12 +182,20 @@ export function ProfileManager() {
             </div>
           </div>
 
-          
+          <div className="space-y-2">
+            <Label htmlFor="username">Username</Label>
+            <Input
+              id="username"
+              value={formData.username}
+              onChange={handleInputChange('username')}
+              placeholder="Enter your username"
+            />
+          </div>
 
-          {/* Sync Status */}
+          {/* Profile Status */}
           {profile && (
             <div className="bg-muted/50 p-3 rounded-lg">
-              <h4 className="font-medium text-sm mb-1">Sync Status</h4>
+              <h4 className="font-medium text-sm mb-1">Profile Status</h4>
               <div className="text-xs text-muted-foreground space-y-1">
                 <p>Profile ID: {profile.id}</p>
                 <p>Last updated: {new Date(profile.updated_at).toLocaleString()}</p>
@@ -221,47 +206,31 @@ export function ProfileManager() {
         </div>
 
         {/* Actions */}
-        <div className="flex gap-2">
-          <Button 
-            onClick={handleSave} 
-            disabled={isSaving || isSyncing}
-            className="flex-1"
-          >
-            {(isSaving || isSyncing) ? (
-              <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Updating Profile...
-              </>
-            ) : (
-              <>
-                <Save className="h-4 w-4 mr-2" />
-                Update Profile
-              </>
-            )}
-          </Button>
-          
-          <Button 
-            variant="outline" 
-            onClick={handleSyncFromClerk}
-            disabled={isSyncing}
-          >
-            {isSyncing ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              'Sync from Clerk'
-            )}
-          </Button>
-        </div>
+        <Button 
+          onClick={handleSave} 
+          disabled={isSaving}
+          className="w-full"
+        >
+          {isSaving ? (
+            <>
+              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              Updating Profile...
+            </>
+          ) : (
+            <>
+              <Save className="h-4 w-4 mr-2" />
+              Update Profile
+            </>
+          )}
+        </Button>
 
         {/* Instructions */}
         <div className="text-xs text-muted-foreground bg-muted/30 p-3 rounded-lg">
           <p className="font-medium mb-1">How it works:</p>
           <ul className="list-disc list-inside space-y-1">
-            <li><strong>Update Profile:</strong> Updates your profile in Clerk first, then syncs to Supabase</li>
-            <li>Your profile changes will be reflected in both systems automatically</li>
-            <li>Use "Sync from Clerk" to refresh your profile with the latest data from Clerk</li>
-            <li>Your avatar and email are managed through Clerk settings</li>
-            <li>Clerk is the single source of truth for your profile data</li>
+            <li>Update your profile information and click "Update Profile" to save changes</li>
+            <li>Your email is managed through your account settings</li>
+            <li>Changes are saved to your profile database</li>
           </ul>
         </div>
       </CardContent>

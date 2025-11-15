@@ -10,18 +10,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { SignedIn, SignedOut, useClerk } from "@clerk/nextjs";
+import { useSession } from "@/lib/auth-client";
 
 const NavigationSheet = () => {
-  const { openSignIn, openSignUp } = useClerk();
-
-  const handleSignIn = () => {
-    openSignIn({});
-  };
-
-  const handleSignUp = () => {
-    openSignUp({});
-  };
+  const { data: session } = useSession();
+  const user = session?.user;
 
   const navItems = [
     { href: "#features", label: "Features" },
@@ -53,22 +46,25 @@ const NavigationSheet = () => {
             </a>
           ))}
           <div className="flex flex-col gap-3 mt-4 pt-4 border-t">
-            <SignedOut>
-              <Button variant="outline" className="w-full rounded-full" onClick={handleSignIn}>
-                Sign In
-              </Button>
-              <Button className="w-full rounded-full" onClick={handleSignUp}>
-                Sign Up
-              </Button>
-            </SignedOut>
-            <SignedIn>
-              <Link href="/dashboard" className="text-lg font-medium hover:text-primary transition-colors">
-                Dashboard
-              </Link>
-              <Link href="/profile" className="text-lg font-medium hover:text-primary transition-colors">
-                Profile
-              </Link>
-            </SignedIn>
+            {!user ? (
+              <>
+                <Button asChild variant="outline" className="w-full rounded-full">
+                  <Link href="/sign-in">Sign In</Link>
+                </Button>
+                <Button asChild className="w-full rounded-full">
+                  <Link href="/sign-up">Sign Up</Link>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link href="/dashboard" className="text-lg font-medium hover:text-primary transition-colors">
+                  Dashboard
+                </Link>
+                <Link href="/profile" className="text-lg font-medium hover:text-primary transition-colors">
+                  Profile
+                </Link>
+              </>
+            )}
           </div>
         </nav>
       </SheetContent>

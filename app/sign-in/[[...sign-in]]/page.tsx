@@ -1,20 +1,9 @@
-import { SignIn } from "@clerk/nextjs";
+import { AuthForm } from "@/components/auth/AuthForm";
 
-export default function Page() {
+export default function SignInPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <div className="w-full max-w-md space-y-6">
-        <div className="text-center space-y-2">
-        </div>
-        <SignIn
-          appearance={{
-            elements: {
-              rootBox: "w-full",
-              card: "bg-card border border-border rounded-xl shadow-lg p-6",
-            }
-          }}
-        />
-      </div>
+      <AuthForm mode="signin" />
     </div>
   );
 }
