@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn, signUp } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
@@ -21,6 +21,12 @@ export function AuthForm({ mode }: AuthFormProps) {
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    if (mode === "signup") {
+      router.prefetch("/sign-in");
+    }
+  }, [mode, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -152,7 +158,9 @@ export function AuthForm({ mode }: AuthFormProps) {
 
         <Button type="submit" className="w-full" disabled={isLoading}>
           {isLoading
-            ? "Loading..."
+            ? mode === "signup"
+              ? "Creating your account..."
+              : "Signing you in..."
             : mode === "signin"
             ? "Sign In"
             : "Create Account"}
