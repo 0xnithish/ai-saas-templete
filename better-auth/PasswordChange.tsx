@@ -14,27 +14,27 @@ import {
   Tailwind,
   Text,
 } from '@react-email/components';
-import { betterAuthDesignSystem } from '../../design-systems/better-auth/better-auth-design-system';
+import { betterAuthDesignSystem } from '../design-systems/better-auth/better-auth-design-system';
 
-interface BetterAuthEmailChangedProps {
-  oldEmail?: string;
-  newEmail?: string;
-  revertLink?: string;
+interface BetterAuthPasswordChangedProps {
+  userEmail?: string;
+  timestamp?: string;
+  secureAccountLink?: string;
   appName?: string;
   supportEmail?: string;
   logoUrl?: string;
 }
 
-export const BetterAuthEmailChanged = ({
-  oldEmail = 'old@example.com',
-  newEmail = 'new@example.com',
-  revertLink = 'https://app.example.com/auth/revert-email?token=abc123',
+export const BetterAuthPasswordChanged = ({
+  userEmail = 'user@example.com',
+  timestamp = 'January 15, 2025 at 3:45 PM UTC',
+  secureAccountLink = 'https://app.example.com/auth/secure-account',
   appName = 'slackbound',
   supportEmail = 'support@example.com',
   logoUrl = 'https://0o4pg1fpby.ufs.sh/f/RSbfEU0J8DcdtpRbOh6sAUj3N86LXf57JKBqdoixIRQHecMu',
-}: BetterAuthEmailChangedProps) => {
+}: BetterAuthPasswordChangedProps) => {
   const ds = betterAuthDesignSystem;
-  const previewText = 'Your email address has been changed';
+  const previewText = 'Your password has been changed';
 
   return (
     <Html>
@@ -93,11 +93,12 @@ export const BetterAuthEmailChanged = ({
                   className="m-0 mb-[20px] text-[24px] font-semibold leading-[1.3]"
                   style={{ color: ds.colors.text.primary, letterSpacing: '-0.01em' }}
                 >
-                  Email address changed
+                  Password changed successfully
                 </Heading>
 
                 <Text className="mt-0 mb-[20px] text-[14px] leading-[1.6]" style={{ color: ds.colors.text.primary }}>
-                  The email address for your {appName} account has been changed.
+                  The password for your {appName} account <span style={{ color: '#6366F1' }}>{userEmail}</span> has been
+                  changed successfully.
                 </Text>
 
                 <Section
@@ -108,26 +109,20 @@ export const BetterAuthEmailChanged = ({
                   }}
                 >
                   <Text className="m-0 mb-[8px] text-[12px] leading-[1.5]" style={{ color: ds.colors.text.tertiary }}>
-                    Previous email:
+                    Changed at:
                   </Text>
-                  <Text className="m-0 mb-[16px] text-[14px] font-semibold" style={{ color: ds.colors.text.primary }}>
-                    {oldEmail}
-                  </Text>
-                  <Text className="m-0 mb-[8px] text-[12px] leading-[1.5]" style={{ color: ds.colors.text.tertiary }}>
-                    New email:
-                  </Text>
-                  <Text className="m-0 text-[14px] font-semibold" style={{ color: '#6366F1' }}>
-                    {newEmail}
+                  <Text className="m-0 text-[14px] font-semibold" style={{ color: ds.colors.text.primary }}>
+                    {timestamp}
                   </Text>
                 </Section>
 
                 <Text className="mt-0 mb-[20px] text-[14px] leading-[1.6]" style={{ color: ds.colors.text.primary }}>
-                  If you made this change, you can safely ignore this email.
+                  If you made this change, you can safely ignore this email. Your account is secure.
                 </Text>
 
                 <Section className="my-[24px]">
                   <Button
-                    href={revertLink}
+                    href={secureAccountLink}
                     className="inline-block text-center no-underline"
                     style={{
                       backgroundColor: ds.buttons.primary.backgroundColor,
@@ -155,8 +150,8 @@ export const BetterAuthEmailChanged = ({
                   If you didn't authorize this change, please contact support immediately at{' '}
                   <Link href={`mailto:${supportEmail}`} style={{ color: '#6366F1', textDecoration: 'underline' }}>
                     {supportEmail}
-                  </Link>
-                  .
+                  </Link>{' '}
+                  to secure your account.
                 </Text>
 
                 <Text className="mt-0 mb-0 text-center text-[11px]" style={{ color: ds.colors.text.quaternary }}>
@@ -177,13 +172,13 @@ export const BetterAuthEmailChanged = ({
   );
 };
 
-BetterAuthEmailChanged.PreviewProps = {
-  oldEmail: 'old@mandarin3d.com',
-  newEmail: 'ryan@mandarin3d.com',
-  revertLink: 'https://app.slackbound.com/auth/revert-email?token=abc123def456',
+BetterAuthPasswordChanged.PreviewProps = {
+  userEmail: 'ryan@mandarin3d.com',
+  timestamp: 'January 15, 2025 at 3:45 PM UTC',
+  secureAccountLink: 'https://app.slackbound.com/auth/secure-account',
   appName: 'slackbound',
   supportEmail: 'support@slackbound.com',
-} as BetterAuthEmailChangedProps;
+} as BetterAuthPasswordChangedProps;
 
-export default BetterAuthEmailChanged;
+export default BetterAuthPasswordChanged;
 

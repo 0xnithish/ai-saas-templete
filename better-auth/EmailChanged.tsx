@@ -14,25 +14,27 @@ import {
   Tailwind,
   Text,
 } from '@react-email/components';
-import { betterAuthDesignSystem } from '../../design-systems/better-auth/better-auth-design-system';
+import { betterAuthDesignSystem } from '../design-systems/better-auth/better-auth-design-system';
 
-interface BetterAuthPasswordResetProps {
-  resetLink?: string;
-  userEmail?: string;
+interface BetterAuthEmailChangedProps {
+  oldEmail?: string;
+  newEmail?: string;
+  revertLink?: string;
   appName?: string;
-  expirationMinutes?: number;
+  supportEmail?: string;
   logoUrl?: string;
 }
 
-export const BetterAuthPasswordReset = ({
-  resetLink = 'https://app.example.com/auth/reset-password?token=abc123',
-  userEmail = 'user@example.com',
+export const BetterAuthEmailChanged = ({
+  oldEmail = 'old@example.com',
+  newEmail = 'new@example.com',
+  revertLink = 'https://app.example.com/auth/revert-email?token=abc123',
   appName = 'slackbound',
-  expirationMinutes = 60,
+  supportEmail = 'support@example.com',
   logoUrl = 'https://0o4pg1fpby.ufs.sh/f/RSbfEU0J8DcdtpRbOh6sAUj3N86LXf57JKBqdoixIRQHecMu',
-}: BetterAuthPasswordResetProps) => {
+}: BetterAuthEmailChangedProps) => {
   const ds = betterAuthDesignSystem;
-  const previewText = 'Reset your password';
+  const previewText = 'Your email address has been changed';
 
   return (
     <Html>
@@ -91,17 +93,41 @@ export const BetterAuthPasswordReset = ({
                   className="m-0 mb-[20px] text-[24px] font-semibold leading-[1.3]"
                   style={{ color: ds.colors.text.primary, letterSpacing: '-0.01em' }}
                 >
-                  Reset your password
+                  Email address changed
                 </Heading>
 
                 <Text className="mt-0 mb-[20px] text-[14px] leading-[1.6]" style={{ color: ds.colors.text.primary }}>
-                  We received a request to reset the password for your account{' '}
-                  <span style={{ color: '#6366F1' }}>{userEmail}</span>.
+                  The email address for your {appName} account has been changed.
+                </Text>
+
+                <Section
+                  className="my-[24px] border border-solid p-[16px]"
+                  style={{
+                    backgroundColor: '#FAFAFA',
+                    borderColor: ds.colors.border.main,
+                  }}
+                >
+                  <Text className="m-0 mb-[8px] text-[12px] leading-[1.5]" style={{ color: ds.colors.text.tertiary }}>
+                    Previous email:
+                  </Text>
+                  <Text className="m-0 mb-[16px] text-[14px] font-semibold" style={{ color: ds.colors.text.primary }}>
+                    {oldEmail}
+                  </Text>
+                  <Text className="m-0 mb-[8px] text-[12px] leading-[1.5]" style={{ color: ds.colors.text.tertiary }}>
+                    New email:
+                  </Text>
+                  <Text className="m-0 text-[14px] font-semibold" style={{ color: '#6366F1' }}>
+                    {newEmail}
+                  </Text>
+                </Section>
+
+                <Text className="mt-0 mb-[20px] text-[14px] leading-[1.6]" style={{ color: ds.colors.text.primary }}>
+                  If you made this change, you can safely ignore this email.
                 </Text>
 
                 <Section className="my-[24px]">
                   <Button
-                    href={resetLink}
+                    href={revertLink}
                     className="inline-block text-center no-underline"
                     style={{
                       backgroundColor: ds.buttons.primary.backgroundColor,
@@ -115,30 +141,22 @@ export const BetterAuthPasswordReset = ({
                       border: `1px solid ${ds.buttons.primary.border.color}`,
                     }}
                   >
-                    Reset password
+                    I didn't make this change
                   </Button>
                 </Section>
-
-                <Text className="mt-[20px] mb-[12px] text-[12px] leading-[1.5]" style={{ color: ds.colors.text.tertiary }}>
-                  Or copy and paste this URL into your browser:
-                </Text>
-
-                <Text
-                  className="mt-0 mb-[20px] break-all text-[12px] leading-[1.5]"
-                  style={{ color: '#6366F1', wordBreak: 'break-all' }}
-                >
-                  {resetLink}
-                </Text>
 
                 <Hr className="mx-0 my-[24px] w-full border border-solid" style={{ borderColor: ds.colors.border.main }} />
 
                 <Text className="mt-0 mb-[12px] text-[12px] leading-[1.5]" style={{ color: ds.colors.text.tertiary }}>
-                  This link expires in {expirationMinutes} minutes. Email sent by {appName}.
+                  Email sent by {appName}.
                 </Text>
 
                 <Text className="mt-[12px] mb-[16px] text-[12px] leading-[1.5]" style={{ color: ds.colors.text.tertiary }}>
-                  If you didn't request a password reset, you can safely ignore this email. Your password will remain
-                  unchanged.
+                  If you didn't authorize this change, please contact support immediately at{' '}
+                  <Link href={`mailto:${supportEmail}`} style={{ color: '#6366F1', textDecoration: 'underline' }}>
+                    {supportEmail}
+                  </Link>
+                  .
                 </Text>
 
                 <Text className="mt-0 mb-0 text-center text-[11px]" style={{ color: ds.colors.text.quaternary }}>
@@ -159,12 +177,13 @@ export const BetterAuthPasswordReset = ({
   );
 };
 
-BetterAuthPasswordReset.PreviewProps = {
-  resetLink: 'https://app.slackbound.com/auth/reset-password?token=abc123def456',
-  userEmail: 'ryan@mandarin3d.com',
+BetterAuthEmailChanged.PreviewProps = {
+  oldEmail: 'old@mandarin3d.com',
+  newEmail: 'ryan@mandarin3d.com',
+  revertLink: 'https://app.slackbound.com/auth/revert-email?token=abc123def456',
   appName: 'slackbound',
-  expirationMinutes: 60,
-} as BetterAuthPasswordResetProps;
+  supportEmail: 'support@slackbound.com',
+} as BetterAuthEmailChangedProps;
 
-export default BetterAuthPasswordReset;
+export default BetterAuthEmailChanged;
 

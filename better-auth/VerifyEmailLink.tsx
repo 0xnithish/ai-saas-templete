@@ -1,5 +1,6 @@
 import {
   Body,
+  Button,
   Container,
   Font,
   Head,
@@ -13,25 +14,25 @@ import {
   Tailwind,
   Text,
 } from '@react-email/components';
-import { betterAuthDesignSystem } from '../../design-systems/better-auth/better-auth-design-system';
+import { betterAuthDesignSystem } from '../design-systems/better-auth/better-auth-design-system';
 
-interface BetterAuthVerifyEmailProps {
-  verificationCode?: string;
+interface BetterAuthVerifyEmailLinkProps {
+  verificationLink?: string;
   userEmail?: string;
   appName?: string;
   expirationMinutes?: number;
   logoUrl?: string;
 }
 
-export const BetterAuthVerifyEmail = ({
-  verificationCode = '920441',
+export const BetterAuthVerifyEmailLink = ({
+  verificationLink = 'https://app.example.com/auth/verify-email?token=abc123',
   userEmail = 'user@example.com',
   appName = 'slackbound',
   expirationMinutes = 10,
   logoUrl = 'https://0o4pg1fpby.ufs.sh/f/RSbfEU0J8DcdtpRbOh6sAUj3N86LXf57JKBqdoixIRQHecMu',
-}: BetterAuthVerifyEmailProps) => {
+}: BetterAuthVerifyEmailLinkProps) => {
   const ds = betterAuthDesignSystem;
-  const previewText = `Your verification code is ${verificationCode}`;
+  const previewText = 'Verify your email address';
 
   return (
     <Html>
@@ -94,30 +95,45 @@ export const BetterAuthVerifyEmail = ({
                 </Heading>
 
                 <Text className="mt-0 mb-[20px] text-[14px] leading-[1.6]" style={{ color: ds.colors.text.primary }}>
-                  We need to verify your email address{' '}
-                  <span style={{ color: '#6366F1' }}>{userEmail}</span> before you can access your account. Enter the
-                  code below in your open browser window.
+                  Thanks for signing up! Please verify your email address{' '}
+                  <span style={{ color: '#6366F1' }}>{userEmail}</span> by clicking the button below:
                 </Text>
 
-                <Section
-                  className="my-[32px] border border-solid p-[24px]"
-                  style={{
-                    backgroundColor: '#FAFAFA',
-                    borderColor: ds.colors.border.main,
-                  }}
-                >
-                  <Text
-                    className="m-0 text-center text-[36px] font-semibold tracking-[0.2em]"
-                    style={{ color: ds.colors.text.primary, letterSpacing: '0.2em' }}
+                <Section className="my-[24px]">
+                  <Button
+                    href={verificationLink}
+                    className="inline-block text-center no-underline"
+                    style={{
+                      backgroundColor: ds.buttons.primary.backgroundColor,
+                      color: ds.buttons.primary.color,
+                      padding: '12px 24px',
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      lineHeight: '1',
+                      textDecoration: 'none',
+                      borderRadius: ds.buttons.primary.borderRadius,
+                      border: `1px solid ${ds.buttons.primary.border.color}`,
+                    }}
                   >
-                    {verificationCode}
-                  </Text>
+                    Verify Email Address
+                  </Button>
                 </Section>
+
+                <Text className="mt-[20px] mb-[12px] text-[12px] leading-[1.5]" style={{ color: ds.colors.text.tertiary }}>
+                  Or copy and paste this URL into your browser:
+                </Text>
+
+                <Text
+                  className="mt-0 mb-[20px] break-all text-[12px] leading-[1.5]"
+                  style={{ color: '#6366F1', wordBreak: 'break-all' }}
+                >
+                  {verificationLink}
+                </Text>
 
                 <Hr className="mx-0 my-[24px] w-full border border-solid" style={{ borderColor: ds.colors.border.main }} />
 
                 <Text className="mt-0 mb-[12px] text-[12px] leading-[1.5]" style={{ color: ds.colors.text.tertiary }}>
-                  This code expires in {expirationMinutes} minutes. Email sent by {appName}.
+                  This link expires in {expirationMinutes} minutes. Email sent by {appName}.
                 </Text>
 
                 <Text className="mt-[12px] mb-[16px] text-[12px] leading-[1.5]" style={{ color: ds.colors.text.tertiary }}>
@@ -140,12 +156,11 @@ export const BetterAuthVerifyEmail = ({
   );
 };
 
-BetterAuthVerifyEmail.PreviewProps = {
-  verificationCode: '920441',
+BetterAuthVerifyEmailLink.PreviewProps = {
+  verificationLink: 'https://app.slackbound.com/auth/verify-email?token=abc123def456',
   userEmail: 'ryan@mandarin3d.com',
   appName: 'slackbound',
   expirationMinutes: 10,
-} as BetterAuthVerifyEmailProps;
+} as BetterAuthVerifyEmailLinkProps;
 
-export default BetterAuthVerifyEmail;
-
+export default BetterAuthVerifyEmailLink;

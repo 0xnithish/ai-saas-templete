@@ -1,6 +1,5 @@
 import {
   Body,
-  Button,
   Container,
   Font,
   Head,
@@ -14,27 +13,25 @@ import {
   Tailwind,
   Text,
 } from '@react-email/components';
-import { betterAuthDesignSystem } from '../../design-systems/better-auth/better-auth-design-system';
+import { betterAuthDesignSystem } from '../design-systems/better-auth/better-auth-design-system';
 
-interface BetterAuthPasswordChangedProps {
+interface BetterAuthVerifyEmailProps {
+  verificationCode?: string;
   userEmail?: string;
-  timestamp?: string;
-  secureAccountLink?: string;
   appName?: string;
-  supportEmail?: string;
+  expirationMinutes?: number;
   logoUrl?: string;
 }
 
-export const BetterAuthPasswordChanged = ({
+export const BetterAuthVerifyEmail = ({
+  verificationCode = '920441',
   userEmail = 'user@example.com',
-  timestamp = 'January 15, 2025 at 3:45 PM UTC',
-  secureAccountLink = 'https://app.example.com/auth/secure-account',
   appName = 'slackbound',
-  supportEmail = 'support@example.com',
+  expirationMinutes = 10,
   logoUrl = 'https://0o4pg1fpby.ufs.sh/f/RSbfEU0J8DcdtpRbOh6sAUj3N86LXf57JKBqdoixIRQHecMu',
-}: BetterAuthPasswordChangedProps) => {
+}: BetterAuthVerifyEmailProps) => {
   const ds = betterAuthDesignSystem;
-  const previewText = 'Your password has been changed';
+  const previewText = `Your verification code is ${verificationCode}`;
 
   return (
     <Html>
@@ -93,73 +90,44 @@ export const BetterAuthPasswordChanged = ({
                   className="m-0 mb-[20px] text-[24px] font-semibold leading-[1.3]"
                   style={{ color: ds.colors.text.primary, letterSpacing: '-0.01em' }}
                 >
-                  Password changed successfully
+                  Verify your email
                 </Heading>
 
                 <Text className="mt-0 mb-[20px] text-[14px] leading-[1.6]" style={{ color: ds.colors.text.primary }}>
-                  The password for your {appName} account <span style={{ color: '#6366F1' }}>{userEmail}</span> has been
-                  changed successfully.
+                  We need to verify your email address{' '}
+                  <span style={{ color: '#6366F1' }}>{userEmail}</span> before you can access your account. Enter the
+                  code below in your open browser window.
                 </Text>
 
                 <Section
-                  className="my-[24px] border border-solid p-[16px]"
+                  className="my-[32px] border border-solid p-[24px]"
                   style={{
                     backgroundColor: '#FAFAFA',
                     borderColor: ds.colors.border.main,
                   }}
                 >
-                  <Text className="m-0 mb-[8px] text-[12px] leading-[1.5]" style={{ color: ds.colors.text.tertiary }}>
-                    Changed at:
-                  </Text>
-                  <Text className="m-0 text-[14px] font-semibold" style={{ color: ds.colors.text.primary }}>
-                    {timestamp}
-                  </Text>
-                </Section>
-
-                <Text className="mt-0 mb-[20px] text-[14px] leading-[1.6]" style={{ color: ds.colors.text.primary }}>
-                  If you made this change, you can safely ignore this email. Your account is secure.
-                </Text>
-
-                <Section className="my-[24px]">
-                  <Button
-                    href={secureAccountLink}
-                    className="inline-block text-center no-underline"
-                    style={{
-                      backgroundColor: ds.buttons.primary.backgroundColor,
-                      color: ds.buttons.primary.color,
-                      padding: '12px 24px',
-                      fontSize: '14px',
-                      fontWeight: 600,
-                      lineHeight: '1',
-                      textDecoration: 'none',
-                      borderRadius: ds.buttons.primary.borderRadius,
-                      border: `1px solid ${ds.buttons.primary.border.color}`,
-                    }}
+                  <Text
+                    className="m-0 text-center text-[36px] font-semibold tracking-[0.2em]"
+                    style={{ color: ds.colors.text.primary, letterSpacing: '0.2em' }}
                   >
-                    I didn't make this change
-                  </Button>
+                    {verificationCode}
+                  </Text>
                 </Section>
 
                 <Hr className="mx-0 my-[24px] w-full border border-solid" style={{ borderColor: ds.colors.border.main }} />
 
                 <Text className="mt-0 mb-[12px] text-[12px] leading-[1.5]" style={{ color: ds.colors.text.tertiary }}>
-                  Email sent by {appName}.
+                  This code expires in {expirationMinutes} minutes. Email sent by {appName}.
                 </Text>
 
                 <Text className="mt-[12px] mb-[16px] text-[12px] leading-[1.5]" style={{ color: ds.colors.text.tertiary }}>
-                  If you didn't authorize this change, please contact support immediately at{' '}
-                  <Link href={`mailto:${supportEmail}`} style={{ color: '#6366F1', textDecoration: 'underline' }}>
-                    {supportEmail}
-                  </Link>{' '}
-                  to secure your account.
+                  If you didn't sign up for {appName}, you can safely ignore this email. Someone else might have typed
+                  your email address by mistake.
                 </Text>
 
                 <Text className="mt-0 mb-0 text-center text-[11px]" style={{ color: ds.colors.text.quaternary }}>
                   Powered by{' '}
-                  <Link
-                    href="https://better-auth.com"
-                    style={{ color: ds.colors.text.quaternary, textDecoration: 'underline' }}
-                  >
+                  <Link href="https://better-auth.com" style={{ color: ds.colors.text.quaternary, textDecoration: 'underline' }}>
                     better-auth
                   </Link>
                 </Text>
@@ -172,13 +140,12 @@ export const BetterAuthPasswordChanged = ({
   );
 };
 
-BetterAuthPasswordChanged.PreviewProps = {
+BetterAuthVerifyEmail.PreviewProps = {
+  verificationCode: '920441',
   userEmail: 'ryan@mandarin3d.com',
-  timestamp: 'January 15, 2025 at 3:45 PM UTC',
-  secureAccountLink: 'https://app.slackbound.com/auth/secure-account',
   appName: 'slackbound',
-  supportEmail: 'support@slackbound.com',
-} as BetterAuthPasswordChangedProps;
+  expirationMinutes: 10,
+} as BetterAuthVerifyEmailProps;
 
-export default BetterAuthPasswordChanged;
+export default BetterAuthVerifyEmail;
 
