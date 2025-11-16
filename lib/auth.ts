@@ -25,15 +25,12 @@ if (!rawDatabaseUrl) {
 }
 
 // Initialize Postgres pool for Better Auth
-// For Vercel/serverless: Use connection pooling with port 6543
 const pool = new Pool({
   connectionString: rawDatabaseUrl!,
   max: 1, // Limit connections in serverless environments
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 10000,
   ssl: { rejectUnauthorized: false }, // Allow SSL connection for Supabase
-  // Force IPv4 to avoid DNS resolution issues on Vercel
-  family: 4,
 });
 
 export const auth = betterAuth({
