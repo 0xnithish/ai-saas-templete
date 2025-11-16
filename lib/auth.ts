@@ -7,10 +7,31 @@ import { polarClient } from "./polar";
 // Initialize Resend for email sending (only if API key is available)
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
-// Initialize Postgres pool for Better Auth using the fixed DATABASE_URL
-// The DATABASE_URL has been updated to use the correct hostname (without 'db.' prefix)
+const rawDatabaseUrl = process.env.DATABASE_URL;
+if (!rawDatabaseUrl) {
+  console.error("[Better Auth] DATABASE_URL is not set in environment variables");
+} else {
+  try {
+    const parsed = new URL(rawDatabaseUrl);
+    console.log(
+      "[Better Auth] Using DATABASE_URL host:",
+      parsed.hostname,
+      "port:",
+      parsed.port || "(default 5432)"
+    );
+  } catch (error) {
+    console.error("[Better Auth] Invalid DATABASE_URL format:", rawDatabaseUrl);
+  }
+}
+
+// Initialize Postgres pool for Better Auth
+// For Vercel/serverless: Use connection pooling with port 6543 and pgbouncer=true
+// For local dev: Use direct connection with port 5432
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL!,
+  connectionString: rawDatabaseUrl!,
+  max: 1, // Limit connections in serverless environments
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 10000,
 });
 
 export const auth = betterAuth({
