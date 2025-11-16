@@ -1,5 +1,5 @@
 import { Resend } from 'resend';
-import BetterAuthEmailChanged from '../emails/email-change';
+import BetterAuthEmailChanged from '../better-auth/email-change';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
