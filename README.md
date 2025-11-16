@@ -26,59 +26,78 @@ A modern, production-ready AI SaaS template built with Next.js 16, React 19, and
 - **Icons**: Lucide React
 - **Package Manager**: Bun
 
-## Getting Started
+## 🚀 Quick Start
 
-1. **Install dependencies**:
-   ```bash
-   bun install
-   ```
+**New to this template? See [SETUP.md](./SETUP.md) for step-by-step instructions!**
 
-2. **Set up Supabase**:
-   - Create a Supabase project at [supabase.com](https://supabase.com)
-   - Run the database migration: `supabase/migrations/20250115000000_migrate_to_better_auth.sql`
-   - Get your project URL and keys from the Supabase dashboard
+### TL;DR
 
-3. **Set up Resend**:
-   - Create a Resend account at [resend.com](https://resend.com)
-   - Verify your domain (or use their test domain for development)
-   - Get your API key from the dashboard
+```bash
+# 1. Install dependencies
+bun install
 
-4. **Set up Polar** (for payments):
-   - Create a Polar account at [polar.sh](https://polar.sh)
-   - Create an organization and products (Free and Premium tiers)
-   - Get your sandbox access token from Settings → Organization Access Tokens
-   - Configure webhook endpoint: `https://yourdomain.com/api/auth/polar/webhooks`
-   - Get your webhook secret from the webhook settings
-   - Note: Use sandbox environment for development, production for live deployment
+# 2. Copy environment variables
+cp .env.example .env.local
 
-5. **Set up environment variables**:
-   Copy `.env.example` to `.env.local` and fill in your credentials:
-   ```bash
-   cp .env.example .env.local
-   ```
+# 3. Set up database (one-time)
+# - Go to Supabase Dashboard → SQL Editor
+# - Copy & paste entire supabase/init.sql file
+# - Run it ✅
 
-   Required environment variables:
-   - `BETTER_AUTH_SECRET` - Random secret key (generate with `openssl rand -base64 32`)
-   - `BETTER_AUTH_URL` - Your app URL (http://localhost:3000 for dev)
-   - `DATABASE_URL` - PostgreSQL connection string from Supabase
-   - `NEXT_PUBLIC_SUPABASE_URL` - Your Supabase project URL
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Supabase anon key
-   - `SUPABASE_SERVICE_ROLE_KEY` - Supabase service role key
-   - `RESEND_API_KEY` - Your Resend API key
-   - `EMAIL_FROM` - Email address to send from (e.g., noreply@yourdomain.com)
-   - `POLAR_ACCESS_TOKEN` - Polar sandbox/production access token
-   - `POLAR_WEBHOOK_SECRET` - Polar webhook secret
-   - `POLAR_SUCCESS_URL` - Checkout success redirect URL
-   - `POLAR_PRODUCT_ID_FREE` - Free tier product ID from Polar
-   - `POLAR_PRODUCT_ID_PREMIUM` - Premium tier product ID from Polar
+# 4. Fill in .env.local with your credentials
+# - Supabase URL and service_role key
+# - Generate BETTER_AUTH_SECRET with: openssl rand -base64 32
 
-5. **Run the development server**:
-   ```bash
-   bun dev
-   ```
+# 5. Start development
+bun dev
+```
 
-6. **Open your browser**:
-   Navigate to [http://localhost:3000](http://localhost:3000)
+Open [http://localhost:3000](http://localhost:3000) and you're ready to go! 🎉
+
+## Detailed Setup
+
+### 1. Install Dependencies
+```bash
+bun install
+# or: npm install
+```
+
+### 2. Database Setup (Supabase)
+**One file = Complete setup** ✨
+
+1. Create a project at [supabase.com](https://supabase.com)
+2. Go to **SQL Editor** in your dashboard
+3. Copy **ALL contents** of `supabase/init.sql`
+4. Paste and **Run**
+
+That's it! All tables, indexes, and security are configured.
+
+### 3. Environment Variables
+```bash
+cp .env.example .env.local
+```
+
+Fill in your Supabase credentials (from Dashboard → Settings → API):
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `SUPABASE_SERVICE_ROLE_KEY` (⚠️ use service_role, not anon key)
+- `BETTER_AUTH_SECRET` (generate with: `openssl rand -base64 32`)
+
+### 4. Optional Services
+
+**Email (Resend)**:
+- Sign up at [resend.com](https://resend.com)
+- Add `RESEND_API_KEY` to `.env.local`
+
+**Payments (Polar.sh)**:
+- Create account at [polar.sh](https://polar.sh)
+- Add `POLAR_ACCESS_TOKEN` and product IDs to `.env.local`
+
+### 5. Start Development
+```bash
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) 🎉
 
 ## Project Structure
 
