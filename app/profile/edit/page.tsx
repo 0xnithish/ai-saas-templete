@@ -1,11 +1,11 @@
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
-import { ProfileCard } from '@/components/profile/ProfileCard';
+import { ProfileEdit } from '@/components/profile/ProfileEdit';
 
-export default async function ProfilePage() {
+export default async function EditProfilePage() {
   return (
     <ProtectedRoute>
       <div className="container mx-auto py-8">
-        <ProfileCard />
+        <ProfileEdit />
       </div>
     </ProtectedRoute>
   );
