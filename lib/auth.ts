@@ -3,8 +3,8 @@ import * as React from "react";
 import { Pool } from "pg";
 import { Resend } from "resend";
 import { polar, checkout, portal, usage, webhooks } from "@polar-sh/better-auth";
-import VerificationEmail from "@/emails/VerificationEmail";
-import PasswordResetEmail from "@/emails/PasswordResetEmail";
+import VerificationEmail from "@/components/emails/VerificationEmail";
+import PasswordResetEmail from "@/components/emails/PasswordResetEmail";
 import { polarClient } from "./polar";
 
 // Initialize Resend for email sending (only if API key is available)
@@ -43,7 +43,7 @@ export const auth = betterAuth({
     requireEmailVerification: true,
     minPasswordLength: 8,
     autoSignIn: false,
-    sendResetPassword: async ({ user, url }: { user: { email: string }; url: string }) => {
+    sendResetPassword: async ({ user, url }: { user: { email: string; name?: string }; url: string }) => {
       if (!resend) {
         console.warn('Resend not configured - skipping password reset email');
         return;
@@ -55,6 +55,7 @@ export const auth = betterAuth({
         react: React.createElement(PasswordResetEmail, {
           resetUrl: url,
           userEmail: user.email,
+          userName: user.name ?? undefined,
         }),
       });
     },
@@ -110,7 +111,7 @@ export const auth = betterAuth({
         console.error('❌ Failed to create/link Polar customer after verification:', error);
       }
     },
-    sendVerificationEmail: async ({ user, url }: { user: { email: string }; url: string }) => {
+    sendVerificationEmail: async ({ user, url }: { user: { email: string; name?: string }; url: string }) => {
       if (!resend) {
         console.warn('Resend not configured - skipping email verification');
         return;
@@ -122,6 +123,7 @@ export const auth = betterAuth({
         react: React.createElement(VerificationEmail, {
           verificationUrl: url,
           userEmail: user.email,
+          userName: user.name ?? undefined,
         }),
       });
     },
