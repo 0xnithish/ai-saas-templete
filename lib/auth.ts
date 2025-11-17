@@ -150,6 +150,65 @@ export const auth = betterAuth({
   ],
   secret: process.env.BETTER_AUTH_SECRET!,
   baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
+  socialProviders: {
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      enabled: !!process.env.GOOGLE_CLIENT_ID && !!process.env.GOOGLE_CLIENT_SECRET,
+    },
+    github: {
+      clientId: process.env.GITHUB_CLIENT_ID!,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+      enabled: !!process.env.GITHUB_CLIENT_ID && !!process.env.GITHUB_CLIENT_SECRET,
+    },
+  },
+  social: {
+    afterSignIn: async ({ user, account }: { user: any; account: any }) => {
+      // Create Polar customer after successful social authentication
+      try {
+        console.log(`🔄 Creating Polar customer for social user: ${user.email}`);
+
+        // Check if customer already exists
+        const existingCustomers = await polarClient.customers.list({
+          email: user.email,
+          limit: 1,
+        });
+
+        let polarCustomerId: string;
+
+        if (existingCustomers.result && existingCustomers.result.items.length > 0) {
+          // Customer already exists
+          polarCustomerId = existingCustomers.result.items[0].id;
+          console.log(`✅ Found existing Polar customer: ${polarCustomerId}`);
+        } else {
+          // Create new customer in Polar
+          const newCustomer = await polarClient.customers.create({
+            email: user.email,
+            name: user.name || undefined,
+            metadata: {
+              userId: user.id,
+              provider: account.providerId,
+            },
+          });
+
+          polarCustomerId = newCustomer.id;
+          console.log(`✅ Created new Polar customer: ${polarCustomerId}`);
+        }
+
+        // Update database with Polar customer ID
+        await pool.query(
+          `UPDATE public.user
+           SET "polarCustomerId" = $1, "updatedAt" = NOW()
+           WHERE id = $2`,
+          [polarCustomerId, user.id]
+        );
+
+        console.log(`✅ Linked Polar customer ${polarCustomerId} to social user ${user.id}`);
+      } catch (error) {
+        console.error('❌ Failed to create/link Polar customer for social user:', error);
+      }
+    },
+  },
   plugins: [
     polar({
       client: polarClient,

@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
+import { SocialLoginButton } from "./SocialLoginButton";
 
 interface AuthFormProps {
   mode: "signin" | "signup";
@@ -20,6 +21,7 @@ export function AuthForm({ mode }: AuthFormProps) {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [socialLoading, setSocialLoading] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
@@ -27,6 +29,30 @@ export function AuthForm({ mode }: AuthFormProps) {
       router.prefetch("/sign-in");
     }
   }, [mode, router]);
+
+  const handleSocialSignIn = async (provider: "google" | "github") => {
+    try {
+      setSocialLoading(provider);
+
+      const result = await signIn.social({
+        provider,
+        callbackURL: "/dashboard",
+      });
+
+      if (result.error) {
+        toast.error(result.error.message || `Failed to sign in with ${provider}`);
+        return;
+      }
+
+      toast.success(`Signed in with ${provider} successfully!`);
+      // Better Auth will handle the redirect automatically
+    } catch (error) {
+      toast.error(`An unexpected error occurred with ${provider} authentication`);
+      console.error(`${provider} auth error:`, error);
+    } finally {
+      setSocialLoading(null);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -80,6 +106,33 @@ export function AuthForm({ mode }: AuthFormProps) {
             ? "Enter your credentials to sign in"
             : "Enter your information to get started"}
         </p>
+      </div>
+
+      {/* Social Login Buttons */}
+      <div className="space-y-3">
+        <SocialLoginButton
+          provider="google"
+          onClick={() => handleSocialSignIn("google")}
+          isLoading={socialLoading === "google"}
+        />
+
+        <SocialLoginButton
+          provider="github"
+          onClick={() => handleSocialSignIn("github")}
+          isLoading={socialLoading === "github"}
+        />
+      </div>
+
+      {/* Divider */}
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <span className="w-full border-t" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-background px-2 text-muted-foreground">
+            Or continue with
+          </span>
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">

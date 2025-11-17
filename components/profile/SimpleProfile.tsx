@@ -10,6 +10,7 @@ import { getProfileAction } from '@/lib/actions/profile-actions';
 import { toast } from 'sonner';
 import Link from 'next/link';
 import { SubscriptionCard } from './SubscriptionCard';
+import { SocialAccountsCard } from './SocialAccountsCard';
 
 interface Profile {
   id: string;
@@ -101,6 +102,9 @@ export function SimpleProfile() {
         subscriptionStatus={profile?.subscriptionStatus}
         subscriptionEndsAt={profile?.subscriptionEndsAt}
       />
+
+      {/* Social Accounts Card */}
+      <SocialAccountsCard />
 
       {/* Profile Card */}
       <Card>

@@ -6,7 +6,7 @@ A modern, production-ready AI SaaS template built with Next.js 16, React 19, and
 
 - 🚀 **Modern Tech Stack**: Next.js 16 with App Router, React 19, and TypeScript
 - 🎨 **Beautiful UI**: shadcn/ui components with Tailwind CSS v4
-- 🔐 **Authentication**: Better Auth with email/password and email verification
+- 🔐 **Authentication**: Better Auth with email/password, email verification, and social login (Google, GitHub)
 - 💳 **Payments**: Polar integration for subscriptions and checkout
 - 📧 **Email Service**: Resend integration for transactional emails
 - 🗄️ **Database**: Supabase integration for data storage
@@ -88,6 +88,21 @@ Fill in your Supabase credentials (from Dashboard → Settings → API):
 - Sign up at [resend.com](https://resend.com)
 - Add `RESEND_API_KEY` to `.env.local`
 
+**Social Authentication**:
+- **Google OAuth**:
+  1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+  2. Create a new project or select existing
+  3. Enable Google+ API and Google OAuth2 API
+  4. Create OAuth 2.0 Client ID for Web application
+  5. Add authorized redirect URI: `http://localhost:3000/api/auth/callback/google`
+  6. Add `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` to `.env.local`
+- **GitHub OAuth**:
+  1. Go to [GitHub Settings > Developer settings > OAuth Apps](https://github.com/settings/applications/new)
+  2. Create new OAuth App
+  3. Set Homepage URL: `http://localhost:3000`
+  4. Set Authorization callback URL: `http://localhost:3000/api/auth/callback/github`
+  5. Add `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` to `.env.local`
+
 **Payments (Polar.sh)**:
 - Create account at [polar.sh](https://polar.sh)
 - Add `POLAR_ACCESS_TOKEN` and product IDs to `.env.local`
@@ -139,10 +154,12 @@ Open [http://localhost:3000](http://localhost:3000) 🎉
 
 ### Authentication (Better Auth)
 - Email/password authentication with verification
+- Social authentication (Google, GitHub)
 - Password reset functionality
 - Session management with database storage
 - Protected routes support
 - Customizable email templates
+- Account linking for social providers
 
 ### Email Service (Resend)
 - Transactional email delivery
@@ -166,15 +183,22 @@ Open [http://localhost:3000](http://localhost:3000) 🎉
 
 ## Authentication Features
 
+### Social Authentication
+- **Google OAuth**: Sign in with Google account
+- **GitHub OAuth**: Sign in with GitHub account
+- **Account Linking**: Link/unlink social accounts from profile
+- **Automatic Customer Creation**: Polar customer creation for social users
+- **Seamless Integration**: Social and email authentication work together
+
 ### Sign Up Flow
-1. User enters email, password, and name
-2. Account is created with unverified email
-3. Verification email is sent via Resend
-4. User clicks verification link
-5. Email is verified and user can sign in
+1. User can sign up with email/password or social account
+2. **Email/password**: Enter email, password, and name
+3. **Social account**: Click provider button and authenticate
+4. Account is created (email verification skipped for social users)
+5. Polar customer is created automatically
 
 ### Password Reset Flow
-1. User requests password reset
+1. User requests password reset (for email/password accounts only)
 2. Reset email is sent via Resend
 3. User clicks reset link
 4. User enters new password
@@ -183,6 +207,7 @@ Open [http://localhost:3000](http://localhost:3000) 🎉
 ### Profile Management
 - Update first name, last name, and username
 - View profile status and metadata
+- Manage linked social accounts
 - Automatic profile creation on first sign-in
 
 ## Customization
@@ -197,6 +222,29 @@ This template is designed to be customized for your specific AI SaaS needs:
 6. **Extend authentication**: Add OAuth providers via Better Auth plugins
 
 ## Deploy
+
+### Production Configuration
+
+For social authentication in production:
+
+1. **Update OAuth Redirect URIs**:
+   - Google: Add `https://yourdomain.com/api/auth/callback/google`
+   - GitHub: Add `https://yourdomain.com/api/auth/callback/github`
+
+2. **Environment Variables**:
+   ```bash
+   # Update URLs for production
+   BETTER_AUTH_URL=https://yourdomain.com
+   NEXT_PUBLIC_APP_URL=https://yourdomain.com
+
+   # Social auth credentials
+   GOOGLE_CLIENT_ID=your_production_google_client_id
+   GOOGLE_CLIENT_SECRET=your_production_google_client_secret
+   GITHUB_CLIENT_ID=your_production_github_client_id
+   GITHUB_CLIENT_SECRET=your_production_github_client_secret
+   ```
+
+3. **Trusted Origins**: Add your production domain to trusted origins in `lib/auth.ts`
 
 The easiest way to deploy is using the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme).
 
