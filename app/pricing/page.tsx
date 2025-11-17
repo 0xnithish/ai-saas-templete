@@ -1,6 +1,7 @@
 "use client";
 
-import { useSession, authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth-client";
+import { useSessionOptimized } from "@/components/auth/SessionProvider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check } from "lucide-react";
@@ -44,7 +45,7 @@ const tiers = [
 ];
 
 export default function PricingPage() {
-  const { data: session, isPending } = useSession();
+  const { session, isLoading } = useSessionOptimized();
   const router = useRouter();
   const [loading, setLoading] = useState<string | null>(null);
 
@@ -135,7 +136,7 @@ export default function PricingPage() {
                   variant={tier.highlighted ? "default" : "outline"}
                   size="lg"
                   onClick={() => handleSubscribe(tier.slug)}
-                  disabled={loading !== null || isPending}
+                  disabled={loading !== null || isLoading}
                 >
                   {loading === tier.slug ? "Loading..." : tier.cta}
                 </Button>

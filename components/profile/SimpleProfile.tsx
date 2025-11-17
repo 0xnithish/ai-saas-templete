@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSession } from '@/lib/auth-client';
+import { useSessionOptimized } from '@/components/auth/SessionProvider';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -26,17 +26,17 @@ interface Profile {
 }
 
 export function SimpleProfile() {
-  const { data: session, isPending } = useSession();
+  const { session, isLoading: sessionLoading } = useSessionOptimized();
   const user = session?.user;
   const [profile, setProfile] = useState<Profile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   // Load profile on mount
   useEffect(() => {
-    if (!isPending && user) {
+    if (!sessionLoading && user) {
       loadProfile();
     }
-  }, [isPending, user]);
+  }, [sessionLoading, user]);
 
   const loadProfile = async () => {
     setIsLoading(true);
@@ -62,7 +62,7 @@ export function SimpleProfile() {
     return user?.name?.[0] || user?.email[0] || 'U';
   };
 
-  if (isPending || isLoading) {
+  if (sessionLoading || isLoading) {
     return (
       <Card className="w-full max-w-2xl mx-auto">
         <CardHeader>

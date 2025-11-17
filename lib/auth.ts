@@ -27,13 +27,19 @@ if (!rawDatabaseUrl) {
   }
 }
 
-// Initialize Postgres pool for Better Auth
+// Initialize Postgres pool for Better Auth with optimized settings
 const pool = new Pool({
   connectionString: rawDatabaseUrl!,
-  max: 1, // Limit connections in serverless environments
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 10000,
+  max: 1, // Single connection per serverless instance to prevent exhaustion
+  min: 1, // Maintain at least one connection
+  idleTimeoutMillis: 60000, // Keep idle connections longer
+  connectionTimeoutMillis: 15000, // Increased timeout for stability
   ssl: { rejectUnauthorized: false }, // Allow SSL connection for Supabase
+});
+
+// Handle unexpected pool errors
+pool.on('error', (err) => {
+  console.error('Unexpected database pool error:', err);
 });
 
 export const auth = betterAuth({
@@ -63,6 +69,15 @@ export const auth = betterAuth({
   session: {
     expiresIn: 60 * 60 * 24 * 7, // 7 days
     updateAge: 60 * 60 * 24, // 1 day
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60, // Cache for 5 minutes
+      refreshCache: {
+        updateAge: 60 // Refresh when 60 seconds remain before expiry
+      },
+      strategy: "compact", // Use compact strategy for smallest cookie size
+    },
+    freshAge: 60 * 5, // Consider session fresh for 5 minutes
   },
   emailVerification: {
     sendOnSignUp: true,

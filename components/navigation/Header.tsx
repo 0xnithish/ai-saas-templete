@@ -6,13 +6,14 @@ import NavMenu from "@/components/navigation/NavMenu";
 import NavigationSheet from "@/components/navigation/NavigationSheet";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { ArrowRight } from "lucide-react";
-import { useSession, signOut } from "@/lib/auth-client";
+import { signOut } from "@/lib/auth-client";
+import { useSessionOptimized } from "@/components/auth/SessionProvider";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const router = useRouter();
-  const { data: session, isPending } = useSession();
+  const { session, isLoading } = useSessionOptimized();
   const user = session?.user;
 
   const handleSignOut = async () => {
@@ -30,7 +31,7 @@ const Navbar = () => {
 
         <div className="flex items-center gap-3">
           <ThemeToggle />
-          {isPending ? (
+          {isLoading ? (
             // Show skeleton buttons while loading to prevent layout shift
             <div className="flex items-center gap-3">
               <div className="h-9 w-20 bg-muted animate-pulse rounded-md hidden sm:inline-flex" />

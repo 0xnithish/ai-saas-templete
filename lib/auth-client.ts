@@ -12,7 +12,10 @@ export const {
   signIn,
   signUp,
   signOut,
-  useSession,
   resetPassword,
   forgetPassword,
 } = authClient;
+
+// Note: For optimized session handling, use the useSessionOptimized hook
+// from components/auth/SessionProvider instead of the default useSession
+export const { useSession } = authClient;

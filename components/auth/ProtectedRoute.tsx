@@ -1,5 +1,4 @@
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { getSession } from "@/lib/auth-utils";
 import { redirect } from "next/navigation";
 
 interface ProtectedRouteProps {
@@ -26,9 +25,7 @@ export async function ProtectedRoute({
   children, 
   redirectTo = "/sign-in" 
 }: ProtectedRouteProps) {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const session = await getSession();
 
   if (!session?.user) {
     redirect(redirectTo);

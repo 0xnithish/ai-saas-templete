@@ -10,10 +10,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { useSession } from "@/lib/auth-client";
+import { useSessionOptimized } from "@/components/auth/SessionProvider";
 
 const NavigationSheet = () => {
-  const { data: session } = useSession();
+  const { session } = useSessionOptimized();
   const user = session?.user;
 
   const navItems = [
