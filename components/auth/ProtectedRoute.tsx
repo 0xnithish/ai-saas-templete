@@ -1,8 +1,9 @@
+import type { ReactNode } from "react";
 import { getSession } from "@/lib/auth-utils";
 import { redirect } from "next/navigation";
 
 interface ProtectedRouteProps {
-  children: React.ReactNode;
+  children: ReactNode;
   redirectTo?: string;
 }
 

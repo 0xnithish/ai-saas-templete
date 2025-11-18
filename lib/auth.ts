@@ -2,10 +2,10 @@ import { betterAuth } from "better-auth";
 import * as React from "react";
 import { Pool } from "pg";
 import { Resend } from "resend";
-import { polar, checkout, portal, usage, webhooks } from "@polar-sh/better-auth";
+import { dodopayments, checkout, webhooks } from "@dodopayments/better-auth";
 import VerificationEmail from "@/components/emails/VerificationEmail";
 import PasswordResetEmail from "@/components/emails/PasswordResetEmail";
-import { polarClient } from "./polar";
+import { dodoClient } from "./dodo";
 
 // Initialize Resend for email sending (only if API key is available)
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
@@ -23,7 +23,7 @@ if (!rawDatabaseUrl) {
       parsed.port || "(default 5432)"
     );
   } catch (error) {
-    console.error("[Better Auth] Invalid DATABASE_URL format:", rawDatabaseUrl);
+    console.error("[Better Auth] Invalid DATABASE_URL format:", rawDatabaseUrl, error);
   }
 }
 
@@ -83,47 +83,46 @@ export const auth = betterAuth({
     sendOnSignUp: true,
     autoSignInAfterVerification: true,
     afterEmailVerification: async (user) => {
-      // Create Polar customer after email verification
+      // Create Dodo customer after email verification
       try {
-        console.log(`🔄 Creating Polar customer for verified user: ${user.email}`);
+        console.log(`🔄 Creating Dodo customer for verified user: ${user.email}`);
         
         // Check if customer already exists
-        const existingCustomers = await polarClient.customers.list({
+        const existingCustomers = await dodoClient.customers.list({
           email: user.email,
-          limit: 1,
         });
 
-        let polarCustomerId: string;
+        let dodoCustomerId: string;
 
-        if (existingCustomers.result && existingCustomers.result.items.length > 0) {
-          // Customer already exists (shouldn't happen with createCustomerOnSignUp: false)
-          polarCustomerId = existingCustomers.result.items[0].id;
-          console.log(`✅ Found existing Polar customer: ${polarCustomerId}`);
+        if (existingCustomers.items && existingCustomers.items.length > 0) {
+          // Customer already exists
+          dodoCustomerId = existingCustomers.items[0].customer_id;
+          console.log(`✅ Found existing Dodo customer: ${dodoCustomerId}`);
         } else {
-          // Create new customer in Polar
-          const newCustomer = await polarClient.customers.create({
+          // Create new customer in Dodo
+          const newCustomer = await dodoClient.customers.create({
             email: user.email,
-            name: user.name || undefined,
+            name: user.name || "",
             metadata: {
               userId: user.id,
             },
           });
           
-          polarCustomerId = newCustomer.id;
-          console.log(`✅ Created new Polar customer: ${polarCustomerId}`);
+          dodoCustomerId = newCustomer.customer_id;
+          console.log(`✅ Created new Dodo customer: ${dodoCustomerId}`);
         }
         
-        // Update database with Polar customer ID
+        // Update database with Dodo customer ID
         await pool.query(
           `UPDATE public.user 
-           SET "polarCustomerId" = $1, "updatedAt" = NOW()
+           SET "dodoCustomerId" = $1, "updatedAt" = NOW()
            WHERE id = $2`,
-          [polarCustomerId, user.id]
+          [dodoCustomerId, user.id]
         );
         
-        console.log(`✅ Linked Polar customer ${polarCustomerId} to user ${user.id}`);
+        console.log(`✅ Linked Dodo customer ${dodoCustomerId} to user ${user.id}`);
       } catch (error) {
-        console.error('❌ Failed to create/link Polar customer after verification:', error);
+        console.error('❌ Failed to create/link Dodo customer after verification:', error);
       }
     },
     sendVerificationEmail: async ({ user, url }: { user: { email: string; name?: string }; url: string }) => {
@@ -164,143 +163,124 @@ export const auth = betterAuth({
   },
   social: {
     afterSignIn: async ({ user, account }: { user: any; account: any }) => {
-      // Create Polar customer after successful social authentication
+      // Create Dodo customer after successful social authentication
       try {
-        console.log(`🔄 Creating Polar customer for social user: ${user.email}`);
+        console.log(`🔄 Creating Dodo customer for social user: ${user.email}`);
 
         // Check if customer already exists
-        const existingCustomers = await polarClient.customers.list({
+        const existingCustomers = await dodoClient.customers.list({
           email: user.email,
-          limit: 1,
         });
 
-        let polarCustomerId: string;
+        let dodoCustomerId: string;
 
-        if (existingCustomers.result && existingCustomers.result.items.length > 0) {
+        if (existingCustomers.items && existingCustomers.items.length > 0) {
           // Customer already exists
-          polarCustomerId = existingCustomers.result.items[0].id;
-          console.log(`✅ Found existing Polar customer: ${polarCustomerId}`);
+          dodoCustomerId = existingCustomers.items[0].customer_id;
+          console.log(`✅ Found existing Dodo customer: ${dodoCustomerId}`);
         } else {
-          // Create new customer in Polar
-          const newCustomer = await polarClient.customers.create({
+          // Create new customer in Dodo
+          const newCustomer = await dodoClient.customers.create({
             email: user.email,
-            name: user.name || undefined,
+            name: user.name || "",
             metadata: {
               userId: user.id,
               provider: account.providerId,
             },
           });
 
-          polarCustomerId = newCustomer.id;
-          console.log(`✅ Created new Polar customer: ${polarCustomerId}`);
+          dodoCustomerId = newCustomer.customer_id;
+          console.log(`✅ Created new Dodo customer: ${dodoCustomerId}`);
         }
 
-        // Update database with Polar customer ID
+        // Update database with Dodo customer ID
         await pool.query(
           `UPDATE public.user
-           SET "polarCustomerId" = $1, "updatedAt" = NOW()
+           SET "dodoCustomerId" = $1, "updatedAt" = NOW()
            WHERE id = $2`,
-          [polarCustomerId, user.id]
+          [dodoCustomerId, user.id]
         );
 
-        console.log(`✅ Linked Polar customer ${polarCustomerId} to social user ${user.id}`);
+        console.log(`✅ Linked Dodo customer ${dodoCustomerId} to social user ${user.id}`);
       } catch (error) {
-        console.error('❌ Failed to create/link Polar customer for social user:', error);
+        console.error('❌ Failed to create/link Dodo customer for social user:', error);
       }
     },
   },
   plugins: [
-    polar({
-      client: polarClient,
+    dodopayments({
+      client: dodoClient,
       createCustomerOnSignUp: false, // Don't create until email verified
       use: [
         checkout({
           products: [
             {
-              productId: process.env.POLAR_PRODUCT_ID_FREE!,
+              productId: process.env.DODO_PRODUCT_ID_FREE!,
               slug: "free",
             },
             {
-              productId: process.env.POLAR_PRODUCT_ID_PREMIUM!,
+              productId: process.env.DODO_PRODUCT_ID_PREMIUM!,
               slug: "premium",
             },
           ],
-          successUrl: process.env.POLAR_SUCCESS_URL || "/success?checkout_id={CHECKOUT_ID}",
+          successUrl:
+            process.env.DODO_SUCCESS_URL ||
+            `${process.env.NEXT_PUBLIC_APP_URL || process.env.BETTER_AUTH_URL || "http://localhost:3000"}/success?checkout_id={CHECKOUT_ID}`,
           authenticatedUsersOnly: true,
         }),
-        portal(),
-        usage(),
         webhooks({
-          secret: process.env.POLAR_WEBHOOK_SECRET!,
-          onSubscriptionActive: async (payload) => {
+          webhookKey: process.env.DODO_WEBHOOK_SECRET!,
+          onPaymentSucceeded: async (payload) => {
+            // Payment succeeded - activate user subscription
             try {
-              // The payload contains customer data with externalId
-              const userId = payload.data.customer?.externalId;
-              
-              if (!userId) {
-                console.warn('[Polar Webhook] No externalId found for customer');
-                return;
+              const data = (payload as any)?.data;
+              const customerId =
+                data?.customer_id ??
+                data?.customer?.customer_id ??
+                data?.customer?.id;
+
+              if (customerId) {
+                // Update user subscription status to active
+                await pool.query(
+                  `UPDATE public.user 
+                   SET "subscriptionStatus" = 'active',
+                       "subscriptionEndsAt" = NULL,
+                       "updatedAt" = NOW()
+                   WHERE "dodoCustomerId" = $1`,
+                  [customerId]
+                );
+                console.log(`✅ Activated subscription for customer ${customerId}`);
               }
-
-              // Update user subscription status to active
-              await pool.query(
-                `UPDATE public.user 
-                 SET "subscriptionStatus" = 'active',
-                     "subscriptionEndsAt" = NULL,
-                     "polarCustomerId" = $2
-                 WHERE id = $1`,
-                [userId, payload.data.customerId]
-              );
-
-              console.log('[Polar Webhook] Granted active subscription to user:', userId);
             } catch (error) {
-              console.error('[Polar Webhook] Error activating subscription:', error);
+              console.error('❌ Error activating subscription:', error);
             }
           },
-          onSubscriptionCanceled: async (payload) => {
+          onPaymentCancelled: async (payload) => {
+            // Payment cancelled - update user status
             try {
-              const userId = payload.data.customer?.externalId;
-              const endsAt = payload.data.endsAt ? new Date(payload.data.endsAt) : null;
-              
-              if (!userId) {
-                console.warn('[Polar Webhook] No externalId found for customer');
-                return;
+              const data = (payload as any)?.data;
+              const customerId =
+                data?.customer_id ??
+                data?.customer?.customer_id ??
+                data?.customer?.id;
+
+              if (customerId) {
+                await pool.query(
+                  `UPDATE public.user 
+                   SET "subscriptionStatus" = 'canceled',
+                       "updatedAt" = NOW()
+                   WHERE "dodoCustomerId" = $1`,
+                  [customerId]
+                );
+                console.log(`⚠️ Cancelled subscription for customer ${customerId}`);
               }
-
-              await pool.query(
-                `UPDATE public.user 
-                 SET "subscriptionStatus" = 'canceled',
-                     "subscriptionEndsAt" = $2
-                 WHERE id = $1`,
-                [userId, endsAt]
-              );
-
-              console.log('[Polar Webhook] Marked subscription as canceled for user:', userId);
             } catch (error) {
-              console.error('[Polar Webhook] Error canceling subscription:', error);
+              console.error('❌ Error canceling subscription:', error);
             }
           },
-          onSubscriptionRevoked: async (payload) => {
-            try {
-              const userId = payload.data.customer?.externalId;
-              
-              if (!userId) {
-                console.warn('[Polar Webhook] No externalId found for customer');
-                return;
-              }
-
-              await pool.query(
-                `UPDATE public.user 
-                 SET "subscriptionStatus" = 'free',
-                     "subscriptionEndsAt" = NULL
-                 WHERE id = $1`,
-                [userId]
-              );
-
-              console.log('[Polar Webhook] Revoked subscription access for user:', userId);
-            } catch (error) {
-              console.error('[Polar Webhook] Error revoking subscription:', error);
-            }
+          onRefundSucceeded: async (payload) => {
+            console.log('💰 Refund processed:', payload);
+            // Handle refunds if needed
           },
         }),
       ],

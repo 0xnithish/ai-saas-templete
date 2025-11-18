@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useSessionOptimized } from "@/components/auth/SessionProvider";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { Loader2, Link as LinkIcon, Unlink, Shield, CheckCircle } from "lucide-react";
 import { signIn } from "@/lib/auth-client";

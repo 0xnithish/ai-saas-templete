@@ -37,6 +37,15 @@ const eslintConfig = [
         navigator: "readonly",
         localStorage: "readonly",
         sessionStorage: "readonly",
+        URL: "readonly",
+        Request: "readonly",
+        Response: "readonly",
+        Headers: "readonly",
+        fetch: "readonly",
+        setTimeout: "readonly",
+        clearTimeout: "readonly",
+        setInterval: "readonly",
+        clearInterval: "readonly",
       },
     },
     plugins: {
@@ -53,6 +62,7 @@ const eslintConfig = [
       "no-debugger": "error",
       "prefer-const": "error",
       "no-var": "error",
+      "no-unused-vars": "off",
     },
   },
 ];

@@ -7,7 +7,6 @@
   Hr,
   Html,
   Img,
-  Link,
   Preview,
   Section,
   Tailwind,
@@ -142,7 +141,7 @@ export function VerificationEmail({
                   className="mt-0 mb-3 text-[12px] leading-normal"
                   style={{ color: emailTheme.mutedText }}
                 >
-                  This link may expire after a short period of time. Email sent by {brand}.
+                  This link expires in {expirationMinutes} minutes. Email sent by {brand}.
                 </Text>
 
                 <Text

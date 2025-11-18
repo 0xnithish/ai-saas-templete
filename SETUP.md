@@ -6,7 +6,7 @@ Get your SaaS app running in **under 10 minutes**!
 
 - Node.js 18+ installed
 - A Supabase account (free tier works)
-- A Polar.sh account (for payments, optional)
+- A Dodo Payments account (for payments, optional)
 
 ## Step 1: Clone & Install (2 minutes)
 
@@ -66,12 +66,18 @@ BETTER_AUTH_SECRET=your-generated-secret
 BETTER_AUTH_URL=http://localhost:3000
 ```
 
-#### Polar.sh (Optional - for payments)
-From [polar.sh](https://polar.sh) dashboard:
+#### Dodo Payments (Optional - for payments)
+From [Dodo Payments Dashboard](https://dashboard.dodopayments.com/):
+1. Create an account and verify your email
+2. Go to **Settings** → **API Keys** to get your credentials
+3. Create products in the dashboard for your subscription tiers
+
 ```bash
-POLAR_ACCESS_TOKEN=polar_xxx
-POLAR_WEBHOOK_SECRET=whsec_xxx
-POLAR_ORGANIZATION_ID=your-org-id
+DODO_PAYMENTS_API_KEY=dodo_test_xxx  # Use dodo_live_xxx for production
+DODO_PAYMENTS_ENVIRONMENT=test_mode  # Change to live_mode for production
+DODO_WEBHOOK_SECRET=whsec_xxx
+DODO_PRODUCT_ID_FREE=prod_xxx
+DODO_PRODUCT_ID_PREMIUM=prod_xxx
 ```
 
 ## Step 4: Start Development (30 seconds)
@@ -117,10 +123,11 @@ export const auth = betterAuth({
 });
 ```
 
-### Set Up Payments (Polar.sh)
-1. Create products in Polar.sh dashboard
-2. Copy product IDs to `app/pricing/page.tsx`
-3. Webhook handlers are already set up in `app/api/polar/`
+### Set Up Payments (Dodo Payments)
+1. Create products in Dodo Payments dashboard
+2. Copy product IDs to `.env.local`
+3. Configure webhook endpoints in Dodo dashboard pointing to `/api/webhooks`
+4. Test the checkout flow on the pricing page
 
 ## 📁 Project Structure
 
@@ -135,8 +142,9 @@ export const auth = betterAuth({
 │   ├── dashboard/       # Dashboard components
 │   └── landing/         # Landing page components
 ├── lib/
-│   ├── auth.ts          # Better Auth config
+│   ├── auth.ts          # Better Auth config with Dodo Payments
 │   ├── auth-client.ts   # Client-side auth
+│   ├── dodo.ts          # Dodo Payments client config
 │   └── db/              # Database utilities
 ├── supabase/
 │   ├── init.sql         # Complete database setup

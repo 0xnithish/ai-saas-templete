@@ -63,15 +63,43 @@ export default function PricingPage() {
 
     try {
       setLoading(slug);
-      
-      // Initiate Polar checkout
-      // @ts-ignore - polarClient methods are added by the plugin
-      await authClient.checkout({ slug });
-      
-      // User will be redirected to Polar checkout page
+
+      // Initiate Dodo checkout via Better Auth Dodo client plugin
+      // The client returns { data, error } instead of throwing on HTTP 4xx
+      // @ts-ignore - dodopayments methods are added by the plugin
+      const { data: checkout, error } = await authClient.dodopayments.checkout({
+        slug,
+        customer: {
+          email: session.user.email,
+          name: (session.user.name as string | undefined) ?? undefined,
+        },
+        billing: {
+          city: "San Francisco",
+          country: "US",
+          state: "CA",
+          street: "123 Market St",
+          zipcode: "94103",
+        },
+      });
+
+      if (error || !checkout) {
+        console.error("Checkout error:", error);
+        toast.error(error?.message || "Failed to start checkout. Please try again.");
+        setLoading(null);
+        return;
+      }
+
+      // Redirect user to Dodo checkout URL
+      if (checkout.url) {
+        window.location.href = checkout.url;
+      } else {
+        // Fallback in case URL is missing
+        toast.error("Checkout URL not available. Please try again.");
+        setLoading(null);
+      }
     } catch (error) {
-      console.error("Checkout error:", error);
-      toast.error("Failed to start checkout. Please try again.");
+      console.error("Checkout unexpected error:", error);
+      toast.error("Unexpected error starting checkout. Please try again.");
       setLoading(null);
     }
   };

@@ -5,7 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CreditCard, ExternalLink, Sparkles } from "lucide-react";
-import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import Link from "next/link";
 
@@ -28,9 +27,8 @@ export function SubscriptionCard({
     try {
       setLoading(true);
       
-      // Open Polar customer portal
-      // @ts-ignore - portal method is added by the Polar plugin
-      await authClient.portal();
+      // Redirect to Dodo customer portal
+      window.location.href = "/api/customer-portal";
       
     } catch (error) {
       console.error("Portal error:", error);
